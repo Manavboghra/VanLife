@@ -1,0 +1,25 @@
+import React from 'react'
+import { useLoaderData } from 'react-router-dom'
+
+const Details = () => {
+    const van = useLoaderData()
+  return (
+    <div className='p-5 flex flex-col gap-2'>
+        <div>
+            <b>Name: </b>{van.name}
+        </div>
+        <div>
+            <b>Category: </b>{String(van.type).charAt(0).toUpperCase() +
+            String(van.type).slice(1)}
+        </div>
+        <div>
+            <b>Description: </b>{van.description}
+        </div>
+        <div>
+            <b>Visibility: </b>Public
+        </div>
+    </div>
+  )
+}
+
+export default Details
