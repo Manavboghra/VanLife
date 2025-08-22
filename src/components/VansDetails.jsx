@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "react-feather";
-import { useParams, Link, useLoaderData } from "react-router-dom";
-
+import { useParams, Link, useLoaderData, useLocation, useSearchParams } from "react-router-dom";
 const VansDetails = () => {
   // const [vans, setVans] = useState([]);
   // const { id } = useParams();
@@ -15,14 +14,17 @@ const VansDetails = () => {
   // }, []);
 
   const vans = useLoaderData();
+  const location = useLocation()
+  const search = location.state?.search || "/vans"
+  const type = location.state?.type || "all"
   return (
     <div>
       <div className="bg-[#FFF7ED] flex flex-col gap-2 pb-14 p-6 ">
         <div className=" mb-10 font-medium text-xl">
-          <Link to={"/vans"}>
+          <Link to={`/vans${search}`} >
             <div className="flex items-center gap-2">
               <ArrowLeft size={16} />
-              <span className="underline">Back to all vans</span>
+              <span className="underline">Back to {type.typeFilters.join(" ")} vans</span>
             </div>
           </Link>
         </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData, Link, useParams, Outlet } from "react-router-dom";
+import { useLoaderData, Link, Outlet } from "react-router-dom";
 import HostVansDetailsNavbar from "./HostVansDetailsNavbar";
 import { ArrowLeft } from "react-feather";
 
@@ -40,7 +40,7 @@ const HostVansDetails = () => {
           </div>
           <div>
             <HostVansDetailsNavbar />
-            <Outlet />
+            <Outlet context={vans} />
           </div>
         </div>
       </div>

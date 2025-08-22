@@ -32,6 +32,14 @@ const HostVansDetailsNavbar = () => {
         >
           Photos
         </NavLink>
+        <NavLink
+          to="reviews"
+          className={({ isActive }) =>
+            isActive ? "underline font-bold" : "font-[600]"
+          }
+        >
+          Reviews
+        </NavLink>
 
       </div>
     </div>

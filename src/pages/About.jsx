@@ -31,14 +31,16 @@ const About = () => {
   </div>
 
   {/* Yellow Box */}
-  <div className="w-[500px] mx-auto my-10 rounded-sm h-48 bg-[#FFCC8D] p-8 gap-6 items-start  flex flex-col">
-    <div className="font-bold text-2xl ">
+  <div className="w-[500px] mx-auto my-10 rounded-sm h-48 gap-4 bg-[#FFCC8D] p-8 items-start  flex flex-col">
+    <div className="font-bold text-2xl leading-2">
       <p>Your destination is waiting</p>
       <p>Your van is ready</p>
     </div>
-  <button className="bg-black text-white font-medium px-4 py-2 rounded-lg text-sm">
+    <div className="text-white">
+  <button className="bg-black  font-medium px-4 py-2 rounded-lg text-sm">
     Explore our vans
   </button>
+  </div>
   </div>
 </div>
 
