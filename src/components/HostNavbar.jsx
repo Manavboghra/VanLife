@@ -40,6 +40,14 @@ const HostNavbar = () => {
       >
         Reviews
       </NavLink>
+      <NavLink
+        to="demo"
+        className={({ isActive }) =>
+          isActive ? "underline font-bold" : "font-[600]"
+        }
+      >
+        Demo
+      </NavLink>
     </div>
   );
 };

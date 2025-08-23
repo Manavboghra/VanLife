@@ -13,6 +13,7 @@ import HostLayout from "./Layout/HostLayout";
 import Dashboard from "./pages/Host/Dashboard";
 import Income from "./pages/Host/Income";
 import Reviews from "./pages/Host/Reviews";
+import Demo from "./pages/Host/Demo";
 import HostVans from "./pages/Vans/HostVans";
 import HostVansDetails from "./components/HostVansDetails";
 import Details from "./components/Details";
@@ -20,6 +21,7 @@ import Pricing from "./components/Pricing";
 import Photos from "./components/Photos";
 import HostReviews from "./components/HostReviews";
 import PageNotFound from "./pages/PageNotFound";
+import Error from "./components/Error";
 
 function App() {
   const router = createBrowserRouter(
@@ -29,7 +31,7 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="*" element={<PageNotFound />} />
 
-        <Route path="vans" loader={VansLoader} element={<Vans />} />
+        <Route path="vans" loader={VansLoader} element={<Vans />} errorElement={<Error/>} />
         <Route
           path="vans/:id"
           element={<VansDetails />}
@@ -38,7 +40,7 @@ function App() {
         <Route path="host" element={<HostLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="income" element={<Income />} />
-          <Route path="vans" loader={VansLoader} element={<HostVans />} />
+          <Route path="vans" loader={VansLoader} element={<HostVans />} errorElement={<Error/>}/>
           <Route
             path="vans/:id"
             element={<HostVansDetails />}
@@ -49,7 +51,8 @@ function App() {
             <Route path="photos" element={<Photos />} />
             <Route path="reviews" element={<HostReviews />} />
           </Route>
-          <Route path="reviews" loader={VansLoader} element={<Reviews />} />
+          <Route path="reviews" loader={VansLoader} element={<Reviews />} errorElement={<Error/>}/>
+          <Route path="demo" loader={VansLoader} element={<Demo />} errorElement={<Error/>}/>
         </Route>
       </Route>
     )

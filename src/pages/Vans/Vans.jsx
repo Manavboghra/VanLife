@@ -117,9 +117,13 @@ const Vans = () => {
 export default Vans;
 
 export const VansLoader = async () => {
-  const res = await fetch("http://localhost:5000/vans");
-  if (!res.ok) {
-    throw Error("Could not found van list");
+  try {
+    const res = await fetch("http://localhost:5000/vans");
+    if (!res.ok) {
+      throw new Error("Could not find the van list. Please try again later.");
+    }
+    return res.json();
+  } catch (error) {
+    throw new Error("Please check your network connection and make sure the server is running.");
   }
-  return res.json();
 };
