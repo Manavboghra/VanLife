@@ -1,116 +1,143 @@
-// import React from "react";
-// import { useLoaderData } from "react-router-dom";
-// import { Star } from "react-feather";
+import { Column } from "@ant-design/plots";
+import { DatePicker } from "antd";
+import React from "react";
+import { useLoaderData, useSearchParams } from "react-router-dom";
 
-// const Demo = () => {
-//   const vans = useLoaderData();
+const { MonthPicker } = DatePicker;
 
-//   const allReviews = vans.flatMap((van) => van.reviews || []);
+const Demo = () => {
+  // const vans = useLoaderData();
+  // const allReviews = vans.flatMap((van) => van.reviews || []);
 
-//   const starCount = [5, 4, 3, 2, 1];
-//   const totalReviews = allReviews.length;
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const selectedMonth = searchParams.get("month");
 
-//   const starStats = starCount.map((star) => {
-//     const count = allReviews.filter((r) => r.stars === star).length;
-//     const percentage = totalReviews > 0 ? (count / totalReviews) * 100 : 0;
-//     return { star, count, percentage };
-//   });
+  // const getMonthKey = (date) => {
+  //   const d = new Date(date);
+  //   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+  // };
 
-//   return (
-//     <div>
-//       {/* {vans.map((van) => (
-//         <div key={van.id} className="mb-6 pb-4">
-//           {van.reviews && van.reviews.length > 0 ? (
-//             van.reviews.map((review, idx) => (
-//               <div key={idx} className="flex items-center gap-1">
-//                 {[...Array(5)].map((_, i) => (
-//                   <Star
-//                     key={i}
-//                     size={16}
-//                     className={
-//                       i < review.stars
-//                         ? "text-yellow-500 fill-yellow-500"
-//                         : "text-gray-300"
-//                     }
-//                   />
-//                 ))}
-//                 <span className="ml-2 text-sm text-gray-600">{review.comment}</span>
-//               </div>
-//             ))
-//           ) : (
-//             <p className="text-sm text-gray-500">No reviews yet.</p>
-//           )}
-//         </div>
-//       ))} */}
+  // const monthlyIncomeMap = {};
+  // allReviews.forEach((review) => {
+  //   if (!review.date || !review.income) return;
+  //   const key = getMonthKey(review.date);
+  //   if (!monthlyIncomeMap[key]) monthlyIncomeMap[key] = 0;
+  //   monthlyIncomeMap[key] += review.income;
+  // });
 
-//       {starStats.map(({ star, percentage }) => (
-//         <div key={star} className="flex flex-row items-center gap-5 p-2">
-//           <div className="w-12">{star} stars</div>
-//           <div className="flex-1 bg-gray-300 h-4 rounded-2xl overflow-hidden">
-//             <div
-//               className="bg-yellow-400 h-4 rounded-2xl transition-all duration-300"
-//               style={{ width: `${percentage}%` }}
-//             />
-//           </div>
-//           <div className="w-12 text-right">{percentage.toFixed(0)}%</div>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
+  // const data = Object.entries(monthlyIncomeMap).map(([type, value]) => ({
+  //   type,
+  //   value,
+  // }));
 
-// export default Demo;
-  import { Column } from "@ant-design/plots";
-  import React, { useState } from "react";
-  import { useLoaderData } from "react-router-dom";
+  // const filteredReviews = selectedMonth
+  //   ? allReviews.filter((review) => getMonthKey(review.date) === selectedMonth)
+  //   : allReviews;
 
-  const Demo = () => {
-    const vans = useLoaderData();
-    const allReviews = vans.flatMap((van) => van.reviews || []);
+  // const totalIncome = data.reduce((sum, d) => sum + d.value, 0);
+  // const maxAmount = Math.max(...data.map((d) => d.value), 0);
+  // const minAmount = Math.min(...data.map((d) => d.value), 0);
 
-    const monthlyIncomeMap = {};
-    allReviews.forEach((review) => {
-      if (!review.date || !review.income) return;
+  // const config = {
+  //   data,
+  //   xField: "type",
+  //   yField: "value",
+  //   scale: { y: { domain: [minAmount, maxAmount] } },
+  //   legend: false,
+  //   axis: {
+  //     y: {
+  //       gridLineDash: [10, 16],
+  //       gridStrokeOpacity: 0.5,
+  //       title: "Change in price ($)",
+  //     },
+  //   },
+  //   state: {
+  //     active: { fill: "#FF8C38" },
+  //     inactive: { fill: "#FFEAD0" },
+  //   },
+  // };
 
-      const d = new Date(review.date);
-      const label = `${d.toLocaleString("en-US", { month: "long" })} `;
-      if (!monthlyIncomeMap[label]) monthlyIncomeMap[label] = 0;
-      monthlyIncomeMap[label] += review.income;
-    });
+  // // MonthPicker handler
+  // const handleChange = (_, dateString) => {
+  //   if (dateString) {
+  //     setSearchParams({ month: dateString });
+  //   } else {
+  //     setSearchParams({});
+  //   }
+  // };
 
-    const data = Object.entries(monthlyIncomeMap).map(([type, value]) => ({ type, value }));
+  // return (
+  //   <div className="bg-[#FFF7ED] ">
+  //     <div className="font-bold text-4xl px-5 pt-3">
+  //     Income
+  //     </div>
+  //     <div className="text-4xl font-black pb-10 p-5">
+  //       {totalIncome.toLocaleString("en-US", {
+  //         style: "currency",
+  //         currency: "USD",
+  //       })}
+  //     </div>
+  //     <div>
+  //       <Column
+  //         title={false}
+  //         colorField={"#FF8C38"}
+  //         frame={"dotted"}
+  //         className={""}
+  //         {...config}
+  //       />
+  //     </div>
+  //     <div>
+  //       <div className="text-2xl p-5 font-[600]">
+  //         Your transactions ({filteredReviews.length})
+  //       </div>
+  //       <div className="mb-6 p-3">
+  //         <MonthPicker
+  //           onChange={handleChange}
+  //           placeholder="Filter by month"
+  //           format="YYYY-MM"
+  //           allowClear
+  //         />
+  //       </div>
+  //       {/* You can display the selected month in a readable format if needed */}
+  //       <div className="pl-3 font-bold text-xl">
+  //         {selectedMonth
+  //           ? `${new Date(selectedMonth + "-01").toLocaleString("default", {
+  //               month: "long",
+  //             })}`
+  //           : "All Months"}
+  //       </div>
 
-    const totalIncome = data.reduce((sum, d) => sum + d.value, 0);
-    const maxAmount = Math.max(...data.map((d) => d.value), 0);
-    const minAmount = Math.min(...data.map((d) => d.value), 0);
+  //       {filteredReviews.length === 0 ? (
+  //         <div className="text-gray-400 text-lg pl-3 py-8">
+  //           No transactions found for this month.
+  //         </div>
+  //       ) : (
+  //         filteredReviews.map((review, idx) => (
+  //           <div
+  //             key={idx}
+  //             className="p-6 bg-white rounded-lg flex items-center justify-between m-3 gap-2"
+  //           >
+  //             <div className="text-4xl font-[600]">
+  //               {Number(review.income) > 0 ? (
+  //                 Number(review.income).toLocaleString("en-US", {
+  //                   style: "currency",
+  //                   currency: "USD",
+  //                 })
+  //               ) : (
+  //                 <span className="text-gray-400">No income found</span>
+  //               )}
+  //             </div>
+  //             <div className="text-gray-700">
+  //               {review.date
+  //                 ? ` ${new Date(review.date).toLocaleDateString()}`
+  //                 : ""}
+  //             </div>
+  //           </div>
+  //         ))
+  //       )}
+  //     </div>
+  //   </div>
+  // );
+};
 
-
-  const config = {
-
-      data,
-      xField: "type",
-      yField: "value",
-      markBackground: { style: { fill: "#eee" } },
-      scale: { y: { domain: [minAmount, maxAmount] } },
-      legend: false,
-      animate: {
-        enter: { type: "scaleInY", duration: 800 },
-        update: { type: "morphing" },
-      },
-
-    };
-
-
-      return (
-        <div  className="bg-[#FFF7ED]">
-          <div className="text-4xl font-extrabold p-5">
-            {totalIncome.toLocaleString("en-US", { style: "currency", currency: "USD" })}
-          </div>
-          <div >
-          <Column  title={false} colorField={"#FF8C38"} frame={"dotted"} className={""} {...config} />
-          </div>
-        </div>
-      );
-    };
-
-  export default Demo;
+export default Demo;

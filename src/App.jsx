@@ -37,9 +37,9 @@ function App() {
           element={<VansDetails />}
           loader={VansDetailsLoader}
         />
-        <Route path="host" element={<HostLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="income" element={<Income />} />
+        <Route path="host" element={<HostLayout />} >
+          <Route index element={<Dashboard />} loader={VansLoader} />
+          <Route path="income" element={<Income />} loader={VansLoader}/>
           <Route path="vans" loader={VansLoader} element={<HostVans />} errorElement={<Error/>}/>
           <Route
             path="vans/:id"
