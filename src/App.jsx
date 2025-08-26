@@ -22,6 +22,7 @@ import Photos from "./components/Photos";
 import HostReviews from "./components/HostReviews";
 import PageNotFound from "./pages/PageNotFound";
 import Error from "./components/Error";
+import Account from "./pages/Account";
 
 function App() {
   const router = createBrowserRouter(
@@ -29,6 +30,7 @@ function App() {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
+        <Route path="account" element={<Account />} />
         <Route path="*" element={<PageNotFound />} />
 
         <Route path="vans" loader={VansLoader} element={<Vans />} errorElement={<Error/>} />
