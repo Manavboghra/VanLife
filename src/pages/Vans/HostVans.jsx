@@ -1,29 +1,35 @@
 import React from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useOutletContext } from "react-router-dom";
 
 const HostVans = () => {
-  const vans = useLoaderData();
+  // const vans = useLoaderData();
+  const vans = useOutletContext();
+
   return (
     <div className="bg-[#FFF7ED] p-5">
       <div className="font-bold text-3xl">Your listed vans</div>
       <div className="gap-3 pt-4 flex flex-col w">
-        {vans.map((van) =>
-          (
-            <Link key={van.id} to={`${van.id}`}>
-              <div className="bg-white rounded-md items-center gap-3 flex p-3">
-                <div>
-                  <img className="sm:h-17 lg:h-30 h-20" src={van.imageUrl} alt={van.name} />
-                </div>
-                <div>
-                  <div className="font-medium text-sm">{van.name}</div>
-                  <div className="font-medium text-[#4D4D4D] text-xs">
-                    ${van.price}/day
-                  </div>
+        {vans.map((van) => (
+          <Link key={van.id} to={`${van.id}`}>
+            <div className="bg-white rounded-md items-center gap-3 flex p-3">
+              {/* Container for the image with a placeholder background */}
+              <div className="bg-gray-200 rounded sm:h-17 lg:h-30 h-20 w-20 flex-shrink-0">
+                <img
+                  className="sm:h-17 lg:h-30 h-20 w-full object-cover rounded" // Added object-cover
+                  src={van.imageUrl}
+                  alt={van.name}
+                  loading="lazy"
+                />
+              </div>
+              <div>
+                <div className="font-medium text-sm">{van.name}</div>
+                <div className="font-medium text-[#4D4D4D] text-xs">
+                  ${van.price}/day
                 </div>
               </div>
-            </Link>
-          )
-        )}
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );
@@ -39,4 +45,3 @@ export default HostVans;
 //   }
 //   return res.json();
 // };
-

@@ -1,13 +1,19 @@
 import { Column } from "@ant-design/plots";
 import { DatePicker } from "antd";
 import React from "react";
-import { useLoaderData, useSearchParams } from "react-router-dom";
+import {
+  useLoaderData,
+  useOutletContext,
+  useSearchParams,
+} from "react-router-dom";
 import CurrencyFormatter from "../../components/CurrencyFormatter";
 
 const { MonthPicker } = DatePicker;
 
 const Income = () => {
-  const vans = useLoaderData();
+  // const vans = useLoaderData();
+  const vans = useOutletContext();
+
   const allReviews = vans.flatMap((van) => van.reviews || []);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -69,11 +75,9 @@ const Income = () => {
 
   return (
     <div className="bg-[#FFF7ED] ">
-      <div className="font-bold text-4xl px-5 pt-3">
-      Income
-      </div>
+      <div className="font-bold text-4xl px-5 pt-3">Income</div>
       <div className="text-4xl font-black pb-10 p-5">
-         <CurrencyFormatter value={totalIncome} />
+        <CurrencyFormatter value={totalIncome} />
       </div>
       <div>
         <Column
@@ -138,4 +142,4 @@ const Income = () => {
   );
 };
 
-export default Income
+export default Income;

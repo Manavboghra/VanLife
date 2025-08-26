@@ -3,7 +3,7 @@ import { useLoaderData, Link, Outlet } from "react-router-dom";
 import HostVansDetailsNavbar from "./HostVansDetailsNavbar";
 import { ArrowLeft } from "react-feather";
 
-const HostVansDetails = () => {
+const HostVansDetails =  () => {
   const vans = useLoaderData();
   return (
     <div>

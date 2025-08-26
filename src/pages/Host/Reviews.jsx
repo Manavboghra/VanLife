@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData, useSearchParams } from "react-router-dom";
+import { useLoaderData, useOutletContext, useSearchParams } from "react-router-dom";
 import { Star } from "react-feather";
 import { DatePicker } from "antd";
 import "antd/dist/reset.css";
@@ -7,7 +7,9 @@ import "antd/dist/reset.css";
 const { MonthPicker } = DatePicker;
 
 const Reviews = () => {
-  const vans = useLoaderData();
+  // const vans = useLoaderData();
+    const vans = useOutletContext()
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const selectedMonth = searchParams.get("month");
@@ -60,8 +62,8 @@ const Reviews = () => {
         />
       </div>
 
-      {starStats.map(({ star, percentage, average }) => (
-        <div>
+      {starStats.map(({ star, percentage, average,count }) => (
+        <div key={count}>
           <div>
             {average && star === 5 && (
               <div className="flex text-center items-center gap-1.5 p-1">

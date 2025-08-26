@@ -44,7 +44,7 @@ const Navbar = () => {
                 ? "underline font-bold flex items-center justify-center"
                 : "font-[600] flex items-center justify-center"
             }
-            to="account"
+            to="login"
           >
             <span className="flex items-center justify-center pb-6 h-10 w-10">
               <User className="border-3 rounded-2xl" size={25} />
