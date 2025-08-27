@@ -26,6 +26,8 @@ import Login,{loader as loginLoader, action as loginAction} from "./pages/Login"
 import { loader as vansLoader } from "./pages/Vans/Vans.loader";
 import { loader as vansDetails } from "./pages/Vans/VanDetail.loader";
 import RequireAuth from "./utils/RequireAuth";
+import Signup,{loader as sigupLoader, action as signupAction} from "./pages/Signup";
+import AddVans,{action as addvansAction} from "./pages/AddVans";
 
 function App() {
   const router = createBrowserRouter(
@@ -33,7 +35,9 @@ function App() {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
+        <Route path="addvans" element={<AddVans />} action={addvansAction}/>
         <Route path="login" element={<Login />} loader={loginLoader} action={loginAction} />
+        <Route path="signup" element={<Signup />} loader={sigupLoader} action={signupAction} />
         <Route path="*" element={<PageNotFound />} />
 
         <Route
@@ -48,7 +52,7 @@ function App() {
           loader={vansDetails}
         />
         <Route path="host" element={<HostLayout />} loader={vansLoader}>
-          <Route index element={<Dashboard />} loader={ async()=> await RequireAuth()}/>
+          <Route index element={<Dashboard />} />
           <Route path="income" element={<Income />} />
           <Route path="vans" element={<HostVans />} errorElement={<Error />} />
           <Route

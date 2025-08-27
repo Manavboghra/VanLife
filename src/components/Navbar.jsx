@@ -7,13 +7,13 @@ import { User } from "react-feather";
 const Navbar = () => {
   return (
     <header>
-      <div className="w-full flex justify-between p-6 items-center h-28 bg-[#FFF7ED]">
+      <div className="w-full flex justify-between lg:p-6 p-3 gap-2 items-center h-28 bg-[#FFF7ED]">
         <div>
           <Link to="/">
             <img className="w-40" src={logo} alt="#VANLIFE" />
           </Link>
         </div>
-        <div className="flex gap-4 text-[#4D4D4D]">
+        <div className="flex lg:gap-4 gap-2 text-[#4D4D4D] items-center">
           <NavLink
             className={({ isActive }) => {
               return isActive ? "underline font-bold" : "font-[600]";
@@ -39,6 +39,14 @@ const Navbar = () => {
             Vans
           </NavLink>
           <NavLink
+            className={({ isActive }) => {
+              return isActive ? "underline font-bold" : "font-[600]";
+            }}  
+            to="addvans"
+          >
+            AddVans
+          </NavLink>
+          <NavLink
             className={({ isActive }) =>
               isActive
                 ? "underline font-bold flex items-center justify-center"
@@ -46,7 +54,7 @@ const Navbar = () => {
             }
             to="login"
           >
-            <span className="flex items-center justify-center pb-6 h-10 w-10">
+            <span className="flex items-center justify-center h-10 w-8">
               <User className="border-3 rounded-2xl" size={25} />
             </span>
           </NavLink>

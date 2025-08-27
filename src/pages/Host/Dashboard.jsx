@@ -1,6 +1,6 @@
 import React from "react";
 import CurrencyFormatter from "../../components/CurrencyFormatter";
-import { useLoaderData, useOutletContext } from "react-router-dom";
+import {  useOutletContext } from "react-router-dom";
 
 const Dashboard = () => {
   const vans = useOutletContext()

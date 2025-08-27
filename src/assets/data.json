@@ -275,6 +275,43 @@
           "comment": "Amazing eco-friendly option, highly recommend!"
         }
       ]
+    },
+    {
+      "id": "c942",
+      "name": "MAK",
+      "price": "22"
+    },
+    {
+      "id": "93cd",
+      "name": "uu",
+      "price": "33",
+      "description": "sds",
+      "type": "rugged",
+      "imageUrl": "dhrumil.jpeg"
+    },
+    {
+      "id": "b462",
+      "name": "uu",
+      "price": "33",
+      "description": "sds",
+      "type": "rugged",
+      "imageUrl": "http://localhost:5173/addvans"
+    },
+    {
+      "id": "c8e9",
+      "name": "vellfire ",
+      "price": "2000",
+      "description": "The price of Toyota Vellfire, a 7 seater MUV/MPV, ranges from Rs. 1.22 - 1.33 Crore. It is available in 2 variants, with an engine of 2487 cc and a choice of 1 transmission: Automatic. Vellfire comes with 6 airbags. Toyota Vellfire is available in 3 colours. ",
+      "type": "rugged",
+      "imageUrl": "https://imgd.aeplcdn.com/664x374/n/cw/ec/154483/vellfire-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80"
+    },
+    {
+      "id": "7864",
+      "name": "vellfire ",
+      "price": "44",
+      "description": "The price of Toyota Vellfire, a 7 seater MUV/MPV, ranges from Rs. 1.22 - 1.33 Crore. It is available in 2 variants, with an engine of 2487 cc and a choice of 1 transmission: Automatic. Vellfire comes with 6 airbags. Toyota Vellfire is available in 3 colours. ",
+      "type": "simple",
+      "imageUrl": "https://images.unsplash.com/photo-1526779259212-939e64788e3c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D"
     }
   ],
   "users": [
@@ -285,155 +322,34 @@
       "name": "Bob"
     },
     {
-      "id": "456",
-      "email": "user@example.com",
-      "password": "password123",
-      "name": "Example User"
-    },
-    {
-      "id": "4eb2",
-      "email": "b@b.com",
-      "password": "p1"
-    },
-    {
-      "id": "afa0",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "a3e9",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "336a",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "1cee",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "b936",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "f80b",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "7994",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "eb3b",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "43e8",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "a6bc",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "780b",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "9a95",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "37cf",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "07da",
-      "email": "b@b.com",
-      "password": "p1"
-    },
-    {
-      "id": "8a25",
-      "email": "b@b.com",
-      "password": "p1"
-    },
-    {
-      "id": "29ca",
-      "email": "b@b.com",
-      "password": "p1"
-    },
-    {
-      "id": "c255",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "1574",
+      "id": "1a4f",
       "email": "maskd@gmail.ocm",
-      "password": "123123"
+      "password": "1",
+      "name": "mmas"
     },
     {
-      "id": "5ce0",
-      "email": "maskd@gmail.ocm",
-      "password": "1112223"
+      "id": "13fd",
+      "email": "maskd1@gmail.ocm",
+      "password": "1",
+      "name": "Bob1"
     },
     {
-      "id": "b950",
-      "email": "b@b.com",
-      "password": "p1"
+      "id": "43f9",
+      "email": "mmm@mail.com",
+      "password": "111",
+      "name": "bob12"
     },
     {
-      "id": "0776",
-      "email": "b@b.com",
-      "password": "p2"
+      "id": "698d",
+      "email": "Manav@mail.com",
+      "password": "123123",
+      "name": "manavb"
     },
     {
-      "id": "23f4",
-      "email": "user@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "da59",
-      "email": "user@example.com",
-      "password": "uuuuuuuu"
-    },
-    {
-      "id": "f00b",
-      "email": "b@b.com",
-      "password": "p1"
-    },
-    {
-      "id": "f5a6",
-      "email": "b@b.com",
-      "password": "oopd"
-    },
-    {
-      "id": "d4c4",
-      "email": "b@b.com",
-      "password": "bbbb"
-    },
-    {
-      "id": "12d8",
-      "email": "maskdbms@gmail.ocm",
-      "password": "mask"
-    },
-    {
-      "id": "cee8",
-      "email": "maskdbms@gmail.ocm",
-      "password": "mas"
+      "id": "9cda",
+      "email": "mm@mail.com",
+      "password": "2323",
+      "name": "manav"
     }
   ]
 }

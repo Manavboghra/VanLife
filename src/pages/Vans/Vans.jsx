@@ -102,16 +102,17 @@ const Vans = () => {
                           </span>
                         </div>
                         <div className="text-right text-xs text-gray-600">
-                          /day
+                          /day  
                         </div>
                         <div
                           className={`inline-block mt-3 px-4 py-2 rounded-md font-semibold text-white
                             ${van.type === "simple" && "bg-[#E17654]"}
                             ${van.type === "rugged" && "bg-[#115E59]"}
                             ${van.type === "luxury" && "bg-[#161616]"}
+                            ${van.type !== NaN && "bg-[#3cbe7f]"}
                           `}
                         >
-                          {van.type.charAt(0).toUpperCase() + van.type.slice(1)}
+                          {van.type?.charAt(0).toUpperCase() + van.type?.slice(1) }
                         </div>
                       </div>
                     ))

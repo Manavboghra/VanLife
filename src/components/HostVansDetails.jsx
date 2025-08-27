@@ -49,3 +49,6 @@ const HostVansDetails =  () => {
 };
 
 export default HostVansDetails;
+
+
+
