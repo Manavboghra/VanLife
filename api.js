@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { data } from "react-router-dom";
+
 export async function getVans() {
     try {
         const res = await fetch("http://localhost:5000/vans");
@@ -13,25 +16,28 @@ export async function getVans() {
     } catch (error) {
         throw error;
     }
+
+    // useEffect(() => {
+    //   async function data() {
+    //     const req = await fetch("http://localhost:5000/vans");
+    //     const res = await req.json()
+    //     console.log(res)
+    //   }
+    //   data()
+    // }, [])
+
+    // return{}
+    
 }
 
 export async function getNewVan(creds) {
-    const res = await fetch("http://localhost:5000/vans", {
-        method: "post",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(creds)
-    });
-    if (!res.ok) {
-        throw {
-            message: "Failed to create account. Please try again.",
-            statusText: res.statusText,
-            status: res.status
-        };
-    }
-    const data = await res.json();
-    return data;
+  const res = await fetch("http://localhost:5000/vans", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(creds)
+  });
+  const data = await res.json();
+  return data;
 }
 
 

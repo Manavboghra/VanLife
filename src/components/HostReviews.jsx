@@ -3,83 +3,113 @@ import { useOutletContext, useSearchParams } from "react-router-dom";
 import { Star } from "react-feather";
 
 const HostReviews = () => {
-  const van = useOutletContext();
-  const starOptions = ["1", "2", "3", "4", "5"];
+  const van = useOutletContext(); // This might be undefined on the first render
   const [searchParams, setSearchParams] = useSearchParams();
+
+  // --- 1. Add Loading Guard ---
+  // If the 'van' object from the context isn't available yet,
+  // display a loading message to prevent a crash.
+  if (!van) {
+    return <h2>Loading reviews...</h2>;
+  }
+
+  const starOptions = ["1", "2", "3", "4", "5"];
   const filterReview = searchParams.get("star");
 
-  let displayedReviews = van.reviews;
+  // --- 2. Safely Access Reviews ---
+  // Use a default empty array `[]` in case `van.reviews` doesn't exist.
+  // This guarantees `allReviews` is always an array, preventing errors.
+  const allReviews = van.reviews || [];
 
-  if (filterReview) {
-    displayedReviews = van.reviews.filter(
-      (review) => review.stars === parseInt(filterReview)
-    );
-  }
+  const displayedReviews = filterReview
+    ? allReviews.filter((review) => review.stars === parseInt(filterReview))
+    : allReviews;
 
   const handleFilter = (type) => {
     if (filterReview !== type) {
       setSearchParams({ star: type });
     } else {
-      setSearchParams({});
+      setSearchParams({}); // Clear the filter if clicking the active one
     }
   };
 
   return (
-    <div>
-      <div key={van.id} className="mb-6 pt-4">
-        <div className="pt-2 pl-4 flex gap-2">
-          {starOptions.map((o) => (
-            <div key={o}>
+    <div className="p-4">
+      {/* --- 3. Improved Rendering Logic --- */}
+      {/* First, check if there are any reviews at all. */}
+      {allReviews.length > 0 ? (
+        <>
+          {/* Filter Buttons */}
+          <div className="flex gap-2 flex-wrap mb-4">
+            <h3 className="font-semibold self-center">Filter by:</h3>
+            {starOptions.map((option) => (
               <button
-                className={`inline-block mt-3 px-3 py-1 rounded-md mx-2 font-medium cursor-pointer
+                key={option}
+                className={`inline-block px-3 py-1 rounded-md font-medium cursor-pointer transition-colors duration-200
                   ${
-                    filterReview === o
-                      ? "bg-[#FF8C38]"
-                      : "bg-[#FFEAD0]"
+                    filterReview === option
+                      ? "bg-[#FF8C38] text-white"
+                      : "bg-[#FFEAD0] hover:bg-orange-300"
                   }
                 `}
-                onClick={() => handleFilter(o)}
+                onClick={() => handleFilter(option)}
               >
-                <Star size={16} className={`inline mr-1 ${filterReview === o && "fill-[#dcec31]  text-black"}`} />
-                {o}
+                <Star
+                  size={16}
+                  className={`inline mr-1.5 align-text-bottom ${
+                    filterReview === option && "fill-yellow-300 text-black"
+                  }`}
+                />
+                {option}
               </button>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        {displayedReviews && displayedReviews.length > 0 ? (
-          displayedReviews.map((review, idx) => (
-            <div key={idx} className="mt-2 p-5">
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    size={16}
-                    className={
-                      i < review.stars
-                        ? "text-yellow-500 fill-yellow-500"
-                        : "text-gray-300"
-                    }
-                  />
-                ))}
-              </div>
-              <div className="flex gap-8 mt-2 text-sm">
-                <div className="font-semibold">{review.reviewer}</div>
-                <div>
-                  {new Date(review.date).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
+          {/* Displayed Reviews */}
+          {displayedReviews.length > 0 ? (
+            displayedReviews.map((review, idx) => (
+              <div key={idx} className="mt-2 py-4 border-b last:border-b-0">
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      size={16}
+                      className={
+                        i < review.stars
+                          ? "text-yellow-500 fill-yellow-500"
+                          : "text-gray-300"
+                      }
+                    />
+                  ))}
                 </div>
+                <div className="flex gap-4 mt-2 text-sm text-gray-600">
+                  <div className="font-semibold text-black">
+                    {review.reviewer}
+                  </div>
+                  <div>
+                    {new Date(review.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </div>
+                </div>
+                <p className="mt-2">{review.comment}</p>
               </div>
-              <p className="mt-2">{review.comment}</p>
-            </div>
-          ))
-        ) : (
-          <p className="text-sm p-5 text-gray-500">No reviews available for this rating.</p>
-        )}
-      </div>
+            ))
+          ) : (
+            // This message shows if filters result in no matches
+            <p className="text-sm p-5 text-gray-500">
+              No reviews available for this rating.
+            </p>
+          )}
+        </>
+      ) : (
+        // This message shows if the van has no reviews at all
+        <p className="text-md pt-4 text-gray-600">
+          This van has no reviews yet.
+        </p>
+      )}
     </div>
   );
 };

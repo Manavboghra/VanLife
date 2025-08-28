@@ -1,10 +1,80 @@
+// import React from "react";
+// import { useLoaderData, Link, Outlet } from "react-router-dom";
+// import HostVansDetailsNavbar from "./HostVansDetailsNavbar";
+// import { ArrowLeft } from "react-feather";
+
+// const HostVansDetails =  () => {
+//   const vans = useLoaderData();
+//   return (
+//     <div>
+//       <div className="bg-[#FFF7ED] w-full pb-14 p-6 ">
+//         <Link to={"/host/vans"}>
+//           <div className="flex items-center gap-2">
+//             <ArrowLeft size={16} />
+//             <span className="underline">Back to all vans</span>
+//           </div>
+//         </Link>
+//         <div className="bg-white rounded-md mt-7 h-full ">
+//           <div className=" flex gap-2">
+//             <div className="p-4">
+//               <img className="lg:h-52 h-30" src={vans.imageUrl} alt={vans.name} />
+//             </div>
+//             <div className="gap-2 mt-auto mb-auto  flex flex-col">
+//               <div
+//                 className={`inline-block w-[55%] mt-4 py-[3%] text-center rounded-md font-semibold text-white
+//     ${String(vans.type) === "simple" && "bg-[#E17654]"}
+//     ${String(vans.type) === "rugged" && "bg-[#115E59]"}
+//     ${String(vans.type) === "luxury" && "bg-[#161616]"}
+//   `}
+//               >
+//                 {String(vans.type).charAt(0).toUpperCase() +
+//                   String(vans.type).slice(1)}
+//               </div>
+//               <div className="font-bold text-xl text-[#161616]">
+//                 {vans.name}
+//               </div>
+//               <div className="text-lg">
+//                 <b>${vans.price}</b>/day
+//               </div>
+//             </div>
+//           </div>
+//           <div>
+//             <HostVansDetailsNavbar />
+//             <Outlet context={vans} />
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default HostVansDetails;
+
+
+
 import React from "react";
 import { useLoaderData, Link, Outlet } from "react-router-dom";
 import HostVansDetailsNavbar from "./HostVansDetailsNavbar";
 import { ArrowLeft } from "react-feather";
 
-const HostVansDetails =  () => {
+const HostVansDetails = () => {
   const vans = useLoaderData();
+
+  // If the loader couldn't find a van, show a helpful message.
+  if (!vans) {
+    return (
+        <div className="p-6 bg-[#FFF7ED]">
+            <h2>Sorry, we couldn't find that van.</h2>
+            <Link to={"/host/vans"}>
+                <div className="flex items-center gap-2">
+                    <ArrowLeft size={16} />
+                    <span className="underline">Back to all vans</span>
+                </div>
+            </Link>
+        </div>
+    )
+  }
+
   return (
     <div>
       <div className="bg-[#FFF7ED] w-full pb-14 p-6 ">
@@ -15,27 +85,42 @@ const HostVansDetails =  () => {
           </div>
         </Link>
         <div className="bg-white rounded-md mt-7 h-full ">
-          <div className=" flex gap-2">
+          <div className=" flex gap-2 items-center">
             <div className="p-4">
-              <img className="lg:h-52 h-30" src={vans.imageUrl} alt={vans.name} />
+              {/* Check if imageUrl exists before rendering */}
+              {vans.imageUrl ? (
+                <img className="lg:h-40 h-32 rounded-md" src={vans.imageUrl} alt={vans.name || "Van image"} />
+              ) : (
+                <div className="lg:h-40 h-32 w-48 bg-gray-200 rounded-md flex items-center justify-center">
+                    <span className="text-gray-500">No Image</span>
+                </div>
+              )}
             </div>
-            <div className="gap-2 mt-auto mb-auto  flex flex-col">
-              <div
-                className={`inline-block w-[55%] mt-4 py-[3%] text-center rounded-md font-semibold text-white
-    ${String(vans.type) === "simple" && "bg-[#E17654]"}
-    ${String(vans.type) === "rugged" && "bg-[#115E59]"}
-    ${String(vans.type) === "luxury" && "bg-[#161616]"}
-  `}
-              >
-                {String(vans.type).charAt(0).toUpperCase() +
-                  String(vans.type).slice(1)}
-              </div>
-              <div className="font-bold text-xl text-[#161616]">
-                {vans.name}
-              </div>
-              <div className="text-lg">
-                <b>${vans.price}</b>/day
-              </div>
+            <div className="gap-2 flex flex-col">
+              {/* Check if type exists before rendering */}
+              {vans.type && (
+                <div
+                    className={`inline-block w-auto px-4 py-2 text-center rounded-md font-semibold text-white
+                        ${vans.type === "simple" && "bg-[#E17654]"}
+                        ${vans.type === "rugged" && "bg-[#115E59]"}
+                        ${vans.type === "luxury" && "bg-[#161616]"}
+                    `}
+                >
+                    {vans.type.charAt(0).toUpperCase() + vans.type.slice(1)}
+                </div>
+              )}
+              {/* Check if name exists before rendering */}
+              {vans.name && (
+                <div className="font-bold text-2xl text-[#161616]">
+                    {vans.name}
+                </div>
+              )}
+              {/* Check if price exists before rendering and format it */}
+              {vans.price && (
+                <div className="text-lg font-bold">
+                  ${Number(vans.price)}/day
+                </div>
+              )}
             </div>
           </div>
           <div>
@@ -49,6 +134,3 @@ const HostVansDetails =  () => {
 };
 
 export default HostVansDetails;
-
-
-

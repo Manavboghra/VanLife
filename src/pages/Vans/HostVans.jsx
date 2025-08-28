@@ -1,5 +1,5 @@
 import React from "react";
-import { Link,  useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 
 const HostVans = () => {
   const vans = useOutletContext();
@@ -11,9 +11,9 @@ const HostVans = () => {
         {vans.map((van) => (
           <Link key={van.id} to={`${van.id}`}>
             <div className="bg-white rounded-md items-center gap-3 flex p-3">
-              <div className="bg-gray-200 rounded sm:h-17 lg:h-30 h-20 w-20 flex-shrink-0">
+              <div className="bg-gray-200 rounded sm:h-20 lg:h-30 h-20 w-25 lg:w-40   flex-shrink-0">
                 <img
-                  className="sm:h-17 lg:h-30 h-20 w-full object-cover rounded" // Added object-cover
+                  className="sm:h-17 lg:h-30 h-20  w-40 object-cover rounded" // Added object-cover
                   src={van.imageUrl}
                   alt={van.name}
                   loading="lazy"

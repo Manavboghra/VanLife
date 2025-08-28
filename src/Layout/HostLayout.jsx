@@ -8,7 +8,7 @@ const HostLayout = () => {
   return (
     <div>
         <HostNavbar/>
-        <Outlet context={vans} /> {/* <-- pass vans as context */}
+        <Outlet context={vans} /> 
     </div>
   )
 }

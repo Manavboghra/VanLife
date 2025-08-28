@@ -5,6 +5,7 @@ import {
   useLoaderData,
   useActionData,
   useNavigation,
+  useLocation,
   Form,
   redirect,
 } from "react-router-dom";
@@ -37,6 +38,8 @@ const Login = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
   const message = useLoaderData();
+  const location = useLocation();
+  const stateMessage = location.state?.message;
   const errorMessage = useActionData();
   const navigation = useNavigation();
 
@@ -80,6 +83,7 @@ const Login = () => {
               Sign in to your account
             </div>
             <div className="flex flex-col justify-center items-center mt-10">
+              {stateMessage && <p className="text-red-500">{stateMessage}</p>}
               {message && (
                 <div className="text-red-500 text-center mb-4">{message}</div>
               )}

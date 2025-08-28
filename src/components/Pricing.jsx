@@ -7,7 +7,7 @@ const Pricing = () => {
   return (
     <div>
       <div className="p-5">
-        <span className="font-bold text-2xl"> ${van.price.toFixed(2)}</span>{" "}
+        <span className="font-bold text-2xl"> ${Number(van.price).toFixed(2)}</span>{" "}
         <span className="text-[#4D4D4D] font-[500]">/day</span>
       </div>
     </div>

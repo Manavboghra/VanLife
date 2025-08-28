@@ -1,34 +1,67 @@
-import React from "react";
-import { Form } from "react-router-dom";
+import React, { useRef } from "react";
+import { Form, useNavigation } from "react-router-dom";
 import { getNewVan } from "../../api";
 
-export async function action ({request}){
-    const formData = await request.formData()
-    const name = formData.get("name")
-    const price = formData.get("price")
-    const description = formData.get("description")
-    const type = formData.get("type")
-    const imageUrl = formData.get("imageUrl")
-    console.log(name,price,description,type)
+import { getVans } from "../../api";
 
-    console.log(request)
+export async function action({ request }) {
+  const formData = await request.formData();
+  const name = formData.get("name");
+  const price = formData.get("price");
+  const description = formData.get("description");
+  const type = formData.get("type");
+  const imageUrl = formData.get("imageUrl");
+
+  const vans = await getVans();
+  const maxId = Math.max(...vans.map((v) => parseInt(v.id, 10)));
+  const newId = (maxId + 1).toString();
+
   try {
-    const data = await getNewVan({ name, price, description, type, imageUrl });
-    console.log(data)
-   
+    const data = await getNewVan({
+      id: newId,
+      name,
+      price,
+      description,
+      imageUrl,
+      type,
+    });
     return data;
   } catch (err) {
     return err.message;
   }
 }
+// export async function action({ request }) {
+//   const formData = await request.formData();
+//   const name = formData.get("name");
+//   console.log("Form submitted, name:", name);
 
+//   const price = formData.get("price");
+//   const description = formData.get("description");
+//   const type = formData.get("type");
+//   const imageUrl = formData.get("imageUrl");
 
+//   try {
+//     const data = await getNewVan({ name, price, description, type, imageUrl });
+//     console.log("New van created:", data);
+//     return data;
+//   } catch (err) {
+//     console.error(err);
+//     return err.message;
+//   }
+// }
 
 const AddVans = () => {
+  const formRef = useRef();
+  const navigatation = useNavigation();
+  console.log(navigatation);
+
+  const handleSubmit = () => {
+    setTimeout(() => formRef.current.reset(), 100);
+  };
   return (
     <div className="p-6 bg-[#FFF7ED]">
       <div className="font-bold text-4xl text-center ">Add new van</div>
-      <Form method="post">
+      <Form ref={formRef} onSubmit={handleSubmit} method="post">
         <div className="bg-white border-2 rounded-lg text-left  ml-auto mr-auto w-96 m-7 px-10 py-7">
           <div className="flex flex-col">
             <label className="font-[600] text-xl pb-2" htmlFor="name">
@@ -69,10 +102,7 @@ const AddVans = () => {
             />
           </div>
           <div className="flex flex-col">
-            <label
-              className="font-[600] text-xl"
-              htmlFor="imageUrl"
-            >
+            <label className="font-[600] text-xl" htmlFor="imageUrl">
               Image
             </label>
             {/* <input
@@ -84,13 +114,16 @@ const AddVans = () => {
               accept="Image/.jpg/.png/.jpeg"
             /> */}
 
-            <input type="url" name="imageUrl" id="imageUrl" className="border-2 rounded-lg h-10 cursor-pointer p-2"/>
+            <input
+              type="url"
+              name="imageUrl"
+              id="imageUrl"
+              placeholder="Paste Image URL"
+              className="border-2 rounded-lg h-10 cursor-pointer p-2"
+            />
           </div>
           <div className="flex flex-col">
-            <label
-              className="font-[600] text-xl pt-4 pb-2"
-              htmlFor="type"
-            >
+            <label className="font-[600] text-xl pt-4 pb-2" htmlFor="type">
               Type
             </label>
 
@@ -105,9 +138,12 @@ const AddVans = () => {
             </select>
           </div>
           <div className="flex justify-center mt-4">
-          <button className="bg-[#FF8C38] font-bold py-2 px-4 rounded-lg mt-5 hover:bg-[#e6761a] !text-white disabled:bg-[#ffc9a0]">
-            Submit
-          </button>
+            <button
+              disabled={navigatation.state === "submitting"}
+              className="bg-[#FF8C38] font-bold py-2 px-4 rounded-lg mt-5 hover:bg-[#e6761a] !text-white disabled:bg-[#ffc9a0]"
+            >
+              Submit
+            </button>
           </div>
         </div>
       </Form>

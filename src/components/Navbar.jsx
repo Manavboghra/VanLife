@@ -14,7 +14,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="flex lg:gap-4 gap-2 text-[#4D4D4D] items-center">
-          <NavLink
+          <NavLink 
             className={({ isActive }) => {
               return isActive ? "underline font-bold" : "font-[600]";
             }}

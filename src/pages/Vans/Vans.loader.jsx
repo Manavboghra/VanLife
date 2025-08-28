@@ -1,7 +1,6 @@
 import { getVans } from "../../../api";
-import RequireAuth from "../../utils/RequireAuth";
+import requireAuth from "../../utils/requireAuth";
 
 export async function loader() {
-    await RequireAuth();
   return getVans();
 }

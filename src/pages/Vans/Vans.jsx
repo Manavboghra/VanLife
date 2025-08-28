@@ -6,8 +6,10 @@ import {
   Await,
 } from "react-router-dom";
 
+
 const Vans = () => {
   const vans = useLoaderData(); 
+  console.log(vans)
   const [searchParams, setSearchParams] = useSearchParams();
   const typeFilters = searchParams.getAll("type");
   const options = ["Simple", "Luxury", "Rugged"];
@@ -44,7 +46,6 @@ const Vans = () => {
                     typeFilters.includes(van.type.toLowerCase())
                   )
                 : loadedVans;
-
             return (
               <>
                 <div className="font-bold p-4 pb-2 text-2xl">

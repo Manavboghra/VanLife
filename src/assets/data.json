@@ -275,43 +275,6 @@
           "comment": "Amazing eco-friendly option, highly recommend!"
         }
       ]
-    },
-    {
-      "id": "c942",
-      "name": "MAK",
-      "price": "22"
-    },
-    {
-      "id": "93cd",
-      "name": "uu",
-      "price": "33",
-      "description": "sds",
-      "type": "rugged",
-      "imageUrl": "dhrumil.jpeg"
-    },
-    {
-      "id": "b462",
-      "name": "uu",
-      "price": "33",
-      "description": "sds",
-      "type": "rugged",
-      "imageUrl": "http://localhost:5173/addvans"
-    },
-    {
-      "id": "c8e9",
-      "name": "vellfire ",
-      "price": "2000",
-      "description": "The price of Toyota Vellfire, a 7 seater MUV/MPV, ranges from Rs. 1.22 - 1.33 Crore. It is available in 2 variants, with an engine of 2487 cc and a choice of 1 transmission: Automatic. Vellfire comes with 6 airbags. Toyota Vellfire is available in 3 colours. ",
-      "type": "rugged",
-      "imageUrl": "https://imgd.aeplcdn.com/664x374/n/cw/ec/154483/vellfire-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80"
-    },
-    {
-      "id": "7864",
-      "name": "vellfire ",
-      "price": "44",
-      "description": "The price of Toyota Vellfire, a 7 seater MUV/MPV, ranges from Rs. 1.22 - 1.33 Crore. It is available in 2 variants, with an engine of 2487 cc and a choice of 1 transmission: Automatic. Vellfire comes with 6 airbags. Toyota Vellfire is available in 3 colours. ",
-      "type": "simple",
-      "imageUrl": "https://images.unsplash.com/photo-1526779259212-939e64788e3c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D"
     }
   ],
   "users": [
