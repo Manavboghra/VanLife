@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Form, useNavigation } from "react-router-dom";
+import { Form, useLocation, useNavigation } from "react-router-dom";
 import { getNewVan } from "../../api";
 
 import { getVans } from "../../api";
@@ -11,6 +11,8 @@ export async function action({ request }) {
   const description = formData.get("description");
   const type = formData.get("type");
   const imageUrl = formData.get("imageUrl");
+  const location = useLocation()
+  console.log(location)
 
   const vans = await getVans();
   const maxId = Math.max(...vans.map((v) => parseInt(v.id, 10)));

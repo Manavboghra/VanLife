@@ -2,30 +2,31 @@ import React, { useEffect, useState } from "react";
 import { useLoaderData, Link, Outlet, useParams } from "react-router-dom";
 import HostVansDetailsNavbar from "./HostVansDetailsNavbar";
 import { ArrowLeft } from "react-feather";
+import { getVanById } from "../../api";
 
-// export async function loader({ params }) {
-//     return getVanById(params.id)
+export async function loader({ params }) {
+    return getVanById(params.id)
 
-// }
+}
 
 
 
 const HostVansDetails = () => {
-  // const vans = useLoaderData();
+  const vans = useLoaderData();
   
-  const { id } = useParams();
+  // const { id } = useParams();
 
-  const [vans,setVans] = useState("")
+  // const [vans,setVans] = useState("")
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      const res = await fetch(`http://localhost:5000/vans/${id}`);
-      const vanData = await res.json();
-      setVans(vanData || []);
-    };
+  // useEffect(() => {
+  //   const fetchReviews = async () => {
+  //     const res = await fetch(`http://localhost:5000/vans/${id}`);
+  //     const vanData = await res.json();
+  //     setVans(vanData || []);
+  //   };
     
-    fetchReviews();
-  }, [id]);
+  //   fetchReviews();
+  // }, [id]);
 
 
   if (!vans) {
