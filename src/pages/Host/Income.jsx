@@ -1,23 +1,19 @@
 import { Column } from "@ant-design/plots";
 import { DatePicker } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import {
-  useLoaderData,
   useOutletContext,
-  useSearchParams,
 } from "react-router-dom";
 import CurrencyFormatter from "../../components/CurrencyFormatter";
 
 const { MonthPicker } = DatePicker;
 
 const Income = () => {
-  // const vans = useLoaderData();
   const vans = useOutletContext();
 
   const allReviews = vans.flatMap((van) => van.reviews || []);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const selectedMonth = searchParams.get("month");
+  const [selectedMonth, setSelectedMonth] = useState(null) 
 
   const getMonthKey = (date) => {
     const d = new Date(date);
@@ -67,9 +63,9 @@ const Income = () => {
   // MonthPicker handler
   const handleChange = (_, dateString) => {
     if (dateString) {
-      setSearchParams({ month: dateString });
+      setSelectedMonth(dateString);
     } else {
-      setSearchParams({});
+      setSelectedMonth();
     }
   };
 
@@ -100,7 +96,6 @@ const Income = () => {
             allowClear
           />
         </div>
-        {/* You can display the selected month in a readable format if needed */}
         <div className="pl-3 font-bold text-xl">
           {selectedMonth
             ? `${new Date(selectedMonth + "-01").toLocaleString("default", {

@@ -3,17 +3,27 @@ import { ArrowLeft } from "react-feather";
 import {
   useParams,
   Link,
-  useLoaderData,
   useLocation,
-  useSearchParams,
 } from "react-router-dom";
 const VansDetails = () => {
 
 
-  const Allvans = useLoaderData();
   const location = useLocation();
   const search = location.state?.search || "/vans";
   const type = location.state?.type || "all";
+  const { id } = useParams();
+
+  const [Allvans,setAllVans] = useState("")
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      const res = await fetch(`http://localhost:5000/vans/${id}`);
+      const vanData = await res.json();
+      setAllVans(vanData || []);
+    };
+    
+    fetchReviews();
+  }, [id]);
   return (
     <div>
       <div className="bg-[#FFF7ED] flex flex-col gap-2 pb-14 p-6 ">

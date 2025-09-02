@@ -1,24 +1,16 @@
-import React from "react";
-import { useOutletContext, useSearchParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import { Star } from "react-feather";
 
 const HostReviews = () => {
-  const van = useOutletContext(); // This might be undefined on the first render
-  const [searchParams, setSearchParams] = useSearchParams();
+  const van = useOutletContext();
+  const [filterReview, setFilterReview] = useState(null);
 
-  // --- 1. Add Loading Guard ---
-  // If the 'van' object from the context isn't available yet,
-  // display a loading message to prevent a crash.
   if (!van) {
     return <h2>Loading reviews...</h2>;
   }
 
   const starOptions = ["1", "2", "3", "4", "5"];
-  const filterReview = searchParams.get("star");
-
-  // --- 2. Safely Access Reviews ---
-  // Use a default empty array `[]` in case `van.reviews` doesn't exist.
-  // This guarantees `allReviews` is always an array, preventing errors.
   const allReviews = van.reviews || [];
 
   const displayedReviews = filterReview
@@ -27,19 +19,16 @@ const HostReviews = () => {
 
   const handleFilter = (type) => {
     if (filterReview !== type) {
-      setSearchParams({ star: type });
+      setFilterReview(type);
     } else {
-      setSearchParams({}); // Clear the filter if clicking the active one
+      setFilterReview(null);
     }
   };
 
   return (
     <div className="p-4">
-      {/* --- 3. Improved Rendering Logic --- */}
-      {/* First, check if there are any reviews at all. */}
       {allReviews.length > 0 ? (
         <>
-          {/* Filter Buttons */}
           <div className="flex gap-2 flex-wrap mb-4">
             <h3 className="font-semibold self-center">Filter by:</h3>
             {starOptions.map((option) => (
@@ -98,14 +87,12 @@ const HostReviews = () => {
               </div>
             ))
           ) : (
-            // This message shows if filters result in no matches
             <p className="text-sm p-5 text-gray-500">
               No reviews available for this rating.
             </p>
           )}
         </>
       ) : (
-        // This message shows if the van has no reviews at all
         <p className="text-md pt-4 text-gray-600">
           This van has no reviews yet.
         </p>

@@ -1,9 +1,10 @@
 import { Column } from "@ant-design/plots";
 import { DatePicker } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLoaderData, useSearchParams } from "react-router-dom";
 
 const { MonthPicker } = DatePicker;
+
 
 const Demo = () => {
   // const vans = useLoaderData();
@@ -138,6 +139,21 @@ const Demo = () => {
   //     </div>
   //   </div>
   // );
+
+
+  const [getVans, setGetVans] = useState("")
+  useEffect(() => {
+    const fetchReviews = async ()=>{
+     const req =  await fetch("http://localhost:5000/vans")
+    const res = await req.json()
+    setGetVans(res)
+    console.log(getVans)
+    // return data
+    }
+    fetchReviews()
+  }, [])
+  
+  
 };
 
 export default Demo;

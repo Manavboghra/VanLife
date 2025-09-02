@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { data } from "react-router-dom";
 
 export async function getVans() {
     try {
@@ -26,7 +25,7 @@ export async function getVans() {
     //   data()
     // }, [])
 
-    // return{}
+    return{}
     
 }
 
@@ -59,6 +58,8 @@ export async function getVanById(id) {
     } catch (error) {
         throw error;
     }
+
+    
 }
 
 export async function loginUser(creds) {

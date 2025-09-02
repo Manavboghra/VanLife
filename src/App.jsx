@@ -6,10 +6,10 @@ import {
 } from "react-router-dom";
 import RootLayout from "./Layout/RootLayout";
 import About from "./pages/About";
-import Vans from "./pages/Vans/Vans";
+import Vans,{loader as vansLoader} from "./pages/Vans/Vans";
 import Home from "./pages/Home";
 import VansDetails from "./components/VansDetails";
-import HostLayout from "./Layout/HostLayout";
+import HostLayout,{loader as HostLayoutLoader} from "./Layout/HostLayout";
 import Dashboard from "./pages/Host/Dashboard";
 import Income from "./pages/Host/Income";
 import Reviews from "./pages/Host/Reviews";
@@ -26,9 +26,9 @@ import Login, {
   loader as loginLoader,
   action as loginAction,
 } from "./pages/Login";
-import { loader as vansLoader } from "./pages/Vans/Vans.loader";
-import { loader as vansDetails } from "./pages/Vans/VanDetail.loader";
-import requireAuth from "./utils/requireAuth";
+// import { loader as vansLoader } from "./pages/Vans/Vans.loader";
+// import { loader as vansDetails } from "./pages/Vans/VanDetail.loader";
+// import requireAuth from "./utils/requireAuth";
 import Signup, {
   loader as sigupLoader,
   action as signupAction,
@@ -71,12 +71,12 @@ function App() {
           element={<Vans />}
           errorElement={<Error />}
         />
-        <Route path="vans/:id" element={<VansDetails />} loader={vansDetails} />
+        <Route path="vans/:id" element={<VansDetails />}/>
 
         <Route
           path="host"
           element={<HostLayout />}
-          loader={vansLoader}
+          loader={HostLayoutLoader}
         >
           <Route index element={<Dashboard />} />
           <Route path="income" element={<Income />} />
@@ -84,7 +84,7 @@ function App() {
           <Route
             path="vans/:id"
             element={<HostVansDetails />}
-            loader={vansDetails}
+            // loader={vansDetails}
           >
             <Route index element={<Details />} />
             <Route path="pricing" element={<Pricing />} />

@@ -2,6 +2,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 
 export default function RequireAuthCom({ children }) {
+  
   const isLoggedIn = localStorage.getItem("loggedin");
   const location = useLocation();
 

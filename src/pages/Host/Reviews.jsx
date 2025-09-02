@@ -1,5 +1,5 @@
-import React from "react";
-import { useOutletContext, useSearchParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import { Star } from "react-feather";
 import { DatePicker } from "antd";
 import "antd/dist/reset.css";
@@ -7,19 +7,13 @@ import "antd/dist/reset.css";
 const { MonthPicker } = DatePicker;
 
 const Reviews = () => {
-  const vans = useOutletContext(); // This might be undefined on the first render
-  const [searchParams, setSearchParams] = useSearchParams();
+  const vans = useOutletContext(); 
+  const [selectedMonth, setSelectedMonth] = useState(null);
 
-  // --- LOADING GUARD ---
-  // If the 'vans' data from the context isn't available yet, display a loading message.
-  // This is the most robust way to prevent errors like "cannot read properties of undefined".
   if (!vans) {
     return <h2>Loading reviews...</h2>;
   }
 
-  const selectedMonth = searchParams.get("month");
-
-  // Helper function to format the date
   const getMonth = (date) =>
     new Date(date).toLocaleDateString("en-US", {
       year: "numeric",
@@ -33,38 +27,34 @@ const Reviews = () => {
         year: "numeric",
         month: "long",
       });
-      setSearchParams({ month });
+      setSelectedMonth(month);  
     } else {
-      setSearchParams({});
+      setSelectedMonth(null);
     }
   };
 
-  // Flatten all reviews from all vans into a single array
-  // The (van?.reviews || []) ensures this is safe even if a van has no reviews property
   const allReviews = vans.flatMap((van) => van?.reviews || []);
   const totalReviews = allReviews.length;
 
-  // --- Calculations for stats (only needed if there are reviews) ---
   const starCount = [5, 4, 3, 2, 1];
-  const starStats = totalReviews > 0 ? starCount.map((star) => {
-    const count = allReviews.filter((r) => r.stars === star).length;
-    const percentage = (count / totalReviews) * 100;
-    const average = (
-      allReviews.reduce((sum, r) => sum + r.stars, 0) / totalReviews
-    ).toFixed(1);
-    return { star, count, percentage, average };
-  }) : [];
-
+  const starStats =
+    totalReviews > 0
+      ? starCount.map((star) => {
+          const count = allReviews.filter((r) => r.stars === star).length;
+          const percentage = (count / totalReviews) * 100;
+          const average = (
+            allReviews.reduce((sum, r) => sum + r.stars, 0) / totalReviews
+          ).toFixed(1);
+          return { star, count, percentage, average };
+        })
+      : [];
 
   return (
     <div className="bg-[#FFF7ED] p-5">
       <div className="font-bold text-2xl mb-4 p-1">Your reviews</div>
 
-      {/* --- Conditional Rendering Based on a review's existence --- */}
       {totalReviews > 0 ? (
-        // If reviews exist, show the full review details
         <>
-          {/* Month picker filter */}
           <div className="mb-6">
             <MonthPicker
               onChange={handleChange}
@@ -73,9 +63,8 @@ const Reviews = () => {
             />
           </div>
 
-          {/* Star Rating Statistics */}
-          {starStats?.map(({ star, percentage, average, count }) => (
-            <div key={star}> {/* Changed key to 'star' for a stable key */}
+          {starStats?.map(({ star, percentage, average }) => (
+            <div key={star}>
               <div>
                 {average && star === 5 && (
                   <div className="flex text-center items-center gap-1.5 p-1">
@@ -106,9 +95,8 @@ const Reviews = () => {
             {vans.map((van) => (
               <div key={van.id} className="mb-6 border-b py-4">
                 <h2 className="text-lg font-semibold">{van.name}</h2>
-                {/* Use optional chaining and default array for extra safety */}
                 {(van?.reviews || [])?.length > 0 ? (
-                  (van.reviews)
+                  van.reviews
                     .filter(
                       (review) =>
                         !selectedMonth || getMonth(review.date) === selectedMonth
@@ -149,7 +137,6 @@ const Reviews = () => {
           </div>
         </>
       ) : (
-        // If no reviews exist at all, show this message
         <p className="text-gray-600 mt-4">
           There are no reviews available yet.
         </p>

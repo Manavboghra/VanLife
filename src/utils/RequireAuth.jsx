@@ -23,7 +23,7 @@ export default async function requireAuth() {
 
   if (!isLoggedIn) {
     
-    throw redirect(`/login`);
+    throw redirect(`/login?redirectTo=${encodeURIComponent(location.pathname)}`);
 }
 
   return null;
