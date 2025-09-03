@@ -7,12 +7,10 @@ import { getVans } from "../../api";
 export async function action({ request }) {
   const formData = await request.formData();
   const name = formData.get("name");
-  const price = formData.get("price");
+  const price = Number(formData.get("price"));
   const description = formData.get("description");
   const type = formData.get("type");
   const imageUrl = formData.get("imageUrl");
-  const location = useLocation()
-  console.log(location)
 
   const vans = await getVans();
   const maxId = Math.max(...vans.map((v) => parseInt(v.id, 10)));
@@ -32,39 +30,22 @@ export async function action({ request }) {
     return err.message;
   }
 }
-// export async function action({ request }) {
-//   const formData = await request.formData();
-//   const name = formData.get("name");
-//   console.log("Form submitted, name:", name);
-
-//   const price = formData.get("price");
-//   const description = formData.get("description");
-//   const type = formData.get("type");
-//   const imageUrl = formData.get("imageUrl");
-
-//   try {
-//     const data = await getNewVan({ name, price, description, type, imageUrl });
-//     console.log("New van created:", data);
-//     return data;
-//   } catch (err) {
-//     console.error(err);
-//     return err.message;
-//   }
-// }
 
 const AddVans = () => {
   const formRef = useRef();
   const navigatation = useNavigation();
   console.log(navigatation);
-
+  
   const handleSubmit = () => {
-    setTimeout(() => formRef.current.reset(), 100);
-  };
+  setTimeout(() => formRef.current.reset(), 100);
+};
+
+
   return (
     <div className="p-6 bg-[#FFF7ED]">
       <div className="font-bold text-4xl text-center ">Add new van</div>
       <Form ref={formRef} onSubmit={handleSubmit} method="post">
-        <div className="bg-white border-2 rounded-lg text-left  ml-auto mr-auto w-96 m-7 px-10 py-7">
+        <div className="bg-white border-2 rounded-lg text-left  ml-auto mr-auto max-w-96 m-7 px-10 py-7">
           <div className="flex flex-col">
             <label className="font-[600] text-xl pb-2" htmlFor="name">
               Name
@@ -75,6 +56,7 @@ const AddVans = () => {
               name="name"
               id="name"
               placeholder="Enter name of van"
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -87,6 +69,7 @@ const AddVans = () => {
               name="price"
               id="price"
               placeholder="Enter price"
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -101,6 +84,7 @@ const AddVans = () => {
               name="description"
               id="description"
               placeholder="Add description"
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -122,6 +106,7 @@ const AddVans = () => {
               id="imageUrl"
               placeholder="Paste Image URL"
               className="border-2 rounded-lg h-10 cursor-pointer p-2"
+              required
             />
           </div>
           <div className="flex flex-col">

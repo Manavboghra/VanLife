@@ -70,7 +70,7 @@ const Login = () => {
     <div className="p-6 bg-[#FFF7ED]">
       <div>
         {currentUser ? (
-          <div className="flex flex-col items-center  h-screen">
+          <div className="flex flex-col items-center max-w-96 h-screen">
             <div className="text-3xl font-bold text-center pb-3">
               Welcome, {currentUser.name}!
             </div>

@@ -41,6 +41,8 @@ const Vans = () => {
 
   return (
     <div className="bg-[#FFF7ED]">
+     
+
       <Suspense fallback={<div>Loading vans...</div>}>
         <Await resolve={vans}>
           {(loadedVans) => {
@@ -95,7 +97,7 @@ const Vans = () => {
                           }}
                         >
                           <img
-                            src={van.imageUrl}
+                            src={van?.imageUrl}
                             alt={van.name}
                             className="sm:h-[400px] md:h-[300px] h-[180px] w-full object-cover rounded-md mb-3"
                           />
@@ -128,6 +130,7 @@ const Vans = () => {
           }}
         </Await>
       </Suspense>
+
     </div>
   );
 };

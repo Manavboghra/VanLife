@@ -19,7 +19,7 @@
         {
           "reviewer": "Ravi",
           "date": "2025-02-10",
-          "stars": 4, 
+          "stars": 4,
           "income": 240,
           "comment": "Very comfortable but could use more storage."
         },
@@ -275,6 +275,30 @@
           "comment": "Amazing eco-friendly option, highly recommend!"
         }
       ]
+    },
+    {
+      "id": "7",
+      "name": "MAK",
+      "price": "1231",
+      "description": "qdsq",
+      "imageUrl": "http://localhost:5173/addvans",
+      "type": "simple"
+    },
+    {
+      "id": "8",
+      "name": "vellfire ",
+      "price": "2000",
+      "description": "fire ",
+      "imageUrl": "https://imgd.aeplcdn.com/664x374/n/cw/ec/154483/vellfire-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80",
+      "type": "luxury"
+    },
+    {
+      "id": "9",
+      "name": "Land Rover",
+      "price": 71,
+      "description": "land Rover",
+      "imageUrl": "https://imgd.aeplcdn.com/664x374/n/cw/ec/154483/vellfire-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80",
+      "type": "rugged"
     }
   ],
   "users": [
@@ -313,6 +337,12 @@
       "email": "mm@mail.com",
       "password": "2323",
       "name": "manav"
+    },
+    {
+      "id": "1e28",
+      "email": "romio@123.com",
+      "password": "romio",
+      "name": "romio"
     }
   ]
 }

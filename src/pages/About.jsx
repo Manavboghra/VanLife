@@ -1,5 +1,6 @@
 import React from "react";
 import aboutHero from "../assets/About.png";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -37,9 +38,9 @@ const About = () => {
       <p>Your van is ready</p>
     </div>
     <div className="text-white">
-  <button className="bg-black  font-medium px-4 py-2 rounded-lg text-sm">
+  <Link to={"/vans"}  className="bg-black  font-medium px-4 py-2 rounded-lg text-sm">
     Explore our vans
-  </button>
+  </Link>
   </div>
   </div>
 </div>
