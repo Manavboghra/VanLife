@@ -116,7 +116,6 @@ console.log("Mounted: Vans")
                             ${van.type === "simple" && "bg-[#E17654]"}
                             ${van.type === "rugged" && "bg-[#115E59]"}
                             ${van.type === "luxury" && "bg-[#161616]"}
-                            ${van.type !== NaN && "bg-[#3cbe7f]"}
                           `}
                         >
                           {van.type?.charAt(0).toUpperCase() + van.type?.slice(1) }
