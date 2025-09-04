@@ -2,7 +2,7 @@ import React from 'react'
 // import { useLoaderData } from 'react-router-dom'
 import { useOutletContext } from 'react-router-dom'
 
-const Photos = () => {
+const HostPhotos = () => {
   //  const van = useLoaderData()
    const van = useOutletContext()
   return (
@@ -12,4 +12,4 @@ const Photos = () => {
   )
 }
 
-export default Photos
+export default HostPhotos

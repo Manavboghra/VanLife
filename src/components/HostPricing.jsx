@@ -1,7 +1,7 @@
 import React from "react";
 import { useOutletContext } from "react-router-dom";
 
-const Pricing = () => {
+const HostPricing = () => {
   const van = useOutletContext();
 
   return (
@@ -14,4 +14,4 @@ const Pricing = () => {
   );
 };
 
-export default Pricing;
+export default HostPricing;

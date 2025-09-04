@@ -20,6 +20,7 @@ export async function action({ request }) {
   const password = formData.get("password");
   const confirmPassword = formData.get("confirmpassword");
   const username = formData.get("username");
+  const hostId = formData.get("hostId");
   
   const pathname =
     new URL(request.url).searchParams.get("redirectTo") || "/host";
@@ -29,7 +30,7 @@ export async function action({ request }) {
   }
 
   try {
-    const data = await signupUser({ email, password, name: username });
+    const data = await signupUser({ email, password, name: username, hostId });
     localStorage.setItem("loggedin", true);
     localStorage.setItem("currentUser", JSON.stringify(data));
     return redirect(pathname);
@@ -108,6 +109,17 @@ const Signup = () => {
                     <p className={`text-sm mt-1 ${usernameStatus.color}`}>{usernameStatus.message}</p>
                   )}
                 </div>
+
+                <div className="flex flex-col gap-2">
+                  <label className="font-[600] text-lg" htmlFor="hostId">
+                    Role
+                  </label>
+                  <select name="hostId" id="hostId">
+                    <option value="123">Host</option>
+                    <option value="01">User</option>
+                  </select>
+                </div>
+
                 <div className="flex flex-col gap-2">
                   <label className="font-[600] text-lg" htmlFor="email">
                     Email address

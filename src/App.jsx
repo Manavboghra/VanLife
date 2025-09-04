@@ -17,8 +17,8 @@ import Demo from "./pages/Host/Demo";
 import HostVans from "./pages/Vans/HostVans";
 import HostVansDetails,{loader as HostVansDetailsLoader} from "./components/HostVansDetails";
 import Details from "./components/Details";
-import Pricing from "./components/Pricing";
-import Photos from "./components/Photos";
+import HostPricing from "./components/HostPricing";
+import HostPhotos from "./components/HostPhotos";
 import HostReviews from "./components/HostReviews";
 import PageNotFound from "./pages/PageNotFound";
 import Error from "./components/Error";
@@ -32,6 +32,7 @@ import Signup, {
 } from "./pages/Signup";
 import AddVans, { action as addvansAction } from "./pages/AddVans";
 import requireAuth from "./utils/requireAuth";
+import HostIncome from "./components/HostIncome";
 
 function App() {
   const router = createBrowserRouter(
@@ -85,9 +86,10 @@ function App() {
             
           >
             <Route index element={<Details />} />
-            <Route path="pricing" element={<Pricing />} />
-            <Route path="photos" element={<Photos />} />
+            <Route path="pricing" element={<HostPricing />} />
+            <Route path="photos" element={<HostPhotos />} />
             <Route path="reviews" element={<HostReviews />} />
+            <Route path="income" element={<HostIncome/>}/>
           </Route>
           <Route
             path="reviews"

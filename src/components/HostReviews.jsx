@@ -4,7 +4,6 @@ import { Star } from "react-feather";
 
 const HostReviews = () => {
   const van = useOutletContext();
-  console.log(van)
   const [filterReview, setFilterReview] = useState(null);
 
   if (!van) {
@@ -13,7 +12,6 @@ const HostReviews = () => {
 
   const starOptions = ["1", "2", "3", "4", "5"];
   const allReviews = van.reviews || [];
-console.log(allReviews)
   const displayedReviews = filterReview
     ? allReviews.filter((review) => review.stars === parseInt(filterReview))
     : allReviews;

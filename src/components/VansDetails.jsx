@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Star } from "react-feather";
 import {
   useParams,
@@ -8,17 +8,21 @@ import {
   Form,
 } from "react-router-dom";
 import { getReview, getVanById } from "../api";
+import requireAuth from "../utils/requireAuth";
 
 export async function loader({ params }) {
   return getVanById(params.id);
 }
 
 export async function action({ request, params }) {
+  const pathname = new URL(request.url).pathname;
+  await requireAuth(pathname);
   const formData = await request.formData();
   const date = new Intl.DateTimeFormat("en-CA").format(new Date());
 
   const id = params.id;
   const comment = formData.get("comment");
+  const payment = Number(formData.get("payment"));
   const reviewer = formData.get("reviewer");
   const stars = Number(formData.get("stars"));
 
@@ -27,6 +31,7 @@ export async function action({ request, params }) {
       id,
       reviewer,
       date,
+      payment,
       stars,
       comment,
     });
@@ -37,19 +42,9 @@ export async function action({ request, params }) {
 }
 
 const VansDetails = () => {
-  const [stars, setStars] = useState(0);
+  const [stars, setStars] = useState(1);
   const Allvans = useLoaderData();
-  const location = useLocation();
-  const search = location.state?.search || "/vans";
-  const type = location.state?.type || "all";
-  const allReviews = Allvans.reviews || [];
-  const totalReviews = allReviews.length;
-console.log("Mounted: VanDetails")
-  const count = allReviews.filter((r) => r.stars).length;
-  const average = (
-    allReviews.reduce((sum, r) => sum + r.stars, 0) / totalReviews
-  ).toFixed(1);
-
+  const clear = useRef();
   // const { id } = useParams();
 
   // const [Allvans,setAllVans] = useState("")
@@ -63,6 +58,19 @@ console.log("Mounted: VanDetails")
 
   //   fetchReviews();
   // }, [id]);
+  const location = useLocation();
+  const search = location.state?.search || "/vans";
+  const type = location.state?.type || "all";
+  const allReviews = Allvans.reviews || [];
+  const totalReviews = allReviews.length;
+  const count = allReviews.filter((r) => r.stars).length;
+  const average = (
+    allReviews.reduce((sum, r) => sum + r.stars, 0) / totalReviews
+  ).toFixed(1);
+
+  const handleSubmit = () => {
+  setTimeout(() => clear.current.reset(), 100);
+};
 
   return (
     <div className="bg-[#FFF7ED] p-6">
@@ -152,7 +160,12 @@ console.log("Mounted: VanDetails")
         </div>
         <hr className="border-gray-200 my-8 ml-auto mr-auto space-y-3 w-[98%]" />
 
-        <Form method="post" className="m-5 flex flex-col">
+        <Form
+          method="post"
+          ref={clear}
+          className="m-5 flex flex-col"
+          onSubmit={handleSubmit}
+        >
           <div className="text-2xl font-bold pb-3">Leave a Review</div>
 
           <div>
@@ -194,6 +207,22 @@ console.log("Mounted: VanDetails")
               name="reviewer"
               rows="4"
               id="reviewer"
+              required
+            />
+          </div>
+
+          <div className="mt-3">
+            <div className="block mb-1 text-sm font-medium text-gray-700">
+              Amount
+            </div>
+            <input
+              type="number"
+              placeholder="Amount you paid"
+              className="block py-2 px-3 w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+              name="payment"
+              rows="4"
+              id="payment"
+              required
             />
           </div>
 
@@ -207,6 +236,7 @@ console.log("Mounted: VanDetails")
               name="comment"
               rows="4"
               id="comment"
+              required
             />
           </div>
 

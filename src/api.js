@@ -15,18 +15,6 @@ export async function getVans() {
     } catch (error) {
         throw error;
     }
-
-    // useEffect(() => {
-    //   async function data() {
-    //     const req = await fetch("http://localhost:5000/vans");
-    //     const res = await req.json()
-    //     console.log(res)
-    //   }
-    //   data()
-    // }, [])
-
-    // return{}
-    
 }
 
 export async function getNewVan(creds) {
@@ -38,6 +26,7 @@ export async function getNewVan(creds) {
   const data = await res.json();
   return data;
 }
+
 
 
 export async function getReview(params) {
@@ -52,6 +41,7 @@ export async function getReview(params) {
         reviewer: params.reviewer,
         date: params.date,
         stars: params.stars,
+        payment: params.payment,
         comment: params.comment,
       },
     ],
@@ -124,7 +114,8 @@ export async function loginUser(creds) {
     const userToSend = {
         id: foundUser.id,
         name: foundUser.name,
-        email: foundUser.email
+        email: foundUser.email,
+        hostId: foundUser.hostId
     };
 
     return userToSend;
@@ -168,19 +159,14 @@ export async function loginUser(creds) {
 // }
 
 export async function checkUsername(username) {
-    // Fetch all users since json-server doesn't support case-insensitive search
     const res = await fetch(`http://localhost:5000/users`);
     const allUsers = await res.json();
 
-    // Check if any user's name matches, ignoring case
     const isTaken = allUsers.some(user => user.name && user.name.toLowerCase() === username.toLowerCase());
 
     return isTaken;
 }
-
-// UPDATED function for user signup with case-insensitive check
 export async function signupUser(creds) {
-    // Check if email exists (case-insensitive)
     const allUsersRes = await fetch(`http://localhost:5000/users`);
     const allUsers = await allUsersRes.json();
 
@@ -192,7 +178,6 @@ export async function signupUser(creds) {
         };
     }
 
-    // Check if username exists (case-insensitive)
     const existingUsername = allUsers.find(user => user.name && user.name.toLowerCase() === creds.name.toLowerCase());
     if (existingUsername) {
         throw {
@@ -201,7 +186,6 @@ export async function signupUser(creds) {
         };
     }
 
-    // If checks pass, create the new user
     const res = await fetch("http://localhost:5000/users", {
         method: "post",
         headers: {

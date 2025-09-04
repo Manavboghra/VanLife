@@ -84,7 +84,7 @@ const Login = () => {
         ) : (
           <>
             <div className="font-bold text-4xl text-center">
-              Sign in to your account
+              Welcome back!
             </div>
             <div className="flex flex-col justify-center items-center mt-10">
               {stateMessage && <p className="text-red-500">{stateMessage}</p>}
