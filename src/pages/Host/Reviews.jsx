@@ -7,12 +7,25 @@ import "antd/dist/reset.css";
 const { MonthPicker } = DatePicker;
 
 const Reviews = () => {
-  const vans = useOutletContext(); 
+  const {vans = [], currentUser} = useOutletContext()||{}; 
   const [selectedMonth, setSelectedMonth] = useState(null);
+  const filter = vans.filter((van) => van.hostId === currentUser?.hostId);
 
-  if (!vans) {
+
+  if (!filter) {
     return <h2>Loading reviews...</h2>;
   }
+  
+    if (currentUser?.hostId === "01") {
+    return (
+      <div className="bg-[#FFF7ED] h-full flex items-center justify-center p-10">
+        <div className="text-2xl font-semibold text-gray-500">
+          Sorry, you do not have this access.
+        </div>
+      </div>
+    );
+  }
+
 
   const getMonth = (date) =>
     new Date(date).toLocaleDateString("en-US", {
@@ -33,7 +46,7 @@ const Reviews = () => {
     }
   };
 
-  const allReviews = vans.flatMap((van) => van?.reviews || []);
+  const allReviews = filter.flatMap((van) => van?.reviews || []);
   const totalReviews = allReviews.length;
 
   const starCount = [5, 4, 3, 2, 1];
@@ -92,7 +105,7 @@ const Reviews = () => {
           {/* Individual Reviews List */}
           <div className="py-4">
             <div className="text-3xl">Reviews ({totalReviews})</div>
-            {vans.map((van) => (
+            {filter.map((van) => (
               <div key={van.id} className="mb-6 border-b py-4">
                 <h2 className="text-lg font-semibold">{van.name}</h2>
                 {(van?.reviews || [])?.length > 0 ? (

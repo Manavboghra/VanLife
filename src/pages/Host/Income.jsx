@@ -1,19 +1,19 @@
 import { Column } from "@ant-design/plots";
 import { DatePicker } from "antd";
 import React, { useState } from "react";
-import {
-  useOutletContext,
-} from "react-router-dom"; 
+import { useOutletContext } from "react-router-dom";
 import CurrencyFormatter from "../../components/CurrencyFormatter";
 
 const { MonthPicker } = DatePicker;
 
 const Income = () => {
-  const vans = useOutletContext();
+  const { vans = [], currentUser } = useOutletContext() || {};
+  const filter = vans.filter((van) => van.hostId === currentUser?.hostId);
 
-  const allReviews = vans.flatMap((van) => van.reviews || []);
+  const allReviews = filter.flatMap((van) => van.reviews || []);
+  const [selectedMonth, setSelectedMonth] = useState(null);
+  console.log("Current User:", currentUser);
 
-  const [selectedMonth, setSelectedMonth] = useState(null) 
 
   const getMonthKey = (date) => {
     const d = new Date(date);
@@ -69,11 +69,27 @@ const Income = () => {
     }
   };
 
+  if (currentUser?.hostId === "01") {
+    return (
+      <div className="bg-[#FFF7ED] h-full flex items-center justify-center p-10">
+        <div className="text-2xl font-semibold text-gray-500">
+          Sorry, you do not have this access.
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-[#FFF7ED] ">
       <div className="font-bold text-4xl px-5 pt-3">Income</div>
       <div className="text-4xl font-black pb-10 p-5">
-        <CurrencyFormatter value={totalIncome} />
+        {totalIncome > 0 ? (
+          <CurrencyFormatter value={totalIncome} />
+        ) : (
+          <span className="text-gray-400 text-xl">
+            Sorry, No data available
+          </span>
+        )}
       </div>
       <div>
         <Column
@@ -103,7 +119,7 @@ const Income = () => {
               })}`
             : "All Months"}
         </div>
-  
+
         {filteredReviews.length === 0 ? (
           <div className="text-gray-400 text-lg pl-3 py-8">
             No transactions found for this month.

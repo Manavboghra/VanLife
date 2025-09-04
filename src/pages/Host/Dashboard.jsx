@@ -5,10 +5,12 @@ import HostVans from "../Vans/HostVans";
 import { Star } from "react-feather";
 
 const Dashboard = () => {
-  const vans = useOutletContext() || [];
-  console.log("Mounted: Dashboard")
+  const {vans, currentUser} = useOutletContext() || [];
+  
   const { totalIncome, averageStars } = useMemo(() => {
-    const allReviews = vans.flatMap((van) => van.reviews || []);
+  const filter = vans.filter((van) => van.hostId === currentUser?.hostId);
+
+    const allReviews = filter.flatMap((van) => van.reviews || []);
     const totalReviews = allReviews.length;
 
     const totalIncome = allReviews.reduce(
@@ -27,6 +29,17 @@ const Dashboard = () => {
   }, [vans]);
 
   const totalStars = 5;
+
+    if (currentUser?.hostId === "01") {
+    return (
+      <div className="bg-[#FFF7ED] h-full flex items-center justify-center p-10">
+        <div className="text-2xl font-semibold text-gray-500">
+          Sorry, you do not have this access.
+        </div>
+      </div>
+    );
+  }
+
 
   return (
     <div className="text-4xl">
@@ -60,7 +73,7 @@ const Dashboard = () => {
       <div className="relative">
         <div className="pointer-events-none">
           <div className="flex flex-col-reverse">
-            <HostVans propVans={vans.slice(0, 3)} />
+            <HostVans propVans={vans.slice(0, 1)} />
           </div>
         </div>
         <div className="absolute hover:underline top-6 right-4 text-sm px-2 py-1 rounded">

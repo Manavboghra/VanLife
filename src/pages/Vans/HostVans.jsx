@@ -1,33 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link, useOutletContext } from "react-router-dom";
 
 const HostVans = ({ propVans }) => {
-  const contextVans = useOutletContext() || [];
-  const vans = propVans || contextVans; 
+  // expect an object { vans, currentUser } from HostLayout
+  const { vans: contextVans = [], currentUser } = useOutletContext() || {};
+  const vans = propVans || contextVans;
 
-  console.log(vans[1].hostId)
-    const [currentUser, setCurrentUser] = useState(null);
-  
+  // const [currentUser, setCurrentUser] = useState(null);
 
-  // const user = localStorage.getItem("currentUser");
-  // console.log(user("hostId"))
+  // useEffect(() => {
+  //   const user = localStorage.getItem("currentUser");
+  //   if (user) {
+  //     setCurrentUser(JSON.parse(user));
+  //   }
+  // }, []);
+
+  // console.log(currentUser?.hostId); 
+
+  const filter = vans.filter((van) => van.hostId === currentUser?.hostId);
+
+    if (currentUser?.hostId === "01") {
+    return (
+      <div className="bg-[#FFF7ED] h-full flex items-center justify-center p-10">
+        <div className="text-2xl font-semibold text-gray-500">
+          Sorry, you do not have this access.
+        </div>
+      </div>
+    );
+  }
 
 
-    useEffect(() => {
-      const user = localStorage.getItem("currentUser");
-      if (user) {
-        setCurrentUser(JSON.parse(user));
-      }
-    }, []);
-  console.log(currentUser.hostId)
-
-
-  const filter = vans.filter((van)=>van.hostId === "123" )
-  console.log(filter)
   return (
     <div className="bg-[#FFF7ED] p-5">
       <div className="font-bold text-3xl">Your listed vans</div>
-      <div className="gap-3 pt-4 flex flex-col w">
+      <div className="gap-3 pt-4 flex flex-col">
         {filter.map((van) => (
           <Link key={van.id} to={`${van.id}`}>
             <div className="bg-white rounded-md items-center gap-3 flex p-3">
