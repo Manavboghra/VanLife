@@ -298,15 +298,7 @@
       "price": 71,
       "description": "land Rover",
       "imageUrl": "https://imgd.aeplcdn.com/664x374/n/cw/ec/154483/vellfire-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80",
-      "type": "rugged",
-      "reviews": [
-        {
-          "reviewer": "Rohtang",
-          "date": "2025-09-04",
-          "stars": 1,
-          "comment": "bbbbb"
-        }
-      ]
+      "type": "rugged"
     }
   ],
   "users": [

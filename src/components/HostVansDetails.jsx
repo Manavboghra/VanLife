@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLoaderData, Link, Outlet, useParams } from "react-router-dom";
 import HostVansDetailsNavbar from "./HostVansDetailsNavbar";
 import { ArrowLeft } from "react-feather";
-import { getVanById } from "../../api";
+import { getVanById } from "../api";
 
 export async function loader({ params }) {
     return getVanById(params.id)
@@ -27,6 +27,7 @@ const HostVansDetails = () => {
     
   //   fetchReviews();
   // }, [id]);
+  console.log("Mounted: HostVansDetails")
 
 
   if (!vans) {

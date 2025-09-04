@@ -3,16 +3,15 @@ import aboutHero from "../assets/About.png";
 import { Link } from "react-router-dom";
 
 const About = () => {
+  console.log("Mounted: About")
   return (
    <div className="bg-[#FFF7ED] min-h-screen pb-2">
-  {/* Hero Section with stretched background image */}
   <img
     src={aboutHero}
     alt="Van hero"
     className="w-full h-60 object-cover"
   />
 
-  {/* Content Section */}
   <div className="px-6 py-4 mx-4 max-w-full text-[#161616] space-y-6">
     <h1 className="text-4xl font-bold">
       Don’t squeeze in a sedan when you could relax in a van.
@@ -31,7 +30,6 @@ const About = () => {
     </div>
   </div>
 
-  {/* Yellow Box */}
   <div className="w-[500px] mx-auto my-10 rounded-sm h-48 gap-4 bg-[#FFCC8D] p-8 items-start  flex flex-col">
     <div className="font-bold text-2xl leading-2">
       <p>Your destination is waiting</p>

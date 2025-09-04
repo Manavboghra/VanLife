@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import { Form, useLocation, useNavigation } from "react-router-dom";
-import { getNewVan } from "../../api";
+import { getNewVan } from "../api";
 
-import { getVans } from "../../api";
+import { getVans } from "../api";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -34,7 +34,6 @@ export async function action({ request }) {
 const AddVans = () => {
   const formRef = useRef();
   const navigatation = useNavigation();
-  console.log(navigatation);
   
   const handleSubmit = () => {
   setTimeout(() => formRef.current.reset(), 100);

@@ -8,7 +8,7 @@ import RootLayout from "./Layout/RootLayout";
 import About from "./pages/About";
 import Vans,{loader as vansLoader} from "./pages/Vans/Vans";
 import Home from "./pages/Home";
-import VansDetails,{loader as VansDetailsLoader} from "./components/VansDetails";
+import VansDetails,{loader as VansDetailsLoader, action as VansDetailsAction} from "./components/VansDetails";
 import HostLayout,{loader as HostLayoutLoader} from "./Layout/HostLayout";
 import Dashboard from "./pages/Host/Dashboard";
 import Income from "./pages/Host/Income";
@@ -68,7 +68,7 @@ function App() {
           element={<Vans />}
           errorElement={<Error />}
         />
-        <Route path="vans/:id" element={<VansDetails />} loader={VansDetailsLoader}/>
+        <Route path="vans/:id" element={<VansDetails />} loader={VansDetailsLoader} action={VansDetailsAction}/>
 
         <Route
           path="host"

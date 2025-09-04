@@ -5,7 +5,7 @@ import {
   useSearchParams,
   Await,
 } from "react-router-dom";
-import { getVanById, getVans } from "../../../api";
+import { getVanById, getVans } from "../../api";
 
 export async function loader() {
   return  getVans();
@@ -17,7 +17,7 @@ const Vans = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const typeFilters = searchParams.getAll("type");
   const options = ["Simple", "Luxury", "Rugged"];
-
+console.log("Mounted: Vans")
   const handleClick = (option) => {
     const currentFilters = searchParams.getAll("type");
     if (currentFilters.includes(option.toLowerCase())) {

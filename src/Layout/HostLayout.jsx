@@ -1,7 +1,7 @@
 import React from 'react'
 import HostNavbar from '../components/HostNavbar'
 import { Outlet, useLoaderData } from 'react-router-dom'
-import { getVans } from '../../api';
+import { getVans } from '../api';
 import requireAuth from '../utils/requireAuth';
 
 export async function loader({request}) {

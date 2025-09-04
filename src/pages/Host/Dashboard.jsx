@@ -6,12 +6,15 @@ import { Star } from "react-feather";
 
 const Dashboard = () => {
   const vans = useOutletContext() || [];
-
+  console.log("Mounted: Dashboard")
   const { totalIncome, averageStars } = useMemo(() => {
     const allReviews = vans.flatMap((van) => van.reviews || []);
     const totalReviews = allReviews.length;
 
-    const totalIncome = allReviews.reduce((sum, r) => sum + (r.income || 0), 0);
+    const totalIncome = allReviews.reduce(
+      (sum, r) => sum + (r.payment || 0),
+      0
+    );
     const averageStars =
       totalReviews > 0
         ? (

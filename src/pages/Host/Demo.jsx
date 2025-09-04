@@ -20,10 +20,10 @@ const Demo = () => {
 
   // const monthlyIncomeMap = {};
   // allReviews.forEach((review) => {
-  //   if (!review.date || !review.income) return;
+  //   if (!review.date || !review.payment) return;
   //   const key = getMonthKey(review.date);
   //   if (!monthlyIncomeMap[key]) monthlyIncomeMap[key] = 0;
-  //   monthlyIncomeMap[key] += review.income;
+  //   monthlyIncomeMap[key] += review.payment;
   // });
 
   // const data = Object.entries(monthlyIncomeMap).map(([type, value]) => ({
@@ -119,8 +119,8 @@ const Demo = () => {
   //             className="p-6 bg-white rounded-lg flex items-center justify-between m-3 gap-2"
   //           >
   //             <div className="text-4xl font-[600]">
-  //               {Number(review.income) > 0 ? (
-  //                 Number(review.income).toLocaleString("en-US", {
+  //               {Number(review.payment) > 0 ? (
+  //                 Number(review.payment).toLocaleString("en-US", {
   //                   style: "currency",
   //                   currency: "USD",
   //                 })

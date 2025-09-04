@@ -25,7 +25,7 @@ export async function getVans() {
     //   data()
     // }, [])
 
-    return{}
+    // return{}
     
 }
 
@@ -39,6 +39,36 @@ export async function getNewVan(creds) {
   return data;
 }
 
+
+export async function getReview(params) {
+  const vanRes = await fetch(`http://localhost:5000/vans/${params.id}`);
+  const van = await vanRes.json();
+
+  const updatedVan = {
+    ...van,
+    reviews: [
+      ...(van.reviews || []),
+      {
+        reviewer: params.reviewer,
+        date: params.date,
+        stars: params.stars,
+        comment: params.comment,
+      },
+    ],
+  };
+
+  const res = await fetch(`http://localhost:5000/vans/${params.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedVan),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to update van: ${res.status} ${res.statusText}`);
+  }
+
+  return await res.json();
+}
 
 
 export async function getVanById(id) {
