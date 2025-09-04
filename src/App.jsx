@@ -8,16 +8,14 @@ import RootLayout from "./Layout/RootLayout";
 import About from "./pages/About";
 import Vans,{loader as vansLoader} from "./pages/Vans/Vans";
 import Home from "./pages/Home";
-import VansDetails, { 
-    loader as vanDetailsLoader,
-    action as reviewAction 
-} from "./components/VansDetails";
+import VansDetails,{loader as VansDetailsLoader, action as VansDetailsAction} from "./components/VansDetails";
 import HostLayout,{loader as HostLayoutLoader} from "./Layout/HostLayout";
 import Dashboard from "./pages/Host/Dashboard";
 import Income from "./pages/Host/Income";
 import Reviews from "./pages/Host/Reviews";
+import Demo from "./pages/Host/Demo";
 import HostVans from "./pages/Vans/HostVans";
-import HostVansDetails, {loader as hostVansDetailsLoader} from "./components/HostVansDetails";
+import HostVansDetails,{loader as HostVansDetailsLoader} from "./components/HostVansDetails";
 import Details from "./components/Details";
 import Pricing from "./components/Pricing";
 import Photos from "./components/Photos";
@@ -29,6 +27,7 @@ import Login, {
   action as loginAction,
 } from "./pages/Login";
 import Signup, {
+  loader as sigupLoader,
   action as signupAction,
 } from "./pages/Signup";
 import AddVans, { action as addvansAction } from "./pages/AddVans";
@@ -44,7 +43,10 @@ function App() {
           path="addvans"
           element={<AddVans />}
           action={addvansAction}
-          loader={({request}) => requireAuth(request)}
+          loader={({ request }) => {
+            console.log(new URL(request.url).pathname)
+            return requireAuth(new URL(request.url).pathname) 
+          }}
         />
         <Route
           path="login"
@@ -55,6 +57,7 @@ function App() {
         <Route
           path="signup"
           element={<Signup />}
+          loader={sigupLoader}
           action={signupAction}
         />
         <Route path="*" element={<PageNotFound />} />
@@ -65,12 +68,7 @@ function App() {
           element={<Vans />}
           errorElement={<Error />}
         />
-        <Route 
-            path="vans/:id" 
-            element={<VansDetails />}
-            loader={vanDetailsLoader}
-            action={reviewAction}
-        />
+        <Route path="vans/:id" element={<VansDetails />} loader={VansDetailsLoader} action={VansDetailsAction}/>
 
         <Route
           path="host"
@@ -83,7 +81,8 @@ function App() {
           <Route
             path="vans/:id"
             element={<HostVansDetails />}
-            loader={hostVansDetailsLoader}
+            loader={HostVansDetailsLoader}
+            
           >
             <Route index element={<Details />} />
             <Route path="pricing" element={<Pricing />} />
@@ -95,15 +94,15 @@ function App() {
             element={<Reviews />}
             errorElement={<Error />}
           />
+          <Route path="demo" element={<Demo />} errorElement={<Error />} />
         </Route>
       </Route>
     )
   );
   return (
     <>
-      <RouterProvider router={router} />
+      <RouterProvider router={router} hydrateFallback={<div>Loading...</div>} />
     </>
   );
 }
 export default App;
-
