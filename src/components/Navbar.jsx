@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/Logo.png";
 import { UserCircleIcon } from "@heroicons/react/16/solid";
 import { User } from "react-feather";
 
 const Navbar = () => {
+  //  const [currentUser, setCurrentUser] = useState(null);
+  //   useEffect(() => {
+  //     const user = localStorage.getItem("currentUser");
+  //     if (user) {
+  //       setCurrentUser(JSON.parse(user));
+  //     }
+  //   }, []);
+  //   const userId = currentUser?.hostId
   return (
     <header>
       <div className="w-full flex justify-between lg:p-6 p-3 gap-2 items-center h-28 bg-[#FFF7ED]">
@@ -18,7 +26,7 @@ const Navbar = () => {
             className={({ isActive }) => {
               return isActive ? "underline font-bold" : "font-[600]";
             }}
-            to="host"
+             to= "/host"
           >
             Host
           </NavLink>

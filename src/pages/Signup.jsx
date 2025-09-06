@@ -8,11 +8,12 @@ import {
   Form,
   redirect,
 } from "react-router-dom";
-import { signupUser, checkUsername } from "../api";
+import { signupUser, checkUsername, signupHost, getVans, getHost } from "../api";
 
 export function loader({ request }) {
   return new URL(request.url).searchParams.get("message");
 }
+
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -20,8 +21,8 @@ export async function action({ request }) {
   const password = formData.get("password");
   const confirmPassword = formData.get("confirmpassword");
   const username = formData.get("username");
-  const hostId = formData.get("hostId");
-  
+  const role = formData.get("role"); 
+
   const pathname =
     new URL(request.url).searchParams.get("redirectTo") || "/host";
 
@@ -29,22 +30,55 @@ export async function action({ request }) {
     return "Passwords do not match.";
   }
 
+  let hostId;
+  let data;
+
   try {
-    const data = await signupUser({ email, password, name: username, hostId });
+    if (role === "user") {
+      hostId = "01";
+      data = await signupUser({
+        email,
+        password,
+        name: username,
+        hostId,
+      });
+    } else if (role === "host") {
+      const vans = await getHost();
+      console.log(vans)
+      const maxId = Math.max(...vans.map((v) => parseInt(v.hostId, 10)));
+      hostId = (maxId + 1).toString();
+
+      data = await signupHost({
+        email,
+        password,
+        name: username,
+        hostId,
+      });
+    } else {
+      return "Invalid role selected.";
+    }
+
     localStorage.setItem("loggedin", true);
     localStorage.setItem("currentUser", JSON.stringify(data));
+
     return redirect(pathname);
   } catch (err) {
     return err.message;
   }
 }
 
+
+
+
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [username, setUsername] = useState("");
-  const [usernameStatus, setUsernameStatus] = useState({ message: "", color: "" });
-  
+  const [usernameStatus, setUsernameStatus] = useState({
+    message: "",
+    color: "",
+  });
+
   const message = useLoaderData();
   const errorMessage = useActionData();
   const navigation = useNavigation();
@@ -55,14 +89,20 @@ const Signup = () => {
         setUsernameStatus({ message: "Checking...", color: "text-gray-500" });
         const isTaken = await checkUsername(username);
         if (isTaken) {
-          setUsernameStatus({ message: "Username is taken.", color: "text-red-500" });
+          setUsernameStatus({
+            message: "Username is taken.",
+            color: "text-red-500",
+          });
         } else {
-          setUsernameStatus({ message: "Username is available!", color: "text-green-500" });
+          setUsernameStatus({
+            message: "Username is available!",
+            color: "text-green-500",
+          });
         }
       } else {
         setUsernameStatus({ message: "", color: "" });
       }
-    }, 500); 
+    }, 500);
 
     return () => {
       clearTimeout(handler);
@@ -106,17 +146,19 @@ const Signup = () => {
                     required
                   />
                   {usernameStatus.message && (
-                    <p className={`text-sm mt-1 ${usernameStatus.color}`}>{usernameStatus.message}</p>
+                    <p className={`text-sm mt-1 ${usernameStatus.color}`}>
+                      {usernameStatus.message}
+                    </p>
                   )}
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="font-[600] text-lg" htmlFor="hostId">
+                  <label className="font-[600] text-lg" htmlFor="role">
                     Role
                   </label>
-                  <select name="hostId" id="hostId">
-                    <option value="123">Host</option>
-                    <option value="01">User</option>
+                  <select name="role" id="role">
+                    <option value="user">User</option>
+                    <option value="host">Host</option>
                   </select>
                 </div>
 
@@ -196,7 +238,10 @@ const Signup = () => {
                 </div>
                 <button
                   className="bg-[#FF8C38] font-bold py-2 px-4 rounded-lg mt-5 hover:bg-[#e6761a] !text-white disabled:bg-[#ffc9a0]"
-                  disabled={navigation.state === "submitting" || usernameStatus.message === "Username is taken."}
+                  disabled={
+                    navigation.state === "submitting" ||
+                    usernameStatus.message === "Username is taken."
+                  }
                 >
                   {navigation.state === "submitting"
                     ? "Signing up..."

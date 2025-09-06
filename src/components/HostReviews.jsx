@@ -96,7 +96,6 @@ const HostReviews = () => {
           This van has no reviews yet.
         </p>
       )}
-      <div>Add new review</div>
     </div>
   );
 };

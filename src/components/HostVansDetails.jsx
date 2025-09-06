@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { useLoaderData, Link, Outlet, useParams } from "react-router-dom";
+import { useLoaderData, Link, Outlet, useParams, redirect } from "react-router-dom";
 import HostVansDetailsNavbar from "./HostVansDetailsNavbar";
 import { ArrowLeft } from "react-feather";
 import { getVanById } from "../api";
 
 export async function loader({ params }) {
-    return getVanById(params.id)
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  if (!user) {
+    return redirect("/login"); 
+  }
 
+  const van = await getVanById(params.id);
+
+  if (!van) {
+    throw new Response("Not Found", { status: 404 });
+  }
+
+  if (van.hostId !== user.hostId) {
+    return redirect("/host/vans");
+  }
+
+  return van;
 }
 
 
@@ -27,7 +41,6 @@ const HostVansDetails = () => {
     
   //   fetchReviews();
   // }, [id]);
-  console.log("Mounted: HostVansDetails")
 
 
   if (!vans) {
@@ -54,8 +67,8 @@ const HostVansDetails = () => {
           </div>
         </Link>
         <div className="bg-white rounded-md mt-7 h-full ">
-          <div className=" flex gap-2 items-center">
-            <div className="p-4">
+          <div className=" flex gap-2 items-center p-4">
+            <div className="">
               {vans.imageUrl ? (
                 <img className="lg:h-40 h-32 rounded-md" src={vans.imageUrl} alt={vans.name || "Van image"} />
               ) : (
@@ -88,7 +101,7 @@ const HostVansDetails = () => {
               )}
             </div>
           </div>
-          <div>
+          <div className="">
             <HostVansDetailsNavbar />
             <Outlet context={vans} />
           </div>

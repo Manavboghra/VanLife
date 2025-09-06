@@ -17,9 +17,9 @@ export async function getVans() {
     }
 }
 
-export async function getHostVans() {
+export async function getHostVans(hostId) {
     try {
-        const res = await fetch("http://localhost:5000/vans");
+        const res = await fetch(`http://localhost:5000/vans?hostId=${hostId}`);
         if (!res.ok) {
             throw {
                 message: "Failed to fetch vans",
@@ -101,17 +101,21 @@ export async function getVanById(id) {
 }
 
 export async function loginUser(creds) {
-    const res = await fetch(`http://localhost:5000/users?email=${creds.email}`);
-    if (!res.ok) {
+    const resUsers = await fetch(`http://localhost:5000/users?email=${creds.email}`);
+    const resHosts = await fetch(`http://localhost:5000/hosts?email=${creds.email}`);
+
+    if (!resUsers.ok || !resHosts.ok) {
         throw {
             message: "Login failed. Please try again.",
-            statusText: res.statusText,
-            status: res.status
+            statusText: (!resUsers.ok ? resUsers.statusText : resHosts.statusText),
+            status: (!resUsers.ok ? resUsers.status : resHosts.status)
         };
     }
-    const users = await res.json();
 
-    if (users.length === 0) {
+    const users = await resUsers.json();
+    const hosts = await resHosts.json();
+
+    if (users.length === 0 && hosts.length === 0) {
         throw {
             message: "No user with those credentials found! Please Signup",
             statusText: "Not Found",
@@ -119,7 +123,9 @@ export async function loginUser(creds) {
         };
     }
 
-    const foundUser = users.find(user => user.password === creds.password);
+    const foundUser =
+        users.find(user => user.password === creds.password) ||
+        hosts.find(host => host.password === creds.password);
 
     if (!foundUser) {
         throw {
@@ -138,6 +144,7 @@ export async function loginUser(creds) {
 
     return userToSend;
 }
+
 // export async function loginUser(creds) {
 //     const res = await fetch(`http://localhost:5000/users?email=${creds.email}`);
 //     if (!res.ok) {
@@ -177,13 +184,23 @@ export async function loginUser(creds) {
 // }
 
 export async function checkUsername(username) {
-    const res = await fetch(`http://localhost:5000/users`);
-    const allUsers = await res.json();
+    const resUser = await fetch(`http://localhost:5000/users`);
+    const allUsers = await resUser.json();
 
-    const isTaken = allUsers.some(user => user.name && user.name.toLowerCase() === username.toLowerCase());
+    const resHost = await fetch(`http://localhost:5000/hosts`);
+    const allHosts = await resHost.json();
+
+    const isTaken =
+        allUsers.some(
+            user => user.name && user.name.toLowerCase() === username.toLowerCase()
+        ) ||
+        allHosts.some(
+            host => host.name && host.name.toLowerCase() === username.toLowerCase()
+        );
 
     return isTaken;
 }
+
 export async function signupUser(creds) {
     const allUsersRes = await fetch(`http://localhost:5000/users`);
     const allUsers = await allUsersRes.json();
@@ -220,4 +237,99 @@ export async function signupUser(creds) {
     }
     const data = await res.json();
     return data;
+}
+
+
+export async function signupHost(creds) {
+    const allHostsRes = await fetch(`http://localhost:5000/hosts`);
+    const allHosts = await allHostsRes.json();
+
+    const existingEmail = allHosts.find(
+        host => host.email.toLowerCase() === creds.email.toLowerCase()
+    );
+    if (existingEmail) {
+        throw {
+            message: "An account with this email already exists.",
+            status: 409
+        };
+    }
+
+    const existingUsername = allHosts.find(
+        host => host.name && host.name.toLowerCase() === creds.name.toLowerCase()
+    );
+    if (existingUsername) {
+        throw {
+            message: "This username is already taken.",
+            status: 409
+        };
+    }
+
+    const res = await fetch("http://localhost:5000/hosts", {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(creds)
+    });
+
+    if (!res.ok) {
+        throw {
+            message: "Failed to create host account. Please try again.",
+            statusText: res.statusText,
+            status: res.status
+        };
+    }
+
+    const data = await res.json();
+    return data;
+}
+
+export async function getHost() {
+    try {
+        const res = await fetch("http://localhost:5000/hosts");
+        if (!res.ok) {
+            throw {
+                message: "Failed to fetch vans",
+                statusText: res.statusText,
+                status: res.status,
+            }
+        }
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+
+export async function updateVan(params) {
+  // Fetch the existing van
+  const vanRes = await fetch(`http://localhost:5000/vans/${params.id}`);
+  if (!vanRes.ok) {
+    throw new Error(`Van not found: ${vanRes.status} ${vanRes.statusText}`);
+  }
+  const van = await vanRes.json();
+
+  // Merge existing fields with updates
+  const updatedVan = {
+    ...van, // keeps id, hostId, reviews, etc.
+    name: params.name,
+    price: params.price,
+    description: params.description,
+    imageUrl: params.imageUrl,
+    type: params.type,
+  };
+
+  // Send updated van back to server
+  const res = await fetch(`http://localhost:5000/vans/${params.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedVan),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to update van: ${res.status} ${res.statusText}`);
+  }
+
+  return await res.json();
 }

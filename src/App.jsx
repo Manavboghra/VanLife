@@ -13,7 +13,6 @@ import HostLayout,{loader as HostLayoutLoader} from "./Layout/HostLayout";
 import Dashboard from "./pages/Host/Dashboard";
 import Income from "./pages/Host/Income";
 import Reviews from "./pages/Host/Reviews";
-import Demo from "./pages/Host/Demo";
 import HostVans from "./pages/Vans/HostVans";
 import HostVansDetails,{loader as HostVansDetailsLoader} from "./components/HostVansDetails";
 import Details from "./components/Details";
@@ -33,6 +32,8 @@ import Signup, {
 import AddVans, { action as addvansAction } from "./pages/AddVans";
 import requireAuth from "./utils/requireAuth";
 import HostIncome from "./components/HostIncome";
+import UpdateVans from "./pages/Host/UpdateVans";
+import UpdateVanDetails,{loader as UpdateVanDetailsLoader, action as UpdateVanDetailsAction} from "./components/UpdateVanDetails";
 
 function App() {
   const router = createBrowserRouter(
@@ -45,7 +46,6 @@ function App() {
           element={<AddVans />}
           action={addvansAction}
           loader={({ request }) => {
-            console.log(new URL(request.url).pathname)
             return requireAuth(new URL(request.url).pathname) 
           }}
         />
@@ -96,7 +96,18 @@ function App() {
             element={<Reviews />}
             errorElement={<Error />}
           />
-          <Route path="demo" element={<Demo />} errorElement={<Error />} />
+          <Route
+            path="updatevans"
+            element={<UpdateVans />}
+            errorElement={<Error />}
+          />
+          <Route
+            path="updatevans/:id"
+            element={<UpdateVanDetails />}
+            loader={UpdateVanDetailsLoader}
+            errorElement={<Error />}
+            action={UpdateVanDetailsAction}
+          />
         </Route>
       </Route>
     )

@@ -78,6 +78,13 @@
           "stars": 1,
           "payment": 1,
           "comment": "gooood"
+        },
+        {
+          "reviewer": "Rohtang",
+          "date": "2025-09-05",
+          "stars": 4,
+          "payment": 12001,
+          "comment": "goood"
         }
       ]
     },
@@ -320,31 +327,42 @@
     },
     {
       "id": "7",
-      "name": "MAK",
-      "price": "1231",
-      "description": "qdsq",
-      "imageUrl": "http://localhost:5173/addvans",
-      "type": "simple"
+      "name": "vellfire ",
+      "price": 1198,
+      "description": "Good",
+      "imageUrl": "https://imgd.aeplcdn.com/664x374/n/cw/ec/154483/vellfire-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80",
+      "type": "luxury",
+      "hostId": "790",
+      "reviews": [
+        {
+          "reviewer": "mk",
+          "date": "2025-09-05",
+          "stars": 5,
+          "payment": 1200,
+          "comment": "nice"
+        }
+      ]
     },
     {
       "id": "8",
-      "name": "vellfire ",
-      "price": "2000",
-      "description": "fire ",
-      "imageUrl": "https://imgd.aeplcdn.com/664x374/n/cw/ec/154483/vellfire-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80",
-      "type": "luxury"
-    },
-    {
-      "id": "9",
-      "name": "Land Rover",
-      "price": 71,
-      "description": "land Rover",
+      "name": "desire",
+      "price": 11,
+      "description": "qweqwe",
       "imageUrl": "https://imgd.aeplcdn.com/664x374/n/cw/ec/154483/vellfire-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80",
       "type": "rugged",
-      "reviews": []
+      "hostId": "792",
+      "reviews": [
+        {
+          "reviewer": "Rohtang",
+          "date": "2025-09-05",
+          "stars": 5,
+          "payment": 1212,
+          "comment": "nice"
+        }
+      ]
     }
   ],
-  "users": [
+  "hosts": [
     {
       "id": "123",
       "email": "b@b.com",
@@ -367,6 +385,29 @@
       "hostId": "123"
     },
     {
+      "id": "f9e2",
+      "email": "T@123",
+      "password": "123",
+      "name": "T",
+      "hostId": "790"
+    },
+    {
+      "id": "3df9",
+      "email": "A@123",
+      "password": "123",
+      "name": "A",
+      "hostId": "791"
+    },
+    {
+      "id": "9712",
+      "email": "K@123",
+      "password": "123",
+      "name": "K",
+      "hostId": "792"
+    }
+  ],
+  "users": [
+    {
       "id": "1e28",
       "email": "romio@123.com",
       "password": "romio",
@@ -374,29 +415,60 @@
       "hostId": "01"
     },
     {
-      "id": "481e",
+      "id": "4f72",
       "email": "student@123",
-      "password": "123123",
-      "name": "student"
+      "password": "123",
+      "name": "student",
+      "hostId": "01"
     },
     {
-      "id": "8465",
-      "email": "12@12",
-      "password": "1",
-      "name": "12"
+      "id": "84fc",
+      "email": "student@1234",
+      "password": "123",
+      "name": "student123",
+      "hostId": "01"
     },
     {
-      "id": "ab9f",
+      "id": "ce69",
+      "email": "mak@123",
+      "password": "123",
+      "name": "mak",
+      "hostId": "01"
+    },
+    {
+      "id": "9f45",
+      "email": "ram@123",
+      "password": "123",
+      "name": "ram",
+      "hostId": "01"
+    },
+    {
+      "id": "8952",
+      "email": "V@1234",
+      "password": "123",
+      "name": "V",
+      "hostId": "01"
+    },
+    {
+      "id": "e7a1",
+      "email": "W@123",
+      "password": "123",
+      "name": "W",
+      "hostId": "01"
+    },
+    {
+      "id": "e12e",
       "email": "123@123",
       "password": "123",
-      "name": "123"
+      "name": "z",
+      "hostId": "01"
     },
     {
-      "id": "0587",
-      "email": "hello@123",
+      "id": "a3ec",
+      "email": "M@123",
       "password": "123",
-      "name": "hello",
-      "hostId": "123"
+      "name": "M",
+      "hostId": "01"
     }
   ]
 }

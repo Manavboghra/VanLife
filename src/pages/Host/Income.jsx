@@ -12,7 +12,6 @@ const Income = () => {
 
   const allReviews = filter.flatMap((van) => van.reviews || []);
   const [selectedMonth, setSelectedMonth] = useState(null);
-  console.log("Current User:", currentUser);
 
 
   const getMonthKey = (date) => {
@@ -81,7 +80,7 @@ const Income = () => {
 
   return (
     <div className="bg-[#FFF7ED] ">
-      <div className="font-bold text-4xl px-5 pt-3">Income</div>
+      <div className="font-bold text-4xl px-5">Income</div>
       <div className="text-4xl font-black pb-10 p-5">
         {totalIncome > 0 ? (
           <CurrencyFormatter value={totalIncome} />

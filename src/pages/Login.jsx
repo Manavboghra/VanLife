@@ -62,10 +62,6 @@ const Login = () => {
     navigation("/login", { replace: true });
   }
 
-
-  
-
-
   return (
     <div className="p-6 bg-[#FFF7ED]">
       <div>
@@ -74,6 +70,7 @@ const Login = () => {
             <div className="text-3xl font-bold text-center pb-3">
               Welcome, {currentUser.name}!
             </div>
+            <div>HostId:{currentUser.hostId}</div>
             <button
               onClick={handleLogout}
               className="bg-red-500 text-white font-bold py-2 px-6 rounded-lg mt-8 hover:bg-red-600"
@@ -83,9 +80,7 @@ const Login = () => {
           </div>
         ) : (
           <>
-            <div className="font-bold text-4xl text-center">
-              Welcome back!
-            </div>
+            <div className="font-bold text-4xl text-center">Welcome back!</div>
             <div className="flex flex-col justify-center items-center mt-10">
               {stateMessage && <p className="text-red-500">{stateMessage}</p>}
               {message && (

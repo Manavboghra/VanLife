@@ -45,6 +45,13 @@ const VansDetails = () => {
   const [stars, setStars] = useState(1);
   const Allvans = useLoaderData();
   const clear = useRef();
+  const [currentUser, setCurrentUser] = useState(null);
+    useEffect(() => {
+      const user = localStorage.getItem("currentUser");
+      if (user) {
+        setCurrentUser(JSON.parse(user));
+      }
+    }, []);
   // const { id } = useParams();
 
   // const [Allvans,setAllVans] = useState("")
@@ -59,7 +66,7 @@ const VansDetails = () => {
   //   fetchReviews();
   // }, [id]);
   const location = useLocation();
-  const search = location.state?.search || "/vans";
+  const search = location.state?.search;
   const type = location.state?.type || "all";
   const allReviews = Allvans.reviews || [];
   const totalReviews = allReviews.length;
@@ -69,13 +76,13 @@ const VansDetails = () => {
   ).toFixed(1);
 
   const handleSubmit = () => {
-  setTimeout(() => clear.current.reset(), 100);
-};
+    setTimeout(() => clear.current.reset(), 100);
+  };
 
   return (
     <div className="bg-[#FFF7ED] p-6">
       <div className="mb-10 font-medium text-xl">
-        <Link to={`/vans${search}`}>
+        <Link to={search ? `/vans${search}` : "/vans"}>
           <div className="flex items-center gap-2">
             <ArrowLeft size={16} />
             <span className="underline">
@@ -159,8 +166,7 @@ const VansDetails = () => {
           )}
         </div>
         <hr className="border-gray-200 my-8 ml-auto mr-auto space-y-3 w-[98%]" />
-
-        <Form
+        {currentUser?.hostId ==="01" && <Form
           method="post"
           ref={clear}
           className="m-5 flex flex-col"
@@ -243,7 +249,8 @@ const VansDetails = () => {
           <div className="mt-10 bg-[#FF8C38] !text-white font-semibold px-5 py-2 text-center rounded-md hover:bg-[#e57d30] transition-colors">
             <button type="submit">Submit Review</button>
           </div>
-        </Form>
+        </Form>}
+        
       </div>
 
       <div className="bg-[#FF8C38] h-12 w-3/4 mx-auto rounded-md text-center mb-2 text-[18px] font-bold text-white flex items-center justify-center mt-6">

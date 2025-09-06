@@ -8,9 +8,9 @@ const Dashboard = () => {
   const {vans, currentUser} = useOutletContext() || [];
   
   const { totalIncome, averageStars } = useMemo(() => {
-  const filter = vans.filter((van) => van.hostId === currentUser?.hostId);
+  // const filter = vans.filter((van) => van.hostId === currentUser?.hostId);
 
-    const allReviews = filter.flatMap((van) => van.reviews || []);
+    const allReviews = vans.flatMap((van) => van.reviews || []);
     const totalReviews = allReviews.length;
 
     const totalIncome = allReviews.reduce(

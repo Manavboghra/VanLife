@@ -3,13 +3,14 @@ import { NavLink } from "react-router-dom";
 
 const HostVansDetailsNavbar = () => {
   return (
-    <div>
-      <div className="flex px-5 gap-4 text-[#4D4D4D] ">
+    <div className="">
+     <div className="flex items-center px-5 md:gap-7 gap-3 text-[#4D4D4D] text-sm md:text-xl">
+
         <NavLink
           to=""
           end
           className={({ isActive }) =>
-            isActive ? "underline font-bold" : "font-[600]"
+            isActive ? "underline font-bold" : "font-[600] "
           }
         >
           Details
@@ -18,7 +19,7 @@ const HostVansDetailsNavbar = () => {
         <NavLink
           to="pricing"
           className={({ isActive }) =>
-            isActive ? "underline font-bold" : "font-[600]"
+            isActive ? "underline font-bold" : "font-[600] "
           }
         >
           Pricing
@@ -27,7 +28,7 @@ const HostVansDetailsNavbar = () => {
         <NavLink
           to="photos"
           className={({ isActive }) =>
-            isActive ? "underline font-bold" : "font-[600]"
+            isActive ? "underline font-bold" : "font-[600] "
           }
         >
           Photos
@@ -35,7 +36,7 @@ const HostVansDetailsNavbar = () => {
         <NavLink
           to="reviews"
           className={({ isActive }) =>
-            isActive ? "underline font-bold" : "font-[600]"
+            isActive ? "underline font-bold" : "font-[600] "
           }
         >
           Reviews
@@ -44,7 +45,7 @@ const HostVansDetailsNavbar = () => {
         <NavLink
           to="income"
           className={({ isActive }) =>
-            isActive ? "underline font-bold" : "font-[600]"
+            isActive ? "underline font-bold" : "font-[600] "
           }
         >
           Income

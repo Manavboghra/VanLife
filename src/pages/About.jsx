@@ -3,7 +3,6 @@ import aboutHero from "../assets/About.png";
 import { Link } from "react-router-dom";
 
 const About = () => {
-  console.log("Mounted: About")
   return (
    <div className="bg-[#FFF7ED] min-h-screen pb-2">
   <img

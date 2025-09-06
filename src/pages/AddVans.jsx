@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Form, useLocation, useNavigation } from "react-router-dom";
 import { getNewVan } from "../api";
 
@@ -11,7 +11,7 @@ export async function action({ request }) {
   const description = formData.get("description");
   const type = formData.get("type");
   const imageUrl = formData.get("imageUrl");
-
+  const hostId = formData.get("hostId");
   const vans = await getVans();
   const maxId = Math.max(...vans.map((v) => parseInt(v.id, 10)));
   const newId = (maxId + 1).toString();
@@ -24,6 +24,7 @@ export async function action({ request }) {
       description,
       imageUrl,
       type,
+      hostId,
     });
     return data;
   } catch (err) {
@@ -32,13 +33,29 @@ export async function action({ request }) {
 }
 
 const AddVans = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+  useEffect(() => {
+    const user = localStorage.getItem("currentUser");
+    if (user) {
+      setCurrentUser(JSON.parse(user));
+    }
+  }, []);
   const formRef = useRef();
   const navigatation = useNavigation();
-  
-  const handleSubmit = () => {
-  setTimeout(() => formRef.current.reset(), 100);
-};
 
+  const handleSubmit = () => {
+    setTimeout(() => formRef.current.reset(), 100);
+  };
+
+  if (currentUser?.hostId === "01") {
+    return (
+      <div className="bg-[#FFF7ED] h-full flex items-center justify-center p-10">
+        <div className="text-2xl font-semibold text-gray-500">
+          Sorry, you do not have this access.
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 bg-[#FFF7ED]">
@@ -107,6 +124,7 @@ const AddVans = () => {
               className="border-2 rounded-lg h-10 cursor-pointer p-2"
               required
             />
+
           </div>
           <div className="flex flex-col">
             <label className="font-[600] text-xl pt-4 pb-2" htmlFor="type">
@@ -123,6 +141,9 @@ const AddVans = () => {
               <option value="luxury">Luxury</option>
             </select>
           </div>
+          {currentUser && (
+            <input type="hidden" name="hostId" value={currentUser.hostId} />
+          )}
           <div className="flex justify-center mt-4">
             <button
               disabled={navigatation.state === "submitting"}

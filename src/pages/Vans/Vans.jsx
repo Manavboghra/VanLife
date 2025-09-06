@@ -17,7 +17,6 @@ const Vans = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const typeFilters = searchParams.getAll("type");
   const options = ["Simple", "Luxury", "Rugged"];
-console.log("Mounted: Vans")
   const handleClick = (option) => {
     const currentFilters = searchParams.getAll("type");
     if (currentFilters.includes(option.toLowerCase())) {

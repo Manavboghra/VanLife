@@ -5,7 +5,6 @@ const HostVans = ({ propVans }) => {
   // expect an object { vans, currentUser } from HostLayout
   const { vans: contextVans = [], currentUser } = useOutletContext() || {};
   const vans = propVans || contextVans;
-
   // const [currentUser, setCurrentUser] = useState(null);
 
   // useEffect(() => {
@@ -17,7 +16,7 @@ const HostVans = ({ propVans }) => {
 
   // console.log(currentUser?.hostId); 
 
-  const filter = vans.filter((van) => van.hostId === currentUser?.hostId);
+  // const filter = vans.filter((van) => van.hostId === currentUser?.hostId);
 
     if (currentUser?.hostId === "01") {
     return (
@@ -31,10 +30,10 @@ const HostVans = ({ propVans }) => {
 
 
   return (
-    <div className="bg-[#FFF7ED] p-5">
+    <div className="bg-[#FFF7ED] p-5 pt-0">
       <div className="font-bold text-3xl">Your listed vans</div>
       <div className="gap-3 pt-4 flex flex-col">
-        {filter.map((van) => (
+        {vans.map((van) => (
           <Link key={van.id} to={`${van.id}`}>
             <div className="bg-white rounded-md items-center gap-3 flex p-3">
               <div className="bg-gray-200 rounded sm:h-20 lg:h-30 h-20 w-25 lg:w-40 flex-shrink-0">

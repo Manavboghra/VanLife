@@ -4,7 +4,7 @@ import { Space, Table, Tag } from "antd";
 
 const HostIncome = () => {
   const van = useOutletContext();
-  const vansData = van.reviews;
+  const vansData = van?.reviews;
   const total = vansData?.reduce((a, b) => a + b.payment, 0) || "0";
 
   const columns = [
@@ -29,7 +29,7 @@ const HostIncome = () => {
   ];
 
   const data =
-    vansData.map((van, i) => {
+    vansData?.map((van, i) => {
       return {
         key: i,
         customer: van.reviewer,

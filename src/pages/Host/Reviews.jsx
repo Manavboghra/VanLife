@@ -63,8 +63,8 @@ const Reviews = () => {
       : [];
 
   return (
-    <div className="bg-[#FFF7ED] p-5">
-      <div className="font-bold text-2xl mb-4 p-1">Your reviews</div>
+    <div className="bg-[#FFF7ED] p-5 pt-0">
+      <div className="font-bold text-3xl mb-4 p-1">Your reviews</div>
 
       {totalReviews > 0 ? (
         <>

@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const HostNavbar = () => {
+  //  const [currentUser, setCurrentUser] = useState(null);
+  //   useEffect(() => {
+  //     const user = localStorage.getItem("currentUser");
+  //     if (user) {
+  //       setCurrentUser(JSON.parse(user));
+  //     }
+  //   }, []);
+  //   const userId = currentUser?.hostId
   return (
-    <div className="flex bg-[#FFF7ED] px-6 pb-6 gap-4 text-[#4D4D4D] ">
+    <div className="flex  bg-[#FFF7ED] px-5 pb-6 gap-3 text-[#4D4D4D] ">
       <NavLink
-        to="/host"
+         to="/host"
         end
         className={({ isActive }) =>
           isActive ? "underline font-bold" : "font-[600]"
@@ -40,14 +48,18 @@ const HostNavbar = () => {
       >
         Reviews
       </NavLink>
-      <NavLink
-        to="demo"
-        className={({ isActive }) =>
-          isActive ? "underline font-bold" : "font-[600]"
-        }
-      >
-        Demo
-      </NavLink>
+
+      
+        <NavLink
+          to="updatevans"
+          className={({ isActive }) =>
+            isActive ? "underline font-bold" : "font-[600] "
+          }
+        >
+          Update
+        </NavLink>
+
+
     </div>
   );
 };
