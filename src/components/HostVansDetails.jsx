@@ -6,9 +6,6 @@ import { getVanById } from "../api";
 
 export async function loader({ params }) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
-  if (!user) {
-    return redirect("/login"); 
-  }
 
   const van = await getVanById(params.id);
 

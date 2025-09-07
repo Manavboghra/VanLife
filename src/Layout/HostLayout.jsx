@@ -6,18 +6,14 @@ import requireAuth from "../utils/requireAuth";
 
 export async function loader({ request }) {
   const pathname = new URL(request.url).pathname;
-  console.log(pathname);
-
-  // wait for auth check
   await requireAuth(pathname);
 
-  // now continue with logic
   const user = JSON.parse(localStorage.getItem("currentUser"));
   if (!user?.hostId) {
     throw new Error("No hostId found for current user");
   }
 
-  return getHostVans(user.hostId);
+  return await getHostVans(user.hostId);
 }
   
 
