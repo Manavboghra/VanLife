@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import CurrencyFormatter from "../../components/CurrencyFormatter";
 import { Link, useOutletContext } from "react-router-dom";
-import HostVans from "../Vans/HostVans";
+import HostVans from "../Host/HostVans";
 import { Star } from "react-feather";
 
 const Dashboard = () => {
@@ -72,7 +72,7 @@ const Dashboard = () => {
 
       <div className="relative">
         <div className="pointer-events-none">
-          <div className="flex flex-col-reverse">
+          <div className="flex flex-col-reverse pt-2">
             <HostVans propVans={vans.slice(0, 1)} />
           </div>
         </div>

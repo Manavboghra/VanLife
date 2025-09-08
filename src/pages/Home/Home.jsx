@@ -1,5 +1,5 @@
 import React from "react";
-import bgImage from "../assets/background.png";
+import bgImage from "../../assets/background.png";
 import { Link } from "react-router-dom";
 const Home = () => {
   return (

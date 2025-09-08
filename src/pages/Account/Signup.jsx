@@ -8,7 +8,7 @@ import {
   Form,
   redirect,
 } from "react-router-dom";
-import { signupUser, checkUsername, signupHost, getVans, getHost } from "../api";
+import { signupUser, checkUsername, signupHost, getVans, getHost } from "../../api";
 
 export function loader({ request }) {
   return new URL(request.url).searchParams.get("message");

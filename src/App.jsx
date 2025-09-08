@@ -5,33 +5,33 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import RootLayout from "./Layout/RootLayout";
-import About from "./pages/About";
+import About from "./pages/About/About";
 import Vans,{loader as vansLoader} from "./pages/Vans/Vans";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import VansDetails,{loader as VansDetailsLoader, action as VansDetailsAction} from "./components/VansDetails";
 import HostLayout,{loader as HostLayoutLoader} from "./Layout/HostLayout";
 import Dashboard from "./pages/Host/Dashboard";
 import Income from "./pages/Host/Income";
 import Reviews from "./pages/Host/Reviews";
-import HostVans from "./pages/Vans/HostVans";
+import HostVans from "./pages/Host/HostVans";
 import HostVansDetails,{loader as HostVansDetailsLoader} from "./components/HostVansDetails";
-import Details from "./components/Details";
-import HostPricing from "./components/HostPricing";
-import HostPhotos from "./components/HostPhotos";
-import HostReviews from "./components/HostReviews";
-import PageNotFound from "./pages/PageNotFound";
+import HostDetails from "./pages/Host/Vans/HostDetails";
+import HostPricing from "./pages/Host/Vans/HostPricing";
+import HostPhotos from "./pages/Host/Vans/HostPhotos";
+import HostReviews from "./pages/Host/Vans/HostReviews";
+import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import Error from "./components/Error";
 import Login, {
   loader as loginLoader,
   action as loginAction,
-} from "./pages/Login";
+} from "./pages/Account/Login";
 import Signup, {
   loader as sigupLoader,
   action as signupAction,
-} from "./pages/Signup";
-import AddVans, { action as addvansAction } from "./pages/AddVans";
+} from "./pages/Account/Signup";
+import AddVans, { action as addvansAction } from "./pages/AddVans/AddVans";
 import requireAuth from "./utils/requireAuth";
-import HostIncome from "./components/HostIncome";
+import HostIncome from "./pages/Host/Vans/HostIncome";
 import UpdateVans from "./pages/Host/UpdateVans";
 import UpdateVanDetails,{loader as UpdateVanDetailsLoader, action as UpdateVanDetailsAction} from "./components/UpdateVanDetails";
 
@@ -85,7 +85,7 @@ function App() {
             loader={HostVansDetailsLoader}
             
           >
-            <Route index element={<Details />} />
+            <Route index element={<HostDetails />} />
             <Route path="pricing" element={<HostPricing />} />
             <Route path="photos" element={<HostPhotos />} />
             <Route path="reviews" element={<HostReviews />} />

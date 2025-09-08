@@ -1,5 +1,5 @@
 import React from "react";
-import aboutHero from "../assets/About.png";
+import aboutHero from "../../assets/About.png";
 import { Link } from "react-router-dom";
 
 const About = () => {

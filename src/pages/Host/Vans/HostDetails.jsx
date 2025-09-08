@@ -1,7 +1,7 @@
 import React from "react";
 import { useOutletContext } from "react-router-dom";
 
-const Details = () => {
+const HostDetails = () => {
   const van = useOutletContext();
 
   return (
@@ -25,4 +25,4 @@ const Details = () => {
   );
 };
 
-export default Details;
+export default HostDetails;

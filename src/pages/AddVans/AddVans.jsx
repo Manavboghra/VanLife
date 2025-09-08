@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Form, useLocation, useNavigation } from "react-router-dom";
-import { getNewVan } from "../api";
+import { getNewVan } from "../../api";
 
-import { getVans } from "../api";
+import { getVans } from "../../api";
 
 export async function action({ request }) {
   const formData = await request.formData();
