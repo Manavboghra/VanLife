@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/Logo.png";
-import { UserCircleIcon } from "@heroicons/react/16/solid";
 import { User } from "react-feather";
 
 const Navbar = () => {

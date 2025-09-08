@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import { getReview, getVanById } from "../api";
 import requireAuth from "../utils/requireAuth";
+import { useAuth } from "../context/AuthContext";
 
 export async function loader({ params }) {
   return getVanById(params.id);
@@ -45,13 +46,14 @@ const VansDetails = () => {
   const [stars, setStars] = useState(1);
   const Allvans = useLoaderData();
   const clear = useRef();
-  const [currentUser, setCurrentUser] = useState(null);
-    useEffect(() => {
-      const user = localStorage.getItem("currentUser");
-      if (user) {
-        setCurrentUser(JSON.parse(user));
-      }
-    }, []);
+  const {currentUser} = useAuth()
+  // const [currentUser, setCurrentUser] = useState(null);
+  //   useEffect(() => {
+  //     const user = localStorage.getItem("currentUser");
+  //     if (user) {
+  //       setCurrentUser(JSON.parse(user));
+  //     }
+  //   }, []);
   // const { id } = useParams();
 
   // const [Allvans,setAllVans] = useState("")
