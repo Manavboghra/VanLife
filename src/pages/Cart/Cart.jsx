@@ -6,6 +6,10 @@ import DaysSelector from "../../components/DaysSelector";
 import { getCurrentUser } from "../../utils/auth";
 import requireAuth from "../../utils/requireAuth";
 
+import { DatePicker, Space } from "antd";
+
+const { RangePicker } = DatePicker;
+
 export async function loader() {
   await requireAuth("/cart");
   const currentUser = getCurrentUser();
@@ -45,11 +49,7 @@ const Cart = () => {
     setDeleteId(null);
   };
 
-  
-  const subTotalAmount = cartItems.reduce(
-    (a, b) => a + b.price * b.days,
-    0
-  );
+  const subTotalAmount = cartItems.reduce((a, b) => a + b.price * b.days, 0);
   const tax = ((subTotalAmount * 12) / 100).toFixed(2);
   const total = (subTotalAmount + Number(tax)).toFixed(2);
 
@@ -69,6 +69,18 @@ const Cart = () => {
       setCartItems([]);
     } catch (err) {
       console.error("Failed to clear cart", err);
+    }
+  };
+
+  const [range, setRange] = useState({ start: null, end: null });
+
+  const handleDatePicker = (dates, dateStrings) => {
+    if (dateStrings && dateStrings.length === 2) {
+      const [start, end] = dateStrings;
+      setRange({ start, end });
+      console.log("Start:", start, "End:", end);
+    } else {
+      setRange({ start: null, end: null });
     }
   };
 
@@ -101,10 +113,7 @@ const Cart = () => {
                   <div className="flex-grow flex flex-col gap-1 ml-4">
                     <h2 className="text-lg font-semibold">{van.name}</h2>
                     <p className="text-gray-600">Price: ${van.price}/day</p>
-                    <DaysSelector
-                      van={van}
-                      onDaysChange={handleDaysUpdate}
-                    />
+                    <DaysSelector van={van} onDaysChange={handleDaysUpdate} />
                   </div>
                   <div className="pb-24">
                     <button
@@ -113,7 +122,7 @@ const Cart = () => {
                     >
                       <X size={20} />
                     </button>
-                    </div>
+                  </div>
 
                   {isToggleCancel && (
                     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center p-4 z-50">
@@ -184,6 +193,15 @@ const Cart = () => {
             </button>
           </div>
         )}
+      </div>
+      <div className="p-2">
+        <Space direction="vertical" size={12}>
+          <RangePicker onChange={handleDatePicker} />
+          <div>
+            Selected: {range.start} → {range.end}
+          </div>
+        </Space>
+        {console.log("Selected Dates: ")}
       </div>
     </div>
   );

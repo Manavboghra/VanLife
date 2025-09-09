@@ -1,73 +1,133 @@
 import React, { useRef, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import { deleteVan } from "../../api";
+import { Edit, Trash2 } from "react-feather";
 
 const UpdateVans = () => {
-  const { vans: initialVans = []} = useOutletContext() || {};
+  const { vans: initialVans = [] } = useOutletContext() || {};
   const [vans, setVans] = useState(initialVans);
+  const [deleteId, setDeleteId] = useState(null);
+  const [isToggleCancel, setIsToggleCancel] = useState(false);
   const ref = useRef(null);
 
   const handleEditClick = () => {
-    ref.current.focus();
+    ref.current?.focus();
   };
 
-  const handleDelete = async (vanId) => {
+  const confirmDelete = async () => {
     try {
-      await deleteVan(vanId);
-      setVans((prev) => prev.filter((van) => van.id !== vanId));
+      await deleteVan(deleteId);
+      setVans((prev) => prev.filter((van) => van.id !== deleteId));
+      setIsToggleCancel(false);
+      setDeleteId(null);
     } catch (err) {
       console.error(err);
       console.log("Failed to delete item");
     }
   };
 
+  const cancelDelete = () => {
+    setIsToggleCancel(false);
+    setDeleteId(null);
+  };
+
   return (
-    <div className="bg-[#FFF7ED] p-5 pt-0">
-      <div className="font-bold text-3xl">Your listed vans</div>
-      <div className="gap-3 pt-4 flex flex-col ">
-        {vans.map((van) => (
-          <div
-            key={van.id}
-            className="bg-white flex flex-row justify-between items-center "
-          >
-            <div className=" rounded-md items-center gap-3   p-3 flex">
-              <div className="bg-gray-200 rounded sm:h-20 lg:h-30 h-20 w-25 lg:w-40 flex-shrink-0">
+    <div className="bg-[#FFF7ED] min-h-screen p-6">
+      <h1 className="font-bold text-3xl text-gray-800 mb-6">
+        Your Listed Vans
+      </h1>
+
+      <div className="space-y-4">
+        {vans.length > 0 ? (
+          vans.map((van) => (
+            <div
+              key={van.id}
+              className="bg-white rounded-xl shadow-sm hover:shadow-md transition p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                 <img
-                  className="sm:h-17 lg:h-30 h-20 w-40 object-cover rounded"
+                  className="h-60 w-full sm:w-36 sm:h-full object-cover rounded-lg"
                   src={van?.imageUrl}
                   alt={van.name}
                   loading="lazy"
                 />
+                <div>
+                  <h2 className="text-lg font-semibold text-gray-900">
+                    {van.name}
+                  </h2>
+                  <p className="text-gray-600 text-sm">
+                    ${van.price} <span className="text-xs">/day</span>
+                  </p>
+                  <span
+                    className={`inline-block mt-1 px-3 py-1 rounded-full text-xs font-semibold capitalize ${
+                      van.type === "luxury"
+                        ? "bg-purple-100 text-purple-700"
+                        : van.type === "rugged"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-orange-100 text-orange-700"
+                    }`}
+                  >
+                    {van.type}
+                  </span>
+                </div>
               </div>
 
-              <div>
-                <div className="font-medium text-sm">{van.name}</div>
-                <div className="font-medium text-[#4D4D4D] text-xs">
-                  ${van.price}/day
-                </div>
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                <Link
+                  ref={ref}
+                  to={`${van.id}`}
+                  onClick={handleEditClick}
+                  className="flex items-center justify-center gap-1 bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm transition w-full sm:w-auto"
+                >
+                  <Edit size={16} />
+                  Edit
+                </Link>
+                <button
+                  onClick={() => {
+                    setDeleteId(van.id);
+                    setIsToggleCancel(true);
+                  }}
+                  className="flex items-center justify-center gap-1 bg-red-400 hover:bg-red-500 !text-white px-4 py-2 rounded-lg text-sm transition w-full sm:w-auto"
+                >
+                  <Trash2 size={16} />
+                  Delete
+                </button>
               </div>
             </div>
-            <div className="flex ">
-              <Link key={van.id} to={`${van.id}`}>
-                <div
-                  ref={ref}
-                  onClick={handleEditClick}
-                  className="m-0 lg:mx-2 bg-gray-100 rounded-md p-2"
-                >
-                  Edit
-                </div>
-              </Link>
+          ))
+        ) : (
+          <p className="text-center text-gray-500 mt-10">No vans listed yet.</p>
+        )}
+      </div>
 
+      {isToggleCancel && (
+        <div className="fixed inset-0 backdrop-blur-sm bg-black/30 flex justify-center items-center p-4 z-50">
+          <div className="bg-white p-6 rounded-xl shadow-lg w-80">
+            <h2 className="font-semibold text-lg mb-2 text-gray-800">
+              Confirm Deletion
+            </h2>
+            <p className="text-gray-600 text-sm">
+              Are you sure you want to delete this van? This action cannot be
+              undone.
+            </p>
+            <div className="flex justify-end gap-3 mt-5">
               <button
-                onClick={() => handleDelete(van.id)}
-                className="mx-2 bg-gray-100 rounded-md p-2"
+                className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg text-sm transition"
+                onClick={cancelDelete}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-red-500 hover:bg-red-600 !text-white px-4 py-2 rounded-lg text-sm transition"
+                onClick={confirmDelete}
               >
                 Delete
               </button>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -193,7 +193,7 @@
       "price": 65,
       "description": "Dreamfinder is the perfect van to travel in and experience. With a ceiling height of 2.1m, you can stand up in this van and there is great head room. The floor is a beautiful glass-reinforced plastic (GRP) which is easy to clean and very hard wearing. A large rear window and large side windows make it really light inside and keep it well ventilated.",
       "imageUrl": "https://assets.scrimba.com/advanced-react/react-router/dreamfinder.png",
-      "type": "simple",
+      "type": "rugged",
       "hostId": "789",
       "reviews": [
         {
@@ -326,6 +326,24 @@
       ]
     },
     {
+      "id": "7",
+      "name": "vellfire ",
+      "price": 1198,
+      "description": "Good",
+      "imageUrl": "https://imgd.aeplcdn.com/664x374/n/cw/ec/154483/vellfire-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80",
+      "type": "luxury",
+      "hostId": "790",
+      "reviews": [
+        {
+          "reviewer": "mk",
+          "date": "2025-09-05",
+          "stars": 5,
+          "payment": 1200,
+          "comment": "nice"
+        }
+      ]
+    },
+    {
       "id": "8",
       "name": "desire",
       "price": 11,
@@ -346,7 +364,7 @@
   ],
   "hosts": [
     {
-      "id": "566w",
+      "id": "123",
       "email": "b@b.com",
       "password": "p1",
       "name": "Bob",
@@ -386,6 +404,20 @@
       "password": "123",
       "name": "K",
       "hostId": "792"
+    },
+    {
+      "id": "3a01",
+      "email": "Ronark@123",
+      "password": "123",
+      "name": "Ronark",
+      "hostId": "793"
+    },
+    {
+      "id": "e227",
+      "email": "Z@123",
+      "password": "123",
+      "name": "Zombie",
+      "hostId": "794"
     }
   ],
   "users": [
@@ -451,12 +483,26 @@
       "password": "123",
       "name": "M",
       "hostId": "01"
+    },
+    {
+      "id": "5c37",
+      "email": "J@123",
+      "password": "123",
+      "name": "J",
+      "hostId": "01"
+    },
+    {
+      "id": "55f9",
+      "email": "JK@123",
+      "password": "123",
+      "name": "JK",
+      "hostId": "01"
     }
   ],
   "cart": [
     {
-      "id": "b624",
-      "userId": "1e28",
+      "id": "08b4",
+      "userId": "4f72",
       "vanId": "2",
       "name": "Beach Bum",
       "price": 80,

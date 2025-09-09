@@ -28,22 +28,18 @@ export async function loader({ params }) {
 
 export async function action({ request }) {
   const formData = await request.formData();
-  const name = formData.get("name");
-  const price = Number(formData.get("price"));
-  const description = formData.get("description");
-  const imageUrl = formData.get("imageUrl");
-  const type = formData.get("type");
   const id = formData.get("id");
+  const payload = {
+    id,
+    name: formData.get("name"),
+    price: Number(formData.get("price")),
+    description: formData.get("description"),
+    imageUrl: formData.get("imageUrl"),
+    type: formData.get("type"),
+  };
 
   try {
-    await updateVan({
-      id,
-      name,
-      price,
-      description,
-      imageUrl,
-      type,
-    });
+    await updateVan(payload);
     return { success: true };
   } catch (err) {
     return { success: false, message: err.message };
@@ -52,16 +48,16 @@ export async function action({ request }) {
 
 const UpdateVanDetails = () => {
   const van = useLoaderData();
-  const navigate = useNavigation();
+  const navigation = useNavigation();
   const actionData = useActionData();
   const [showPopup, setShowPopup] = useState(false);
 
-  const { values, handleChange, reset } = useInput({
-    name: `${van.name}`,
-    price: `${van.price}`,
-    description: `${van.description}`,
-    imageUrl: `${van.imageUrl}`,
-    type: `${van.type}`,
+  const { values, handleChange } = useInput({
+    name: van.name,
+    price: van.price,
+    description: van.description,
+    imageUrl: van.imageUrl,
+    type: van.type,
   });
 
   useEffect(() => {
@@ -69,119 +65,110 @@ const UpdateVanDetails = () => {
       setShowPopup(true);
       setTimeout(() => {
         setShowPopup(false);
-        window.location.href = "/host/updatevans"; 
+        window.location.href = "/host/updatevans";
       }, 1000);
     }
   }, [actionData]);
 
   return (
-    <div className="p-5 pt-0 bg-[#FFF7ED]">
-      <Link to={"../updatevans"}>
-        <div className="flex text-xl underline items-center py-2">
-          <ArrowLeft size={17} />
-          Back to your vans
-        </div>
+    <div className="bg-[#FFF7ED] min-h-screen p-6">
+      <Link
+        to={"../updatevans"}
+        className="flex items-center gap-2 text-orange-600 hover:underline mb-6"
+      >
+        <ArrowLeft size={18} />
+        Back to your vans
       </Link>
 
-      <div className="font-bold text-4xl text-center pt-2 ">Update van</div>
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-[#c67a1d] text-white p-6">
+          <h1 className="text-3xl font-bold">Update Van</h1>
+          <p className="text-orange-100">Modify the details of your listing</p>
+        </div>
 
-      <Form
-        method="patch"
-        className="max-w-2xl mx-auto bg-white rounded-2xl shadow-md overflow-hidden"
-      >
-        {values.imageUrl ? (
-          <img
-            src={values.imageUrl}
-            alt={values.name || "Van"}
-            className="w-full h-64 object-contain"
-          />
-        ) : (
-          <div className="w-full h-64 bg-gray-100 flex items-center justify-center text-gray-500">
-            No Image
-          </div>
-        )}
-
-        <input type="hidden" name="id" value={van.id} />
-
-        <div className="p-6 space-y-5">
-          <div>
-            <label htmlFor="name" className="block text-lg font-semibold mb-2">
-              Name
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              value={values.name}
-              onChange={handleChange}
-              required
-              className="w-full border rounded-lg px-3 py-2"
+        <Form method="patch" className="p-8 space-y-6">
+          {values.imageUrl ? (
+            <img
+              src={values.imageUrl}
+              alt={values.name || "Van"}
+              className="w-full lg:w-64 mx-auto  object-cover rounded-lg shadow-md"
             />
+          ) : (
+            <div className="w-full h-64 bg-gray-100 flex items-center justify-center rounded-lg text-gray-500">
+              No Image
+            </div>
+          )}
+
+          <input type="hidden" name="id" value={van.id} />
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Name
+              </label>
+              <input
+                name="name"
+                type="text"
+                value={values.name}
+                onChange={handleChange}
+                required
+                className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Price (per day)
+              </label>
+              <input
+                name="price"
+                type="number"
+                value={values.price}
+                onChange={handleChange}
+                required
+                className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+              />
+            </div>
           </div>
 
-          {/* Price */}
           <div>
-            <label htmlFor="price" className="block text-lg font-semibold mb-2">
-              Price (per day)
-            </label>
-            <input
-              id="price"
-              name="price"
-              type="number"
-              value={values.price}
-              onChange={handleChange}
-              required
-              className="w-full border rounded-lg px-3 py-2"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="description"
-              className="block text-lg font-semibold mb-2"
-            >
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Description
             </label>
             <textarea
-              id="description"
               name="description"
               value={values.description}
               onChange={handleChange}
               rows="4"
               required
-              className="w-full border rounded-lg px-3 py-2 resize-none"
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:outline-none resize-none"
             />
           </div>
 
           <div>
-            <label
-              htmlFor="imageUrl"
-              className="block text-lg font-semibold mb-2"
-            >
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Image URL
             </label>
             <input
-              id="imageUrl"
               name="imageUrl"
               type="url"
               value={values.imageUrl}
               onChange={handleChange}
               required
-              className="w-full border rounded-lg px-3 py-2"
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:outline-none"
             />
           </div>
 
           <div>
-            <label htmlFor="type" className="block text-lg font-semibold mb-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Type
             </label>
             <select
-              id="type"
               name="type"
               value={values.type}
               onChange={handleChange}
               required
-              className="w-full border rounded-lg px-3 py-2"
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:outline-none"
             >
               <option value="simple">Simple</option>
               <option value="rugged">Rugged</option>
@@ -192,21 +179,24 @@ const UpdateVanDetails = () => {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-2 rounded-lg transition disabled:bg-orange-300"
+              className="bg-orange-500 hover:bg-orange-600 !text-white font-semibold px-6 py-3 rounded-lg transition disabled:bg-orange-300"
+              disabled={navigation.state === "submitting"}
             >
-              {navigate.state === "submitting" ? "Saving..." : "Save Changes"}
+              {navigation.state === "submitting"
+                ? "Saving..."
+                : "Save Changes"}
             </button>
           </div>
-        </div>
-      </Form>
+        </Form>
+      </div>
 
       {showPopup && (
-        <div className="fixed inset-0 backdrop-blur-md flex justify-center items-center p-4 z-50">
-          <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-            <h2 className="text-xl font-bold text-green-600">
-              ✅ Changes Saved Successfully!
+        <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-50">
+          <div className="bg-white p-8 rounded-xl shadow-xl text-center">
+            <h2 className="text-xl font-bold text-gray-600">
+              Changes Saved Successfully!
             </h2>
-            <p className="mt-2 text-gray-600">Redirecting...</p>
+            <p className="mt-2 text-gray-500">Redirecting...</p>
           </div>
         </div>
       )}

@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import { addToCart, getReview, getVanById } from "../api";
 import requireAuth from "../utils/requireAuth";
+import { getCurrentUser } from "../utils/auth";
 
 export async function loader({ params }) {
   return getVanById(params.id);
@@ -47,14 +48,16 @@ const VansDetails = () => {
   const [addtoCart, setAddtoCart] = useState(false);
   const Allvans = useLoaderData();
   const clear = useRef();
-  // const { currentUser } = useAuth();
-  const [currentUser, setCurrentUser] = useState(null);
-  useEffect(() => {
-    const user = localStorage.getItem("currentUser");
-    if (user) {
-      setCurrentUser(JSON.parse(user));
-    }
-  }, []);
+  // const [currentUser, setCurrentUser] = useState(null);
+  const currentUser = getCurrentUser()
+  console.log(currentUser)
+
+  // useEffect(() => {
+  //   const user = localStorage.getItem("currentUser");
+  //   if (user) {
+  //     setCurrentUser(JSON.parse(user));
+  //   }
+  // }, []);
 
   async function handleAddToCart() {
     if (!currentUser) {

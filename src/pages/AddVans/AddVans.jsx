@@ -3,6 +3,7 @@ import { Form, useLocation, useNavigation } from "react-router-dom";
 import { getNewVan } from "../../api";
 
 import { getVans } from "../../api";
+import { getCurrentUser } from "../../utils/auth";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -33,13 +34,14 @@ export async function action({ request }) {
 }
 
 const AddVans = () => {
-  const [currentUser, setCurrentUser] = useState(null);
-  useEffect(() => {
-    const user = localStorage.getItem("currentUser");
-    if (user) {
-      setCurrentUser(JSON.parse(user));
-    }
-  }, []);
+  const currentUser = getCurrentUser();
+  // const [currentUser, setCurrentUser] = useState(null);
+  // useEffect(() => {
+  //   const user = localStorage.getItem("currentUser");
+  //   if (user) {
+  //     setCurrentUser(JSON.parse(user));
+  //   }
+  // }, []);
   const formRef = useRef();
   const navigatation = useNavigation();
 

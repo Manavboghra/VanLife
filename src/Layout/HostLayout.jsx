@@ -3,6 +3,7 @@ import HostNavbar from "../components/HostNavbar";
 import { Outlet, useLoaderData } from "react-router-dom";
 import { getHostVans} from "../api";
 import requireAuth from "../utils/requireAuth";
+import { getCurrentUser } from "../utils/auth";
 
 export async function loader({ request }) {
   const pathname = new URL(request.url).pathname;
@@ -21,13 +22,14 @@ export async function loader({ request }) {
 
 const HostLayout = () => {
   const vans = useLoaderData();
-  const [currentUser, setCurrentUser] = useState(null);
-  useEffect(() => {
-    const user = localStorage.getItem("currentUser");
-    if (user) {
-      setCurrentUser(JSON.parse(user));
-    }
-  }, []);
+  const currentUser = getCurrentUser();
+  // const [currentUser, setCurrentUser] = useState(null);
+  // useEffect(() => {
+  //   const user = localStorage.getItem("currentUser");
+  //   if (user) {
+  //     setCurrentUser(JSON.parse(user));
+  //   }
+  // }, []);
 
    if (currentUser?.hostId === "01") {
     return (
