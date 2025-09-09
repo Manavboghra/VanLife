@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import RootLayout from "./Layout/RootLayout";
 import About from "./pages/About/About";
-import Vans,{loader as vansLoader} from "./pages/Vans/Vans";
+import Vans from "./pages/Vans/Vans";
 import Home from "./pages/Home/Home";
 import VansDetails,{loader as VansDetailsLoader, action as VansDetailsAction} from "./components/VansDetails";
 import HostLayout,{loader as HostLayoutLoader} from "./Layout/HostLayout";
@@ -34,6 +34,7 @@ import requireAuth from "./utils/requireAuth";
 import HostIncome from "./pages/Host/Vans/HostIncome";
 import UpdateVans from "./pages/Host/UpdateVans";
 import UpdateVanDetails,{loader as UpdateVanDetailsLoader, action as UpdateVanDetailsAction} from "./components/UpdateVanDetails";
+import Cart,{loader as CartLoader} from "./pages/Cart/Cart";
 
 function App() {
   const router = createBrowserRouter(
@@ -41,6 +42,7 @@ function App() {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
+        <Route path="cart" element={<Cart />} loader={CartLoader} />
         <Route
           path="addvans"
           element={<AddVans />}
@@ -65,7 +67,6 @@ function App() {
 
         <Route
           path="vans"
-          loader={vansLoader}
           element={<Vans />}
           errorElement={<Error />}
         />

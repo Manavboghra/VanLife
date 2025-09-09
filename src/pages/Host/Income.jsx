@@ -7,10 +7,8 @@ import CurrencyFormatter from "../../components/CurrencyFormatter";
 const { MonthPicker } = DatePicker;
 
 const Income = () => {
-  const { vans = [], currentUser } = useOutletContext() || {};
-  const filter = vans.filter((van) => van.hostId === currentUser?.hostId);
-
-  const allReviews = filter.flatMap((van) => van.reviews || []);
+  const { vans = [] } = useOutletContext() || {};
+  const allReviews = vans.flatMap((van) => van.reviews || []);
   const [selectedMonth, setSelectedMonth] = useState(null);
 
 
@@ -68,15 +66,6 @@ const Income = () => {
     }
   };
 
-  if (currentUser?.hostId === "01") {
-    return (
-      <div className="bg-[#FFF7ED] h-full flex items-center justify-center p-10">
-        <div className="text-2xl font-semibold text-gray-500">
-          Sorry, you do not have this access.
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-[#FFF7ED] ">

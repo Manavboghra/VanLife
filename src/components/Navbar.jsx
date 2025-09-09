@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/Logo.png";
-import { User } from "react-feather";
+import { ShoppingCart, User } from "react-feather";
 
 const Navbar = () => {
   //  const [currentUser, setCurrentUser] = useState(null);
@@ -64,6 +64,16 @@ const Navbar = () => {
             <span className="flex items-center justify-center h-10 w-8">
               <User className="border-3 rounded-2xl" size={25} />
             </span>
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "underline font-bold flex items-center justify-center"
+                : "font-[600] flex items-center justify-center"
+            }
+            to="cart"
+          >
+              <ShoppingCart  size={17} />
           </NavLink>
         </div>
       </div>

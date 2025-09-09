@@ -29,10 +29,20 @@ const HostLayout = () => {
     }
   }, []);
 
+   if (currentUser?.hostId === "01") {
+    return (
+      <div className="bg-[#FFF7ED] h-full  flex items-center justify-center p-10">
+        <div className="text-2xl font-semibold text-gray-500">
+          Sorry, you do not have this access.
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <HostNavbar />
-      <Outlet context={{ vans, currentUser }} />
+      <Outlet context={{ vans}} />
     </div>
   );
 };

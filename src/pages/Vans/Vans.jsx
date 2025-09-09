@@ -1,28 +1,25 @@
-import React, { Suspense } from "react";
-import {
-  useLoaderData,
-  Link,
-  useSearchParams,
-  Await,
-} from "react-router-dom";
-import { getVanById, getVans } from "../../api";
-
-export async function loader() {
-  return  getVans();
-}
+import React, { Suspense, useEffect, useState } from "react";
+import { Link, useSearchParams, Await } from "react-router-dom";
 
 const Vans = () => {
-  const vans = useLoaderData(); 
-  
+  const [vans, setVans] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const typeFilters = searchParams.getAll("type");
   const options = ["Simple", "Luxury", "Rugged"];
+
+  useEffect(() => {
+    const fetchVans = async () => {
+      const req = await fetch("http://localhost:5000/vans");
+      const res = await req.json();
+      setVans(res);
+    };
+    fetchVans();
+  }, []);
+
   const handleClick = (option) => {
     const currentFilters = searchParams.getAll("type");
     if (currentFilters.includes(option.toLowerCase())) {
-      const newFilters = currentFilters.filter(
-        (f) => f !== option.toLowerCase()
-      );
+      const newFilters = currentFilters.filter((f) => f !== option.toLowerCase());
       setSearchParams(
         newFilters.length > 0 ? newFilters.map((f) => ["type", f]) : {}
       );
@@ -38,11 +35,59 @@ const Vans = () => {
     setSearchParams({});
   };
 
-  return (
-    <div className="bg-[#FFF7ED]">
-     
+  // helper for type badge colors
+  const typeColor = (type) => {
+    switch (type) {
+      case "simple":
+        return "bg-[#E17654]";
+      case "rugged":
+        return "bg-[#115E59]";
+      case "luxury":
+        return "bg-[#161616]";
+      default:
+        return "bg-gray-500";
+    }
+  };
 
-      <Suspense fallback={<div>Loading vans...</div>}>
+  return (
+    <div className="bg-[#FFF7ED] min-h-screen py-10 px-4 lg:px-16">
+      {/* Header */}
+      <div className="text-center mb-10">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+          Explore Our Vans
+        </h1>
+        <p className="text-gray-600 mt-2 text-lg">
+          Choose the perfect van for your next adventure
+        </p>
+      </div>
+
+      {/* Filters */}
+      <div className="flex flex-wrap justify-center gap-3 mb-10">
+        {options.map((o) => (
+          <button
+            key={o}
+            onClick={() => handleClick(o)}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all
+              ${
+                typeFilters.includes(o.toLowerCase())
+                  ? "bg-orange-500 text-white shadow-md"
+                  : "bg-orange-100 text-gray-700 hover:bg-orange-200"
+              }`}
+          >
+            {o}
+          </button>
+        ))}
+        {typeFilters.length > 0 && (
+          <button
+            onClick={handleClear}
+            className="ml-2 underline text-gray-600 text-sm hover:text-gray-900"
+          >
+            Clear All
+          </button>
+        )}
+      </div>
+
+      <Suspense fallback={<div className="text-center text-lg">Loading vans...</div>}>
         <Await resolve={vans}>
           {(loadedVans) => {
             const displayedData =
@@ -51,84 +96,62 @@ const Vans = () => {
                     typeFilters.includes(van.type.toLowerCase())
                   )
                 : loadedVans;
+
             return (
-              <>
-                <div className="font-bold p-4 pb-2 text-2xl">
-                  Explore our van options
-                </div>
-
-                <div className="pl-1 flex">
-                  {options.map((o) => (
-                    <div
-                      key={o}
-                      onClick={() => handleClick(o)}
-                      className={`inline-block mt-3 px-3 py-1 rounded-md mx-2 font-medium cursor-pointer
-                        ${
-                          typeFilters.includes(o.toLowerCase())
-                            ? "bg-[#FF8C38] text-white"
-                            : "bg-[#FFEAD0] text-black"
-                        }`}
-                    >
-                      {o}
-                    </div>
-                  ))}
-                  <div
-                    onClick={handleClear}
-                    className="underline inline-block mt-4 pl-8 rounded-md mx-2 font-medium cursor-pointer"
-                  >
-                    Clear All
+              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {displayedData.length <= 0 ? (
+                  <div className="col-span-full text-center text-gray-600 text-lg">
+                    No vans found. Try clearing filters.
                   </div>
-                </div>
+                ) : (
+                  displayedData.map((van) => (
+                    <div
+                      key={van.id}
+                      className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                    >
+                      <Link
+                        to={`${van.id}`}
+                        state={{
+                          search: `?${searchParams}`.toString(),
+                          type: { typeFilters },
+                        }}
+                      >
+                        <img
+                          src={van?.imageUrl}
+                          alt={van.name}
+                          className="h-64 w-full object-cover"
+                        />
+                      </Link>
 
-                <div className="gap-3 pt-5 items-center grid grid-cols-2">
-                  {displayedData.length <= 0 ? (
-                    <div className="text-5xl mx-auto my-auto mt-10">
-                      Items are not available...
-                    </div>
-                  ) : (
-                    displayedData.map((van) => (
-                      <div key={van.id} className="p-4 rounded-lg shadow-md">
-                        <Link
-                          to={`${van.id}`}
-                          state={{
-                            search: `?${searchParams}`.toString(),
-                            type: { typeFilters },
-                          }}
-                        >
-                          <img
-                            src={van?.imageUrl}
-                            alt={van.name}
-                            className="sm:h-[400px] md:h-[300px] h-[180px] w-full object-cover rounded-md mb-3"
-                          />
-                        </Link>
-                        <div className="flex justify-between items-center text-sm md:text-xl sm:text-xl">
-                          <div className="font-semibold">{van.name}</div>
-                          <span>
-                            <b>${van.price}</b>
+                      <div className="p-5 flex flex-col justify-between ">
+                        <div className="flex justify-between items-center">
+                          <h2 className="text-lg font-bold text-gray-900">
+                            {van.name}
+                          </h2>
+                          <span
+                            className={`px-3 py-1 text-xs font-semibold rounded-full text-white ${typeColor(
+                              van.type
+                            )}`}
+                          >
+                            {van.type?.charAt(0).toUpperCase() + van.type?.slice(1)}
                           </span>
                         </div>
-                        <div className="text-right text-xs text-gray-600">
-                          /day  
-                        </div>
-                        <div
-                          className={`inline-block mt-3 px-4 py-2 rounded-md font-semibold text-white
-                            ${van.type === "simple" && "bg-[#E17654]"}
-                            ${van.type === "rugged" && "bg-[#115E59]"}
-                            ${van.type === "luxury" && "bg-[#161616]"}
-                          `}
-                        >
-                          {van.type?.charAt(0).toUpperCase() + van.type?.slice(1) }
+
+                        <div className="mt-4 flex justify-between items-center">
+                          <span className="text-lg font-bold text-gray-900">
+                            ${van.price}
+                          </span>
+                          <span className="text-gray-500 text-sm">/day</span>
                         </div>
                       </div>
-                    ))
-                  )}
-                </div>
-              </>
+                    </div>
+                  ))
+                )}
+              </div>
             );
           }}
         </Await>
       </Suspense>
-
     </div>
   );
 };

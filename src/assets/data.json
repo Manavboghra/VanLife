@@ -326,24 +326,6 @@
       ]
     },
     {
-      "id": "7",
-      "name": "vellfire ",
-      "price": 1198,
-      "description": "Good",
-      "imageUrl": "https://imgd.aeplcdn.com/664x374/n/cw/ec/154483/vellfire-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80",
-      "type": "luxury",
-      "hostId": "790",
-      "reviews": [
-        {
-          "reviewer": "mk",
-          "date": "2025-09-05",
-          "stars": 5,
-          "payment": 1200,
-          "comment": "nice"
-        }
-      ]
-    },
-    {
       "id": "8",
       "name": "desire",
       "price": 11,
@@ -360,56 +342,11 @@
           "comment": "nice"
         }
       ]
-    },
-    {
-      "id": "9",
-      "name": "ROYAL",
-      "price": 121,
-      "description": "nice",
-      "imageUrl": "https://imgd.aeplcdn.com/1920x1080/n/cw/ec/170173/dzire-exterior-right-front-three-quarter-27.jpeg?isig=0&q=80&q=80",
-      "type": "rugged",
-      "hostId": null
-    },
-    {
-      "id": "10",
-      "name": "BMW",
-      "price": 123,
-      "description": "nice",
-      "imageUrl": "https://imgd.aeplcdn.com/1920x1080/n/cw/ec/170173/dzire-exterior-right-front-three-quarter-27.jpeg?isig=0&q=80&q=80",
-      "type": "rugged",
-      "hostId": null
-    },
-    {
-      "id": "11",
-      "name": "Reliable Red",
-      "price": 12,
-      "description": "msa d",
-      "imageUrl": "https://imgd.aeplcdn.com/1920x1080/n/cw/ec/170173/dzire-exterior-right-front-three-quarter-27.jpeg?isig=0&q=80&q=80",
-      "type": "luxury",
-      "hostId": "789"
-    },
-    {
-      "id": "12",
-      "name": "The Cruiser",
-      "price": 12129,
-      "description": "qw",
-      "imageUrl": "https://assets.scrimba.com/advanced-react/react-router/the-cruiser.png",
-      "type": "luxury",
-      "hostId": null
-    },
-    {
-      "id": "13",
-      "name": "mmmskax",
-      "price": 1,
-      "description": "a",
-      "imageUrl": "https://imgd.aeplcdn.com/1920x1080/n/cw/ec/170173/dzire-exterior-right-front-three-quarter-27.jpeg?isig=0&q=80&q=80",
-      "type": "rugged",
-      "hostId": "790"
     }
   ],
   "hosts": [
     {
-      "id": "123",
+      "id": "566w",
       "email": "b@b.com",
       "password": "p1",
       "name": "Bob",
@@ -514,6 +451,18 @@
       "password": "123",
       "name": "M",
       "hostId": "01"
+    }
+  ],
+  "cart": [
+    {
+      "id": "b624",
+      "userId": "1e28",
+      "vanId": "2",
+      "name": "Beach Bum",
+      "price": 80,
+      "imageUrl": "https://assets.scrimba.com/advanced-react/react-router/beach-bum.png",
+      "type": "rugged",
+      "days": 7
     }
   ]
 }

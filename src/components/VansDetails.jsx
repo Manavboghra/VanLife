@@ -7,9 +7,8 @@ import {
   useLoaderData,
   Form,
 } from "react-router-dom";
-import { getReview, getVanById } from "../api";
+import { addToCart, getReview, getVanById } from "../api";
 import requireAuth from "../utils/requireAuth";
-import { useAuth } from "../context/AuthContext";
 
 export async function loader({ params }) {
   return getVanById(params.id);
@@ -44,16 +43,36 @@ export async function action({ request, params }) {
 
 const VansDetails = () => {
   const [stars, setStars] = useState(1);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [addtoCart, setAddtoCart] = useState(false);
   const Allvans = useLoaderData();
   const clear = useRef();
-  const {currentUser} = useAuth()
-  // const [currentUser, setCurrentUser] = useState(null);
-  //   useEffect(() => {
-  //     const user = localStorage.getItem("currentUser");
-  //     if (user) {
-  //       setCurrentUser(JSON.parse(user));
-  //     }
-  //   }, []);
+  // const { currentUser } = useAuth();
+  const [currentUser, setCurrentUser] = useState(null);
+  useEffect(() => {
+    const user = localStorage.getItem("currentUser");
+    if (user) {
+      setCurrentUser(JSON.parse(user));
+    }
+  }, []);
+
+  async function handleAddToCart() {
+    if (!currentUser) {
+      setShowLoginPopup(true);
+      return;
+    }
+
+    try {
+      await addToCart(currentUser.id, Allvans);
+
+      setAddtoCart(true);
+
+      setTimeout(() => setAddtoCart(false), 1000);
+    } catch (err) {
+      console.error("Failed to add to cart:", err);
+    }
+  }
+
   // const { id } = useParams();
 
   // const [Allvans,setAllVans] = useState("")
@@ -168,96 +187,129 @@ const VansDetails = () => {
           )}
         </div>
         <hr className="border-gray-200 my-8 ml-auto mr-auto space-y-3 w-[98%]" />
-        {currentUser?.hostId ==="01" && <Form
-          method="post"
-          ref={clear}
-          className="m-5 flex flex-col"
-          onSubmit={handleSubmit}
-        >
-          <div className="text-2xl font-bold pb-3">Leave a Review</div>
+        {currentUser?.hostId === "01" && (
+          <Form
+            method="post"
+            ref={clear}
+            className="m-5 flex flex-col"
+            onSubmit={handleSubmit}
+          >
+            <div className="text-2xl font-bold pb-3">Leave a Review</div>
 
-          <div>
-            <div className="block mb-1 text-sm font-medium text-gray-700">
-              Your Rating
+            <div>
+              <div className="block mb-1 text-sm font-medium text-gray-700">
+                Your Rating
+              </div>
+              <div className="flex flex-row py-2 gap-1">
+                {[...Array(5)].map((_, i) => {
+                  const value = i + 1;
+                  return (
+                    <button
+                      type="button"
+                      key={value}
+                      onClick={() => setStars(value)}
+                    >
+                      <Star
+                        size={24}
+                        className={
+                          value <= stars
+                            ? "text-amber-500 fill-amber-500"
+                            : "text-gray-300 fill-gray-300 hover:text-amber-500 hover:fill-amber-500"
+                        }
+                      />
+                    </button>
+                  );
+                })}
+                <input type="hidden" name="stars" value={stars} />
+              </div>
             </div>
-            <div className="flex flex-row py-2 gap-1">
-              {[...Array(5)].map((_, i) => {
-                const value = i + 1;
-                return (
-                  <button
-                    type="button"
-                    key={value}
-                    onClick={() => setStars(value)}
-                  >
-                    <Star
-                      size={24}
-                      className={
-                        value <= stars
-                          ? "text-amber-500 fill-amber-500"
-                          : "text-gray-300 fill-gray-300 hover:text-amber-500 hover:fill-amber-500"
-                      }
-                    />
-                  </button>
-                );
-              })}
-              <input type="hidden" name="stars" value={stars} />
-            </div>
-          </div>
 
-          <div className="mt-3">
-            <div className="block mb-1 text-sm font-medium text-gray-700">
-              Your Name
+            <div className="mt-3">
+              <div className="block mb-1 text-sm font-medium text-gray-700">
+                Your Name
+              </div>
+              <input
+                type="text"
+                placeholder="Enter your name"
+                className="block py-2 px-3 w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+                name="reviewer"
+                rows="4"
+                id="reviewer"
+                required
+              />
             </div>
-            <input
-              type="text"
-              placeholder="Enter your name"
-              className="block py-2 px-3 w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
-              name="reviewer"
-              rows="4"
-              id="reviewer"
-              required
-            />
-          </div>
 
-          <div className="mt-3">
-            <div className="block mb-1 text-sm font-medium text-gray-700">
-              Amount
+            <div className="mt-3">
+              <div className="block mb-1 text-sm font-medium text-gray-700">
+                Amount
+              </div>
+              <input
+                type="number"
+                placeholder="Amount you paid"
+                className="block py-2 px-3 w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+                name="payment"
+                rows="4"
+                id="payment"
+                required
+              />
             </div>
-            <input
-              type="number"
-              placeholder="Amount you paid"
-              className="block py-2 px-3 w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
-              name="payment"
-              rows="4"
-              id="payment"
-              required
-            />
-          </div>
 
-          <div className="mt-3">
-            <div className="block mb-1 text-sm font-medium text-gray-700">
-              Your Review
+            <div className="mt-3">
+              <div className="block mb-1 text-sm font-medium text-gray-700">
+                Your Review
+              </div>
+              <textarea
+                placeholder="Share your experience..."
+                className="block py-2 px-3 w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+                name="comment"
+                rows="4"
+                id="comment"
+                required
+              />
             </div>
-            <textarea
-              placeholder="Share your experience..."
-              className="block py-2 px-3 w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
-              name="comment"
-              rows="4"
-              id="comment"
-              required
-            />
-          </div>
 
-          <div className="mt-10 bg-[#FF8C38] !text-white font-semibold px-5 py-2 text-center rounded-md hover:bg-[#e57d30] transition-colors">
-            <button type="submit">Submit Review</button>
-          </div>
-        </Form>}
-        
+            <div className="mt-10 bg-[#FF8C38] !text-white font-semibold px-5 py-2 text-center rounded-md hover:bg-[#e57d30] transition-colors">
+              <button type="submit">Submit Review</button>
+            </div>
+          </Form>
+        )}
       </div>
-
-      <div className="bg-[#FF8C38] h-12 w-3/4 mx-auto rounded-md text-center mb-2 text-[18px] font-bold text-white flex items-center justify-center mt-6">
-        Rent the van
-      </div>
+      {currentUser?.hostId === "01" && (
+        <div className="mt-4 lg:mt-8 flex justify-center">
+          {showLoginPopup ? (
+            <div className="fixed inset-0 backdrop-blur-xs flex justify-center items-center p-4 z-50">
+              <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-xs text-center">
+                <div className="text-xl font-bold mb-4">Not Logged In</div>
+                <div className="mb-6">
+                  Please log in to add items to your cart.
+                </div>
+                <Link
+                  to={`/login?redirectTo=${location.pathname}`}
+                  className="w-full p-2 bg-orange-500 !text-white font-bold py-3 rounded-md hover:bg-orange-600 transition duration-200"
+                >
+                  Go to Login
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={handleAddToCart}
+              className="bg-orange-500  !text-white p-4 w-full rounded"
+            >
+              Rent the van
+            </button>
+          )}
+        </div>
+      )}
+      {addtoCart && (
+        <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center p-4 z-50">
+          <div className="bg-white p-8 rounded-xl flex-row shadow-lg text-center">
+            <div className="font-[600] text-xl text-black flex items-center gap-2">
+            Van added to cart!
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

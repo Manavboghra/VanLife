@@ -29,17 +29,18 @@ const About = () => {
     </div>
   </div>
 
-  <div className="w-[500px] mx-auto my-10 rounded-sm h-48 gap-4 bg-[#FFCC8D] p-8 items-start  flex flex-col">
-    <div className="font-bold text-2xl leading-2">
-      <p>Your destination is waiting</p>
-      <p>Your van is ready</p>
-    </div>
-    <div className="text-white">
-  <Link to={"/vans"}  className="bg-black  font-medium px-4 py-2 rounded-lg text-sm">
-    Explore our vans
-  </Link>
-  </div>
-  </div>
+  <div className="bg-[#FFCC8D] rounded-2xl mx-6 md:mx-auto max-w-3xl my-12 p-10 text-center shadow-md">
+        <h3 className="text-2xl md:text-3xl font-bold text-[#161616] mb-4">
+          Your destination is waiting.  
+          <br /> Your van is ready.
+        </h3>
+        <Link
+          to="/vans"
+          className="inline-block bg-black text-white font-semibold px-6 py-3 rounded-lg text-base md:text-lg transition hover:bg-gray-900"
+        >
+          Explore Our Vans
+        </Link>
+      </div>
 </div>
 
   );

@@ -20,7 +20,7 @@ export async function action({ request }) {
   const email = formData.get("email");
   const password = formData.get("password");
   const pathname =
-    new URL(request.url).searchParams.get("redirectTo") || "/host";
+    new URL(request.url).searchParams.get("redirectTo") || "/vans";
 
   try {
     const data = await loginUser({ email, password });

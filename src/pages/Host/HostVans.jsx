@@ -3,7 +3,7 @@ import { Link, useOutletContext } from "react-router-dom";
 
 const HostVans = ({ propVans }) => {
   // expect an object { vans, currentUser } from HostLayout
-  const { vans: contextVans = [], currentUser } = useOutletContext() || {};
+  const { vans: contextVans = []} = useOutletContext() || {};
   const vans = propVans || contextVans;
   // const [currentUser, setCurrentUser] = useState(null);
 
@@ -14,19 +14,7 @@ const HostVans = ({ propVans }) => {
   //   }
   // }, []);
 
-  // console.log(currentUser?.hostId); 
 
-  // const filter = vans.filter((van) => van.hostId === currentUser?.hostId);
-
-    if (currentUser?.hostId === "01") {
-    return (
-      <div className="bg-[#FFF7ED] h-full flex items-center justify-center p-10">
-        <div className="text-2xl font-semibold text-gray-500">
-          Sorry, you do not have this access.
-        </div>
-      </div>
-    );
-  }
 
 
   return (

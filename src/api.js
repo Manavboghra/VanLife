@@ -303,16 +303,14 @@ export async function getHost() {
 
 
 export async function updateVan(params) {
-  // Fetch the existing van
   const vanRes = await fetch(`http://localhost:5000/vans/${params.id}`);
   if (!vanRes.ok) {
     throw new Error(`Van not found: ${vanRes.status} ${vanRes.statusText}`);
   }
   const van = await vanRes.json();
 
-  // Merge existing fields with updates
   const updatedVan = {
-    ...van, // keeps id, hostId, reviews, etc.
+    ...van, 
     name: params.name,
     price: params.price,
     description: params.description,
@@ -320,7 +318,6 @@ export async function updateVan(params) {
     type: params.type,
   };
 
-  // Send updated van back to server
   const res = await fetch(`http://localhost:5000/vans/${params.id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -332,4 +329,136 @@ export async function updateVan(params) {
   }
 
   return await res.json();
+}
+
+
+export async function deleteVan(params) {
+   try {
+    const res = await fetch(`http://localhost:5000/vans/${params}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      throw {
+        message: "Failed to remove from cart",
+        statusText: res.statusText,
+        status: res.status,
+      };
+    }
+
+    return true;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export async function getCart(userId) {
+  try {
+    const res = await fetch(`http://localhost:5000/cart?userId=${userId}`);
+    if (!res.ok) {
+      throw {
+        message: "Failed to fetch cart",
+        statusText: res.statusText,
+        status: res.status,
+      };
+    }
+    return await res.json();
+  } catch (error) {
+    throw error;
+  }
+}
+
+// Add item to cart
+export async function addToCart(userId, van) {
+  try {
+    const newCartItem = {
+      userId,
+      vanId: van.id,
+      name: van.name,
+      price: van.price,
+      imageUrl: van.imageUrl,
+      type: van.type,
+      days: 1,
+    };
+
+    const res = await fetch("http://localhost:5000/cart", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newCartItem),
+    });
+
+    if (!res.ok) {
+      throw {
+        message: "Failed to add to cart",
+        statusText: res.statusText,
+        status: res.status,
+      };
+    }
+
+    return await res.json();
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateCartItem(cartItemId, updates) {
+  try {
+    const res = await fetch(`http://localhost:5000/cart/${cartItemId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updates),
+    });
+
+    if (!res.ok) {
+      throw {
+        message: "Failed to update cart item",
+        statusText: res.statusText,
+        status: res.status,
+      };
+    }
+
+    return await res.json();
+  } catch (error) {
+    throw error;
+  }
+}
+
+// Remove item from cart
+export async function removeFromCart(cartItemId) {
+  try {
+    const res = await fetch(`http://localhost:5000/cart/${cartItemId}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      throw {
+        message: "Failed to remove from cart",
+        statusText: res.statusText,
+        status: res.status,
+      };
+    }
+
+    return true;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// Clear cart for a user
+export async function clearCart(userId) {
+  try {
+    const res = await fetch(`http://localhost:5000/cart?userId=${userId}`);
+    const items = await res.json();
+
+    await Promise.all(
+      items.map((item) =>
+        fetch(`http://localhost:5000/cart/${item.id}`, { method: "DELETE" })
+      )
+    );
+
+    return true;
+  } catch (error) {
+    throw error;
+  }
 }
