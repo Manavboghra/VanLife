@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import HostNavbar from "../components/HostNavbar";
 import { Outlet, useLoaderData } from "react-router-dom";
-import { getHostVans} from "../api";
+import { getHostVans } from "../api";
 import requireAuth from "../utils/requireAuth";
 import { getCurrentUser } from "../utils/auth";
 
@@ -16,24 +16,14 @@ export async function loader({ request }) {
 
   return await getHostVans(user.hostId);
 }
-  
-
-
 
 const HostLayout = () => {
   const vans = useLoaderData();
   const currentUser = getCurrentUser();
-  // const [currentUser, setCurrentUser] = useState(null);
-  // useEffect(() => {
-  //   const user = localStorage.getItem("currentUser");
-  //   if (user) {
-  //     setCurrentUser(JSON.parse(user));
-  //   }
-  // }, []);
 
-   if (currentUser?.hostId === "01") {
+  if (currentUser?.hostId === "01") {
     return (
-      <div className="bg-[#FFF7ED] h-full  flex items-center justify-center p-10">
+      <div className="bg-gray-50 h-screen flex items-center justify-center">
         <div className="text-2xl font-semibold text-gray-500">
           Sorry, you do not have this access.
         </div>
@@ -42,9 +32,16 @@ const HostLayout = () => {
   }
 
   return (
-    <div>
-      <HostNavbar />
-      <Outlet context={{ vans}} />
+    <div className="flex h-screen">
+      {/* Sidebar */}
+      <aside className="w-64 border-r bg-white shadow-sm">
+        <HostNavbar />
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
+        <Outlet context={{ vans }} />
+      </main>
     </div>
   );
 };

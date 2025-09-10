@@ -33,9 +33,9 @@ const UpdateVans = () => {
 
   return (
     <div className="bg-[#FFF7ED] min-h-screen p-6">
-      <h1 className="font-bold text-3xl text-gray-800 mb-6">
+      <div className="font-bold text-3xl text-gray-800 mb-6">
         Your Listed Vans
-      </h1>
+      </div>
 
       <div className="space-y-4">
         {vans.length > 0 ? (

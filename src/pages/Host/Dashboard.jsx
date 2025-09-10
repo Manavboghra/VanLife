@@ -5,11 +5,9 @@ import HostVans from "../Host/HostVans";
 import { Star } from "react-feather";
 
 const Dashboard = () => {
-  const {vans} = useOutletContext() || [];
-  
-  const { totalIncome, averageStars } = useMemo(() => {
-  // const filter = vans.filter((van) => van.hostId === currentUser?.hostId);
+  const { vans } = useOutletContext() || [];
 
+  const { totalIncome, averageStars } = useMemo(() => {
     const allReviews = vans.flatMap((van) => van.reviews || []);
     const totalReviews = allReviews.length;
 
@@ -17,6 +15,7 @@ const Dashboard = () => {
       (sum, r) => sum + (r.payment || 0),
       0
     );
+
     const averageStars =
       totalReviews > 0
         ? (
@@ -31,43 +30,55 @@ const Dashboard = () => {
   const totalStars = 5;
 
   return (
-    <div className="text-4xl">
-      <div className="bg-[#FFEAD0] p-6 flex flex-col gap-3">
-        <div className="font-bold text-3xl">Welcome!</div>
-        <div className="text-lg flex justify-between">
-          <div className="text-[#4D4D4D]">Total Income:</div>
-          <div className="hover:underline text-sm content-center">
-            <Link to="./income">Details</Link>
+    <div className="p-8 space-y-8 bg-white min-h-screen">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-gray-800">Welcome Back!</h1>
+        <p className="text-gray-500 text-sm">
+          Here’s an overview of your hosting performance
+        </p>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Income Card */}
+        <div className="bg-white border rounded-xl shadow-md p-6 flex flex-col">
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-semibold text-gray-700">Total Income</h2>
+            <Link to="./income" className="text-sm text-blue-600 hover:underline">
+              Details
+            </Link>
+          </div>
+          <div className="mt-4 text-3xl font-bold text-gray-900">
+            <CurrencyFormatter value={totalIncome} />
           </div>
         </div>
-        <div className="font-bold">
-          <CurrencyFormatter value={totalIncome} />
+
+        {/* Review Score Card */}
+        <div className="bg-white border rounded-xl shadow-md p-6 flex flex-col">
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-semibold text-gray-700">Review Score</h2>
+            <Link to="./reviews" className="text-sm text-blue-600 hover:underline">
+              Details
+            </Link>
+          </div>
+          <div className="mt-4 flex items-center gap-2">
+            <Star size={20} className="fill-amber-400 text-amber-500" />
+            <span className="text-2xl font-bold text-gray-900">{averageStars}</span>
+            <span className="text-gray-500">/ {totalStars}</span>
+          </div>
         </div>
       </div>
 
-      <div className="text-lg p-6 bg-[#FFDDB2] flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="font-bold">Review score</div>
-          <Star size={19} className="fill-amber-400 text-amber-500" />
-          <div className="flex items-baseline font-bold">
-            {averageStars}/<span className="font-light">{totalStars}</span>
-          </div>
+      {/* Vans Section */}
+      <div className="bg-white border rounded-xl shadow-md p-6 relative">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-semibold text-gray-700">Your Vans</h2>
+          <Link to="./vans" className="text-sm text-blue-600 hover:underline">
+            View All
+          </Link>
         </div>
-
-        <div className="hover:underline text-sm">
-          <Link to="./reviews">Details</Link>
-        </div>
-      </div>
-
-      <div className="relative">
-        <div className="pointer-events-none">
-          <div className="flex flex-col-reverse pt-2">
-            <HostVans propVans={vans.slice(0, 1)} />
-          </div>
-        </div>
-        <div className="absolute hover:underline top-6 right-4 text-sm px-2 py-1 rounded">
-          <Link to="./vans">View All</Link>
-        </div>
+        <HostVans propVans={vans.slice(0, 1)} />
       </div>
     </div>
   );

@@ -499,16 +499,6 @@
       "hostId": "01"
     }
   ],
-  "cart": [
-    {
-      "id": "08b4",
-      "userId": "4f72",
-      "vanId": "2",
-      "name": "Beach Bum",
-      "price": 80,
-      "imageUrl": "https://assets.scrimba.com/advanced-react/react-router/beach-bum.png",
-      "type": "rugged",
-      "days": 7
-    }
-  ]
+  "cart": [],
+  "bookings":[]
 }

@@ -1,84 +1,110 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/Logo.png";
-import { ShoppingCart, User } from "react-feather";
+import { ShoppingCart, User, Menu, X } from "react-feather";
 
 const Navbar = () => {
-  //  const [currentUser, setCurrentUser] = useState(null);
-  //   useEffect(() => {
-  //     const user = localStorage.getItem("currentUser");
-  //     if (user) {
-  //       setCurrentUser(JSON.parse(user));
-  //     }
-  //   }, []);
-  //   const userId = currentUser?.hostId
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  const navLinks = [
+    { name: "Host", path: "/host" },
+    { name: "About", path: "/about" },
+    { name: "Vans", path: "/vans" },
+    { name: "Add Vans", path: "/addvans" },
+  ];
+
   return (
-    <header>
-      <div className="w-full flex justify-between lg:p-6 p-3 gap-2 items-center h-28 bg-[#FFF7ED]">
+    <header className="shadow-md bg-white top-0 left-0 right-0 z-50">
+      <div className="w-full flex justify-between px-4 lg:px-12 py-4 items-center h-20">
+        {/* Logo - always visible */}
         <div>
           <Link to="/">
-            <img className="w-40" src={logo} alt="#VANLIFE" />
+            <img className="w-32 lg:w-36" src={logo} alt="#VANLIFE" />
           </Link>
         </div>
-        <div className="flex lg:gap-4 gap-2 text-[#4D4D4D] items-center">
-          <NavLink 
-            className={({ isActive }) => {
-              return isActive ? "underline font-bold" : "font-[600]";
-            }}
-             to= "/host"
-          >
-            Host
-          </NavLink>
+
+        {/* Desktop Links */}
+        <nav className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.path}
+              to={link.path}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-blue-600 font-semibold border-b-2 border-blue-600 pb-1 whitespace-nowrap"
+                  : "hover:text-blue-600 transition-colors whitespace-nowrap"
+              }
+            >
+              {link.name}
+            </NavLink>
+          ))}
+
+          {/* User Icon */}
           <NavLink
-            className={({ isActive }) => {
-              return isActive ? "underline font-bold" : "font-[600]";
-            }}
-            to="about"
-          >
-            About
-          </NavLink>
-          <NavLink
-            className={({ isActive }) => {
-              return isActive ? "underline font-bold" : "font-[600]";
-            }}
-            to="vans"
-          >
-            Vans
-          </NavLink>
-          <NavLink
-            className={({ isActive }) => {
-              return isActive ? "underline font-bold" : "font-[600]";
-            }}  
-            to="addvans"
-          >
-            AddVans
-          </NavLink>
-          <NavLink
+            to="/login"
             className={({ isActive }) =>
               isActive
-                ? "underline font-bold flex items-center justify-center"
-                : "font-[600] flex items-center justify-center"
+                ? "text-blue-600 flex items-center"
+                : "hover:text-blue-600 flex items-center transition-colors"
             }
-            to="login"
           >
-            <span className="flex items-center justify-center h-10 w-8">
-              <User className="border-3 rounded-2xl" size={25} />
-            </span>
+            <User size={22} />
           </NavLink>
+
+          {/* Cart Icon */}
           <NavLink
+            to="/cart"
             className={({ isActive }) =>
               isActive
-                ? "underline font-bold flex items-center justify-center"
-                : "font-[600] flex items-center justify-center"
+                ? "text-blue-600 flex items-center"
+                : "hover:text-blue-600 flex items-center transition-colors"
             }
-            to="cart"
           >
-              <ShoppingCart  size={17} />
+            <ShoppingCart size={20} />
           </NavLink>
+        </nav>
+
+        {/* Mobile Hamburger */}
+        <div className="md:hidden">
+          <button onClick={toggleMenu}>
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Drawer */}
+      {isOpen && (
+        <div className="md:hidden bg-white shadow-lg px-6 py-4 space-y-4">
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.path}
+              to={link.path}
+              className={({ isActive }) =>
+                isActive
+                  ? "block text-blue-600 font-semibold"
+                  : "block hover:text-blue-600"
+              }
+              onClick={() => setIsOpen(false)}
+            >
+              {link.name}
+            </NavLink>
+          ))}
+
+          <div className="flex gap-6 mt-4">
+            <NavLink to="/login" onClick={() => setIsOpen(false)}>
+              <User size={24} className="hover:text-blue-600" />
+            </NavLink>
+            <NavLink to="/cart" onClick={() => setIsOpen(false)}>
+              <ShoppingCart size={22} className="hover:text-blue-600" />
+            </NavLink>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
 
 export default Navbar;
+  

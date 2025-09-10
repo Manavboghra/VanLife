@@ -50,7 +50,6 @@ const VansDetails = () => {
   const clear = useRef();
   // const [currentUser, setCurrentUser] = useState(null);
   const currentUser = getCurrentUser()
-  console.log(currentUser)
 
   // useEffect(() => {
   //   const user = localStorage.getItem("currentUser");

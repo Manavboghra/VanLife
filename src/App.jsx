@@ -35,6 +35,7 @@ import HostIncome from "./pages/Host/Vans/HostIncome";
 import UpdateVans from "./pages/Host/UpdateVans";
 import UpdateVanDetails,{loader as UpdateVanDetailsLoader, action as UpdateVanDetailsAction} from "./components/UpdateVanDetails";
 import Cart,{loader as CartLoader} from "./pages/Cart/Cart";
+import Booking,{loader as BookingLoader} from "./pages/Host/Booking";
 
 function App() {
   const router = createBrowserRouter(
@@ -108,6 +109,11 @@ function App() {
             loader={UpdateVanDetailsLoader}
             errorElement={<Error />}
             action={UpdateVanDetailsAction}
+          />
+          <Route
+            path="booking"
+            element={<Booking />}
+            loader={BookingLoader}
           />
         </Route>
       </Route>

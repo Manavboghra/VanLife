@@ -1,11 +1,17 @@
 import { useLoaderData } from "react-router-dom";
-import { clearCart, getCart, removeFromCart, updateCartItem } from "../../api";
+import {
+  clearCart,
+  getCart,
+  hostBooking,
+  removeFromCart,
+  updateCartItem,
+} from "../../api";
 import { useState } from "react";
 import { X } from "react-feather";
-import DaysSelector from "../../components/DaysSelector";
+// import DaysSelector from "../../components/DaysSelector";
 import { getCurrentUser } from "../../utils/auth";
 import requireAuth from "../../utils/requireAuth";
-
+import dayjs from "dayjs";
 import { DatePicker, Space } from "antd";
 
 const { RangePicker } = DatePicker;
@@ -43,24 +49,26 @@ const Cart = () => {
     }
   };
 
-  // Cancel delete
   const cancelDelete = () => {
     setIsToggleCancel(false);
     setDeleteId(null);
   };
 
-  const subTotalAmount = cartItems.reduce((a, b) => a + b.price * b.days, 0);
+  const subTotalAmount = cartItems.reduce(
+    (a, b) => a + (b.price * b?.daysCount || 0),
+    0
+  );
   const tax = ((subTotalAmount * 12) / 100).toFixed(2);
   const total = (subTotalAmount + Number(tax)).toFixed(2);
 
-  const handleDaysUpdate = (vanId, newDays) => {
-    setCartItems((currentItems) =>
-      currentItems.map((item) =>
-        item.id === vanId ? { ...item, days: newDays } : item
-      )
-    );
-    return updateCartItem(vanId, { days: newDays });
-  };
+  // const handleDaysUpdate = (vanId, newDays) => {
+  //   setCartItems((currentItems) =>
+  //     currentItems.map((item) =>
+  //       item.id === vanId ? { ...item, days: newDays } : item
+  //     )
+  //   );
+  //   return updateCartItem(vanId, { days: newDays });
+  // };
 
   const handleClear = async () => {
     try {
@@ -72,15 +80,49 @@ const Cart = () => {
     }
   };
 
-  const [range, setRange] = useState({ start: null, end: null });
-
-  const handleDatePicker = (dates, dateStrings) => {
+  const handleDatePicker = (dates, dateStrings, vanId) => {
     if (dateStrings && dateStrings.length === 2) {
       const [start, end] = dateStrings;
-      setRange({ start, end });
-      console.log("Start:", start, "End:", end);
+
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      const diffTime = endDate.getTime() - startDate.getTime();
+      const dayCount = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      setCartItems((prev) =>
+        prev.map((item) =>
+          item.id === vanId
+            ? { ...item, daysId: { start, end }, daysCount: dayCount }
+            : item
+        )
+      );
+
+      updateCartItem(vanId, {
+        daysId: { start, end },
+        daysCount: dayCount,
+      });
     } else {
-      setRange({ start: null, end: null });
+      setCartItems((prev) =>
+        prev.map((item) =>
+          item.id === vanId ? { ...item, daysCount: 1, daysId: null } : item
+        )
+      );
+
+      updateCartItem(vanId, { daysCount: 1, daysId: null });
+    }
+  };
+
+  const handleBooking = async (cartItems) => {
+    try {
+      const currentUser = getCurrentUser();
+      console.log(currentUser.id)
+      const orderId = Date.now();
+      await hostBooking(orderId, cartItems);
+      await clearCart(currentUser.id);
+      setCartItems([]);
+      console.log("Booking saved successfully");
+    } catch (err) {
+      console.error("Failed to save booking:", err);
     }
   };
 
@@ -113,7 +155,27 @@ const Cart = () => {
                   <div className="flex-grow flex flex-col gap-1 ml-4">
                     <h2 className="text-lg font-semibold">{van.name}</h2>
                     <p className="text-gray-600">Price: ${van.price}/day</p>
-                    <DaysSelector van={van} onDaysChange={handleDaysUpdate} />
+                    {/* <DaysSelector van={van} onDaysChange={handleDaysUpdate} /> */}
+                    <Space direction="vertical" size={12}>
+                      <div className="flex  flex-row items-center gap-2">
+                        <span className="text-gray-600">Date:</span>
+                        <RangePicker
+                          defaultValue={[
+                            dayjs(van.daysId.start),
+                            dayjs(van.daysId.end),
+                          ]}
+                          onChange={(dates, dateStrings) =>
+                            handleDatePicker(
+                              dates,
+                              dateStrings,
+                              van.id,
+                              van.daysId.start,
+                              van.daysId.end
+                            )
+                          }
+                        />
+                      </div>
+                    </Space>
                   </div>
                   <div className="pb-24">
                     <button
@@ -188,20 +250,14 @@ const Cart = () => {
               </div>
             </div>
 
-            <button className="w-full bg-orange-500 !text-white font-bold py-3 rounded-md hover:bg-orange-600 transition duration-200">
+            <button
+              onClick={() => handleBooking(cartItems)}
+              className="w-full bg-orange-500 !text-white font-bold py-3 rounded-md hover:bg-orange-600 transition duration-200"
+            >
               Proceed to Checkout
             </button>
           </div>
         )}
-      </div>
-      <div className="p-2">
-        <Space direction="vertical" size={12}>
-          <RangePicker onChange={handleDatePicker} />
-          <div>
-            Selected: {range.start} → {range.end}
-          </div>
-        </Space>
-        {console.log("Selected Dates: ")}
       </div>
     </div>
   );
