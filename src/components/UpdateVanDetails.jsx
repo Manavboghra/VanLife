@@ -71,7 +71,7 @@ const UpdateVanDetails = () => {
   }, [actionData]);
 
   return (
-    <div className="bg-[#FFF7ED] min-h-screen p-6">
+    <div className="bg-white min-h-screen p-6">
       <Link
         to={"../updatevans"}
         className="flex items-center gap-2 text-orange-600 hover:underline mb-6"

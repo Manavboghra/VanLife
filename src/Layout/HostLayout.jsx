@@ -32,17 +32,17 @@ const HostLayout = () => {
   }
 
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <aside className="w-64 border-r bg-white shadow-sm">
-        <HostNavbar />
-      </aside>
+   <div className="flex min-h-screen">
+  {/* Sidebar */}
+  <aside className="w-64  bg-white shadow-sm">
+    <HostNavbar />
+  </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
-        <Outlet context={{ vans }} />
-      </main>
-    </div>
+  {/* Main Content */}
+  <main className="flex-1 bg-gray-50 p-6">
+    <Outlet context={{ vans }} />
+  </main>
+</div>
   );
 };
 

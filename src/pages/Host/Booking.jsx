@@ -10,7 +10,7 @@ const Booking = () => {
   const vans = useLoaderData();
 
   return (
-    <div className="p-5 bg-[#FFF7ED] min-h-screen">
+    <div className="p-5 bg-white min-h-screen">
       <div className="text-3xl font-bold pb-2">Bookings</div>
 {vans && vans.length > 0 ? (
       <div>

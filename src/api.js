@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 
 export async function getVans() {
   try {
@@ -144,44 +143,6 @@ export async function loginUser(creds) {
 
   return userToSend;
 }
-
-// export async function loginUser(creds) {
-//     const res = await fetch(`http://localhost:5000/users?email=${creds.email}`);
-//     if (!res.ok) {
-//         throw {
-//             message: "Login failed. Please try again.",
-//             statusText: res.statusText,
-//             status: res.status
-//         };
-//     }
-//     const users = await res.json();
-
-//     if (users.length === 0) {
-//         throw {
-//             message: "No user with those credentials found!",
-//             statusText: "Not Found",
-//             status: 404
-//         };
-//     }
-
-//     const foundUser = users.find(user => user.password === creds.password);
-
-//     if (!foundUser) {
-//         throw {
-//             message: "No user with those credentials found!",
-//             statusText: "Unauthorized",
-//             status: 401
-//         };
-//     }
-
-//     const userToSend = {
-//         id: foundUser.id,
-//         name: foundUser.name,
-//         email: foundUser.email
-//     };
-
-//     return userToSend;
-// }
 
 export async function checkUsername(username) {
   const resUser = await fetch(`http://localhost:5000/users`);
@@ -352,7 +313,6 @@ export async function deleteVan(params) {
   }
 }
 
-
 export async function getCart(userId) {
   try {
     const res = await fetch(`http://localhost:5000/cart?userId=${userId}`);
@@ -368,9 +328,6 @@ export async function getCart(userId) {
     throw error;
   }
 }
-
-
-
 
 export async function addToCart(userId, van) {
   const today = new Date();
@@ -419,7 +376,6 @@ export async function addToCart(userId, van) {
 }
 
 export async function updateCartItem(cartItemId, updates) {
-  // upupdates
   try {
     const res = await fetch(`http://localhost:5000/cart/${cartItemId}`, {
       method: "PATCH",
@@ -441,7 +397,6 @@ export async function updateCartItem(cartItemId, updates) {
   }
 }
 
-// Remove item from cart
 export async function removeFromCart(cartItemId) {
   try {
     const res = await fetch(`http://localhost:5000/cart/${cartItemId}`, {
@@ -462,7 +417,6 @@ export async function removeFromCart(cartItemId) {
   }
 }
 
-// Clear cart for a user
 export async function clearCart(userId) {
   try {
     const res = await fetch(`http://localhost:5000/cart?userId=${userId}`);
@@ -493,9 +447,9 @@ export async function hostBooking(orderId, vans) {
         const endDate = new Date(van.daysId.end);
 
         const formattedStartDate = startDate.toLocaleDateString("en-US", {
-          month: "short", // Sep
-          day: "numeric", // 30
-          year: "numeric", // 2025
+          month: "short", 
+          day: "numeric", 
+          year: "numeric", 
         });
 
         const formattedEndDate = endDate.toLocaleDateString("en-US", {
@@ -507,8 +461,8 @@ export async function hostBooking(orderId, vans) {
         return {
           hostId: Number(van.hostId),
           income,
-          start:formattedStartDate,
-          end:formattedEndDate,
+          start: formattedStartDate,
+          end: formattedEndDate,
           vanId: van.vanId,
           name: van.name,
           price: van.price,

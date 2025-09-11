@@ -42,7 +42,7 @@ const HostVansDetails = () => {
 
   if (!vans) {
     return (
-        <div className="p-6 bg-[#FFF7ED]">
+        <div className="p-6 bg-white">
             <h2>Sorry, we couldn't find that van.</h2>
             <Link to={"/host/vans"}>
                 <div className="flex items-center gap-2">
@@ -56,7 +56,7 @@ const HostVansDetails = () => {
 
   return (
     <div>
-      <div className="bg-[#FFF7ED] w-full pb-14 p-6 ">
+      <div className="bg-white w-full pb-14 p-6 ">
         <Link to={"/host/vans"}>
           <div className="flex items-center gap-2">
             <ArrowLeft size={16} />

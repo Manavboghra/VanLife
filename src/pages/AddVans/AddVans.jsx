@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Form, useLocation, useNavigation } from "react-router-dom";
-import { getNewVan } from "../../api";
-
-import { getVans } from "../../api";
+import React, { useRef } from "react";
+import { Form, useNavigation } from "react-router-dom";
 import { getCurrentUser } from "../../utils/auth";
+import { getNewVan, getVans } from "../../api";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -35,41 +33,38 @@ export async function action({ request }) {
 
 const AddVans = () => {
   const currentUser = getCurrentUser();
-  // const [currentUser, setCurrentUser] = useState(null);
-  // useEffect(() => {
-  //   const user = localStorage.getItem("currentUser");
-  //   if (user) {
-  //     setCurrentUser(JSON.parse(user));
-  //   }
-  // }, []);
   const formRef = useRef();
-  const navigatation = useNavigation();
+  const navigation = useNavigation();
 
   const handleSubmit = () => {
     setTimeout(() => formRef.current.reset(), 100);
   };
 
+
   if (currentUser?.hostId === "01") {
     return (
-      <div className="bg-[#FFF7ED] h-full flex items-center justify-center p-10">
-        <div className="text-2xl font-semibold text-gray-500">
-          Sorry, you do not have this access.
+      <div className="bg-gray-50 h-screen flex items-center justify-center">
+        <div className="text-2xl font-semibold text-gray-500 bg-white p-8 rounded-2xl shadow-md">
+          🚫 Sorry, you do not have access to add vans.
         </div>
       </div>
     );
   }
 
   return (
-    <div className="p-6 bg-[#FFF7ED]">
-      <div className="font-bold text-4xl text-center ">Add new van</div>
-      <Form ref={formRef} onSubmit={handleSubmit} method="post">
-        <div className="bg-white border-2 rounded-lg text-left  ml-auto mr-auto max-w-96 m-7 px-10 py-7">
-          <div className="flex flex-col">
-            <label className="font-[600] text-xl pb-2" htmlFor="name">
+    <div className="bg-gray-50 min-h-screen flex items-center justify-center px-6 py-12">
+      <div className="bg-white shadow-xl rounded-2xl w-full max-w-lg p-10">
+        <h1 className="text-3xl font-extrabold text-center text-gray-800 mb-6">
+          Add New Van
+        </h1>
+
+        <Form ref={formRef} onSubmit={handleSubmit} method="post" className="space-y-6">
+          <div>
+            <label className="block font-semibold text-gray-700 mb-2" htmlFor="name">
               Name
             </label>
             <input
-              className="border-2 rounded-lg h-7 py-4 px-2"
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#FF8C38] outline-none"
               type="text"
               name="name"
               id="name"
@@ -77,12 +72,13 @@ const AddVans = () => {
               required
             />
           </div>
-          <div className="flex flex-col">
-            <label className="font-[600] text-xl pt-4 pb-2" htmlFor="price">
-              Price
+
+          <div>
+            <label className="block font-semibold text-gray-700 mb-2" htmlFor="price">
+              Price (₹)
             </label>
             <input
-              className="border-2 rounded-lg h-7 py-4 px-2"
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#FF8C38] outline-none"
               type="number"
               name="price"
               id="price"
@@ -90,72 +86,63 @@ const AddVans = () => {
               required
             />
           </div>
-          <div className="flex flex-col">
-            <label
-              className="font-[600] text-xl pt-4 pb-2"
-              htmlFor="description"
-            >
+
+          <div>
+            <label className="block font-semibold text-gray-700 mb-2" htmlFor="description">
               Description
             </label>
             <textarea
-              className="border-2 rounded-lg  py-1 h-20 px-2"
+              className="w-full border rounded-lg px-3 py-2 h-24 resize-none focus:ring-2 focus:ring-[#FF8C38] outline-none"
               name="description"
               id="description"
               placeholder="Add description"
               required
             />
           </div>
-          <div className="flex flex-col">
-            <label className="font-[600] text-xl" htmlFor="imageUrl">
-              Image
-            </label>
-            {/* <input
-              className="border-2 rounded-lg h-20 content-center  cursor-pointer pl-12"
-              type="file"
-              name="image"
-              id="image"
-              required
-              accept="Image/.jpg/.png/.jpeg"
-            /> */}
 
+          <div>
+            <label className="block font-semibold text-gray-700 mb-2" htmlFor="imageUrl">
+              Image URL
+            </label>
             <input
               type="url"
               name="imageUrl"
               id="imageUrl"
-              placeholder="Paste Image URL"
-              className="border-2 rounded-lg h-10 cursor-pointer p-2"
+              placeholder="Paste image URL"
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#FF8C38] outline-none"
               required
             />
-
           </div>
-          <div className="flex flex-col">
-            <label className="font-[600] text-xl pt-4 pb-2" htmlFor="type">
+
+          <div>
+            <label className="block font-semibold text-gray-700 mb-2" htmlFor="type">
               Type
             </label>
-
             <select
               name="type"
               id="type"
-              className="border-2 rounded-lg h-10 px-2 py-2"
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#FF8C38] outline-none"
             >
               <option value="simple">Simple</option>
               <option value="rugged">Rugged</option>
               <option value="luxury">Luxury</option>
             </select>
           </div>
+
           {currentUser && (
             <input type="hidden" name="hostId" value={currentUser.hostId} />
           )}
-          <div className="flex justify-center mt-4">
+
+          <div className="flex justify-center">
             <button
-              disabled={navigatation.state === "submitting"}
-              className="bg-[#FF8C38] font-bold py-2 px-4 rounded-lg mt-5 hover:bg-[#e6761a] !text-white disabled:bg-[#ffc9a0]"
+              disabled={navigation.state === "submitting"}
+              className="w-full bg-[#FF8C38] !text-white font-bold py-3 rounded-lg hover:bg-[#e6761a] transition disabled:bg-[#ffc9a0]"
             >
-              Submit
+              {navigation.state === "submitting" ? "Submitting..." : "Submit"}
             </button>
           </div>
-        </div>
-      </Form>
+        </Form>
+      </div>
     </div>
   );
 };

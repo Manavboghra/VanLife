@@ -360,6 +360,15 @@
           "comment": "nice"
         }
       ]
+    },
+    {
+      "id": "9",
+      "name": "BMW",
+      "price": 120,
+      "description": "The price of BMW X5, a 5 seater Full-Size SUV, ranges from Rs. 1.00 - 1.15 Crore. It is available in 4 variants, with engine options ranging from 2993 to 2998 cc and a choice of 1 transmission: Automatic. X5 comes with 6 airbags. BMW X5 is available in 6 colours. Users have reported a mileage of 12 kmpl for X5.\n",
+      "imageUrl": "https://hips.hearstapps.com/hmg-prod/images/p90495464-1677001974.jpg?crop=0.720xw:0.608xh;0.250xw,0.329xh&resize=1200:*",
+      "type": "luxury",
+      "hostId": "789"
     }
   ],
   "hosts": [
@@ -500,5 +509,5 @@
     }
   ],
   "cart": [],
-  "bookings":[]
+  "bookings": []
 }

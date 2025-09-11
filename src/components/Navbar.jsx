@@ -16,16 +16,14 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="shadow-md bg-white top-0 left-0 right-0 z-50">
+    <header className="shadow-md bg-white sticky top-0 left-0 right-0 z-50">
       <div className="w-full flex justify-between px-4 lg:px-12 py-4 items-center h-20">
-        {/* Logo - always visible */}
         <div>
           <Link to="/">
             <img className="w-32 lg:w-36" src={logo} alt="#VANLIFE" />
           </Link>
         </div>
 
-        {/* Desktop Links */}
         <nav className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
           {navLinks.map((link) => (
             <NavLink
@@ -41,7 +39,6 @@ const Navbar = () => {
             </NavLink>
           ))}
 
-          {/* User Icon */}
           <NavLink
             to="/login"
             className={({ isActive }) =>
@@ -53,7 +50,6 @@ const Navbar = () => {
             <User size={22} />
           </NavLink>
 
-          {/* Cart Icon */}
           <NavLink
             to="/cart"
             className={({ isActive }) =>
@@ -66,7 +62,6 @@ const Navbar = () => {
           </NavLink>
         </nav>
 
-        {/* Mobile Hamburger */}
         <div className="md:hidden">
           <button onClick={toggleMenu}>
             {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -74,7 +69,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
       {isOpen && (
         <div className="md:hidden bg-white shadow-lg px-6 py-4 space-y-4">
           {navLinks.map((link) => (

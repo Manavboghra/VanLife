@@ -50,7 +50,7 @@ const Vans = () => {
   };
 
   return (
-    <div className="bg-[#FFF7ED] min-h-screen py-10 px-4 lg:px-16">
+    <div className="bg-white min-h-screen py-10 px-4 lg:px-16">
       {/* Header */}
       <div className="text-center mb-10">
         <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">

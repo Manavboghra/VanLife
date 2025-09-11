@@ -103,7 +103,7 @@ const VansDetails = () => {
   };
 
   return (
-    <div className="bg-[#FFF7ED] p-6">
+    <div className="bg-white p-6">
       <div className="mb-10 font-medium text-xl">
         <Link to={search ? `/vans${search}` : "/vans"}>
           <div className="flex items-center gap-2">

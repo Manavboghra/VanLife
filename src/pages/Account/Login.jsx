@@ -60,26 +60,30 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center  justify-center bg-[#FFF7ED] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-100 to-orange-200 px-4">
       {currentUser ? (
-        <div className="bg-white shadow-lg rounded-2xl   p-8 w-full max-w-md text-center">
+        <div className="bg-white shadow-xl rounded-2xl p-10 w-full max-w-md text-center">
           <h1 className="text-3xl font-bold text-gray-800">
-            Welcome, {currentUser.name}!
+            Welcome, {currentUser.name}! 🎉
           </h1>
           <p className="mt-2 text-gray-600">Host ID: {currentUser.hostId}</p>
           <button
             onClick={handleLogout}
             className="bg-red-500 text-white font-semibold py-2 px-6 rounded-lg mt-6 hover:bg-red-600 transition"
           >
-            Log out
+            Log Out
           </button>
         </div>
       ) : (
-        <div className="bg-white  border shadow-xl rounded-2xl p-8 w-full max-w-md">
-          <h1 className="text-3xl font-bold text-center text-gray-900 mb-6">
-            Welcome Back! 
+        <div className="bg-white border shadow-xl rounded-2xl p-8 w-full max-w-md">
+          <h1 className="text-3xl font-extrabold text-center text-gray-900 mb-2">
+            Welcome Back 👋
           </h1>
+          <p className="text-center text-gray-600 mb-6">
+            Sign in to continue your vanlife journey
+          </p>
 
+          {/* Error Messages */}
           {stateMessage && (
             <p className="text-red-500 text-center mb-2">{stateMessage}</p>
           )}
@@ -91,30 +95,32 @@ const Login = () => {
           )}
 
           <Form method="post" className="flex flex-col gap-5" replace>
+            {/* Email */}
             <div className="flex flex-col">
-              <label className="font-semibold text-gray-700" htmlFor="email">
+              <label className="font-semibold text-gray-700 mb-1" htmlFor="email">
                 Email Address
               </label>
               <input
-                className="border rounded-lg px-4 py-2 mt-1 w-full focus:ring-2 focus:ring-orange-400 outline-none"
+                className="border rounded-lg px-4 py-2 w-full focus:ring-2 focus:ring-orange-400 outline-none"
                 type="email"
                 id="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder="you@example.com"
                 required
               />
             </div>
 
+            {/* Password */}
             <div className="flex flex-col relative">
-              <label className="font-semibold text-gray-700" htmlFor="password">
+              <label className="font-semibold text-gray-700 mb-1" htmlFor="password">
                 Password
               </label>
               <input
-                className="border rounded-lg px-4 py-2 mt-1 w-full pr-10 focus:ring-2 focus:ring-orange-400 outline-none"
+                className="border rounded-lg px-4 py-2 w-full pr-10 focus:ring-2 focus:ring-orange-400 outline-none"
                 type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
-                placeholder="Enter your password"
+                placeholder="••••••••"
                 required
               />
               <div
@@ -129,14 +135,18 @@ const Login = () => {
               className="bg-orange-500 !text-white font-semibold py-2 rounded-lg mt-4 hover:bg-orange-600 transition disabled:bg-orange-300"
               disabled={navigation.state === "submitting"}
             >
-              {navigation.state === "submitting"
-                ? "Signing in..."
-                : "Sign In"}
+              {navigation.state === "submitting" ? "Signing in..." : "Sign In"}
             </button>
           </Form>
 
-          <div className="mt-6 text-center text-gray-600">
-            Don’t have an account?{" "}
+          <div className="flex items-center my-6">
+            <div className="flex-grow h-px bg-gray-300"></div>
+            <span className="mx-2 text-gray-500 text-sm">OR</span>
+            <div className="flex-grow h-px bg-gray-300"></div>
+          </div>
+
+          <div className="text-center text-gray-600">
+            Don't have an account?
             <Link
               to={"../signup"}
               className="text-orange-500 font-semibold hover:underline"

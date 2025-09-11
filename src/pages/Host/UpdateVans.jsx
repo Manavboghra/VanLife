@@ -32,7 +32,7 @@ const UpdateVans = () => {
   };
 
   return (
-    <div className="bg-[#FFF7ED] min-h-screen p-6">
+    <div className="bg-white min-h-screen p-6">
       <div className="font-bold text-3xl text-gray-800 mb-6">
         Your Listed Vans
       </div>

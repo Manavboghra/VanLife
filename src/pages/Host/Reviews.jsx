@@ -7,15 +7,12 @@ import "antd/dist/reset.css";
 const { MonthPicker } = DatePicker;
 
 const Reviews = () => {
-  const {vans = []} = useOutletContext()||{}; 
+  const { vans = [] } = useOutletContext() || {};
   const [selectedMonth, setSelectedMonth] = useState(null);
 
-
   if (!vans) {
-    return <h2>Loading reviews...</h2>;
+    return <h2 className="text-center text-gray-500 mt-10">Loading reviews...</h2>;
   }
-  
-
 
   const getMonth = (date) =>
     new Date(date).toLocaleDateString("en-US", {
@@ -23,14 +20,13 @@ const Reviews = () => {
       month: "long",
     });
 
-  // Handler for the month picker
   const handleChange = (_, dateString) => {
     if (dateString) {
       const month = new Date(dateString).toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
       });
-      setSelectedMonth(month);  
+      setSelectedMonth(month);
     } else {
       setSelectedMonth(null);
     }
@@ -53,51 +49,65 @@ const Reviews = () => {
       : [];
 
   return (
-    <div className="bg-[#FFF7ED] p-5 pt-0">
-      <div className="font-bold text-3xl mb-4 p-1">Your reviews</div>
+    <div className="flex-1 bg-gray-50 p-8 overflow-auto">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="font-bold text-3xl text-gray-800">Your Reviews</h1>
+        {totalReviews > 0 && (
+          <MonthPicker
+            onChange={handleChange}
+            placeholder="Filter by month"
+            format="YYYY-MM"
+            className="border border-gray-300 rounded-lg px-3 py-2"
+          />
+        )}
+      </div>
 
       {totalReviews > 0 ? (
         <>
-          <div className="mb-6">
-            <MonthPicker
-              onChange={handleChange}
-              placeholder="Filter by month"
-              format="YYYY-MM"
-            />
-          </div>
-
-          {starStats?.map(({ star, percentage, average }) => (
-            <div key={star}>
-              <div>
+          {/* Stats Section */}
+          <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+            {starStats?.map(({ star, percentage, average }) => (
+              <div key={star}>
                 {average && star === 5 && (
-                  <div className="flex text-center items-center gap-1.5 p-1">
-                    <div className="font-bold text-3xl pb-1 ">{average}</div>
-                    <Star size={17} className="fill-amber-500 text-amber-500" />
-                    overall rating
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-4xl font-bold text-gray-800">{average}</span>
+                    <Star size={20} className="fill-amber-500 text-amber-500" />
+                    <span className="text-gray-600">overall rating</span>
                   </div>
                 )}
-              </div>
-              <div className="flex flex-row items-center gap-5 p-2 ">
-                <div className="text-gray-600 w-16">
-                  {star} {star === 1 ? "star" : "stars"}
-                </div>
-                <div className="flex-1 bg-gray-300 sm:h-4 h-2 rounded-2xl overflow-hidden">
-                  <div
-                    className="bg-amber-500 sm:h-4 h-2 rounded-2xl transition-all duration-300"
-                    style={{ width: `${percentage}%` }}
-                  />
-                </div>
-                <div className="w-12 text-right">{percentage.toFixed(0)}%</div>
-              </div>
-            </div>
-          ))}
 
-          {/* Individual Reviews List */}
-          <div className="py-4">
-            <div className="text-3xl">Reviews ({totalReviews})</div>
+                <div className="flex items-center gap-4 mb-2">
+                  <div className="text-gray-600 w-20 text-sm font-medium">
+                    {star} {star === 1 ? "star" : "stars"}
+                  </div>
+                  <div className="flex-1 bg-gray-200 h-3 rounded-full overflow-hidden">
+                    <div
+                      className="bg-amber-500 h-3 rounded-full transition-all duration-300"
+                      style={{ width: `${percentage}%` }}
+                    />
+                  </div>
+                  <div className="w-12 text-right text-sm font-medium text-gray-600">
+                    {percentage.toFixed(0)}%
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Reviews List */}
+          <div>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+              Reviews ({totalReviews})
+            </h2>
+
             {vans.map((van) => (
-              <div key={van.id} className="mb-6 border-b py-4">
-                <h2 className="text-lg font-semibold">{van.name}</h2>
+              <div
+                key={van.id}
+                className="mb-10 bg-white shadow-sm rounded-xl p-6 border border-gray-100"
+              >
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">{van.name}</h3>
+
                 {(van?.reviews || [])?.length > 0 ? (
                   van.reviews
                     .filter(
@@ -105,7 +115,11 @@ const Reviews = () => {
                         !selectedMonth || getMonth(review.date) === selectedMonth
                     )
                     .map((review, idx) => (
-                      <div key={idx} className="mt-2 p-3 rounded bg-white shadow">
+                      <div
+                        key={idx}
+                        className="mb-4 border-b border-gray-100 pb-4 last:border-0 last:pb-0"
+                      >
+                        {/* Stars */}
                         <div className="flex">
                           {[...Array(5)].map((_, i) => (
                             <Star
@@ -119,7 +133,9 @@ const Reviews = () => {
                             />
                           ))}
                         </div>
-                        <div className="flex gap-8 mt-2 text-sm">
+
+                        {/* Reviewer + Date */}
+                        <div className="flex gap-6 mt-2 text-sm text-gray-600">
                           <div className="font-semibold">{review.reviewer}</div>
                           <div>
                             {new Date(review.date).toLocaleDateString("en-US", {
@@ -129,7 +145,11 @@ const Reviews = () => {
                             })}
                           </div>
                         </div>
-                        <p className="mt-2">{review.comment}</p>
+
+                        {/* Comment */}
+                        <p className="mt-2 text-gray-700 leading-relaxed">
+                          {review.comment}
+                        </p>
                       </div>
                     ))
                 ) : (
@@ -140,9 +160,9 @@ const Reviews = () => {
           </div>
         </>
       ) : (
-        <p className="text-gray-600 mt-4">
+        <div className="text-gray-500 text-center py-20 text-lg">
           There are no reviews available yet.
-        </p>
+        </div>
       )}
     </div>
   );

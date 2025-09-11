@@ -31,7 +31,6 @@ const Dashboard = () => {
 
   return (
     <div className="p-8 space-y-8 bg-white min-h-screen">
-      {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-800">Welcome Back!</h1>
         <p className="text-gray-500 text-sm">
@@ -39,9 +38,7 @@ const Dashboard = () => {
         </p>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Income Card */}
         <div className="bg-white border rounded-xl shadow-md p-6 flex flex-col">
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold text-gray-700">Total Income</h2>
@@ -54,7 +51,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Review Score Card */}
         <div className="bg-white border rounded-xl shadow-md p-6 flex flex-col">
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold text-gray-700">Review Score</h2>
@@ -70,7 +66,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Vans Section */}
       <div className="bg-white border rounded-xl shadow-md p-6 relative">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold text-gray-700">Your Vans</h2>

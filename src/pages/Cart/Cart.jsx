@@ -127,7 +127,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="bg-[#FFF7ED] min-h-screen p-4 lg:p-8">
+    <div className="bg-white min-h-screen p-4 lg:p-8">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
         <button

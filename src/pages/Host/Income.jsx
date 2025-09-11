@@ -68,8 +68,8 @@ const Income = () => {
 
 
   return (
-    <div className="bg-[#FFF7ED] ">
-      <div className="font-bold text-4xl px-5">Income</div>
+    <div className="p-8 space-y-8 bg-white min-h-screen">
+      <div className=" text-4xl px-5">Income</div>
       <div className="text-4xl font-black pb-10 p-5">
         {totalIncome > 0 ? (
           <CurrencyFormatter value={totalIncome} />

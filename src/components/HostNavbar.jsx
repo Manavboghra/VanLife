@@ -27,8 +27,8 @@ const HostNavbar = () => {
     <div className="flex h-screen">
       {/* Sidebar */}
       <div
-        className={`bg-white shadow-md border-r w-64 p-5 flex flex-col transition-transform duration-300
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 fixed md:relative z-50`}
+        className={`bg-white shadow-md w-64 p-5 flex flex-col transition-transform duration-300
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 fixed md:relative z-40`}
       >
         {/* Logo + Toggle */}
         <div className="flex justify-between items-center mb-8">
@@ -63,7 +63,6 @@ const HostNavbar = () => {
         </nav>
       </div>
 
-      {/* Mobile toggle button */}
       {!isOpen && (
         <button
           className="fixed top-4 left-4 md:hidden bg-white shadow-md p-2 rounded-md"
@@ -73,10 +72,6 @@ const HostNavbar = () => {
         </button>
       )}
 
-      {/* Page Content */}
-      <div className="flex-1 bg-[#FFF7ED] p-6 overflow-auto">
-        {/* This will render Dashboard / Vans / Income / etc. */}
-      </div>
     </div>
   );
 };
