@@ -1,11 +1,17 @@
 import React from "react";
 import { getBookedVans } from "../../api";
 import { Link, useLoaderData } from "react-router-dom";
+import { getCurrentUser } from "../../utils/auth";
 
+// export async function loader() {
+//   const currentUser = getCurrentUser()
+//   return await getBookedVans(currentUser.hostId);
+// }
 export async function loader() {
-  return await getBookedVans();
+  const currentUser = getCurrentUser();
+  const bookings = await getBookedVans(currentUser.hostId);
+  return bookings;
 }
-
 const Booking = () => {
   const vans = useLoaderData();
 

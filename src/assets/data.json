@@ -326,24 +326,6 @@
       ]
     },
     {
-      "id": "7",
-      "name": "vellfire ",
-      "price": 1198,
-      "description": "Good",
-      "imageUrl": "https://imgd.aeplcdn.com/664x374/n/cw/ec/154483/vellfire-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80",
-      "type": "luxury",
-      "hostId": "790",
-      "reviews": [
-        {
-          "reviewer": "mk",
-          "date": "2025-09-05",
-          "stars": 5,
-          "payment": 1200,
-          "comment": "nice"
-        }
-      ]
-    },
-    {
       "id": "8",
       "name": "desire",
       "price": 11,
@@ -509,5 +491,102 @@
     }
   ],
   "cart": [],
-  "bookings": []
+  "bookings": [
+    {
+      "id": "1378",
+      "orderId": 1757585331554,
+      "items": [
+        {
+          "hostId": 123,
+          "income": "89.60",
+          "start": "Sep 12, 2025",
+          "end": "Sep 13, 2025",
+          "vanId": "2",
+          "name": "Beach Bum",
+          "price": 80,
+          "imageUrl": "https://assets.scrimba.com/advanced-react/react-router/beach-bum.png",
+          "type": "rugged"
+        }
+      ]
+    },
+    {
+      "id": "9c4e",
+      "orderId": 1757586354965,
+      "items": [
+        {
+          "hostId": 789,
+          "income": "67.20",
+          "start": "Sep 12, 2025",
+          "end": "Sep 13, 2025",
+          "vanId": "1",
+          "name": "Modest Explorer",
+          "price": 60,
+          "imageUrl": "https://assets.scrimba.com/advanced-react/react-router/modest-explorer.png",
+          "type": "simple"
+        }
+      ]
+    },
+    {
+      "id": "865a",
+      "orderId": 1757587726742,
+      "items": [
+        {
+          "hostId": 789,
+          "income": "134.40",
+          "start": "Sep 12, 2025",
+          "end": "Sep 13, 2025",
+          "vanId": "9",
+          "name": "BMW",
+          "price": 120,
+          "imageUrl": "https://hips.hearstapps.com/hmg-prod/images/p90495464-1677001974.jpg?crop=0.720xw:0.608xh;0.250xw,0.329xh&resize=1200:*",
+          "type": "luxury"
+        }
+      ]
+    },
+    {
+      "id": "ce63",
+      "orderId": 1757587761562,
+      "items": [
+        {
+          "hostId": 792,
+          "income": "12.32",
+          "start": "Sep 12, 2025",
+          "end": "Sep 13, 2025",
+          "vanId": "8",
+          "name": "desire",
+          "price": 11,
+          "imageUrl": "https://imgd.aeplcdn.com/664x374/n/cw/ec/154483/vellfire-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80",
+          "type": "rugged"
+        },
+        {
+          "hostId": 789,
+          "income": "72.80",
+          "start": "Sep 12, 2025",
+          "end": "Sep 13, 2025",
+          "vanId": "4",
+          "name": "Dreamfinder",
+          "price": 65,
+          "imageUrl": "https://assets.scrimba.com/advanced-react/react-router/dreamfinder.png",
+          "type": "rugged"
+        }
+      ]
+    },
+    {
+      "id": "741f",
+      "orderId": 1757660462969,
+      "items": [
+        {
+          "hostId": 123,
+          "income": "470.40",
+          "start": "Sep 20, 2025",
+          "end": "Sep 27, 2025",
+          "vanId": "1",
+          "name": "Modest Explorer",
+          "price": 60,
+          "imageUrl": "https://assets.scrimba.com/advanced-react/react-router/modest-explorer.png",
+          "type": "simple"
+        }
+      ]
+    }
+  ]
 }

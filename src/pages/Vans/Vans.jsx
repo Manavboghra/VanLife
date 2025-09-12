@@ -1,4 +1,6 @@
+import { button } from "@material-tailwind/react";
 import React, { Suspense, useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "react-feather";
 import { Link, useSearchParams, Await } from "react-router-dom";
 
 const Vans = () => {
@@ -6,20 +8,36 @@ const Vans = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const typeFilters = searchParams.getAll("type");
   const options = ["Simple", "Luxury", "Rugged"];
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 3;
+  const total = vans.length;
+  const totalPages = Math.ceil(total / limit);
+  console.log(totalPages);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(1);
+    }
+  }, [totalPages, currentPage]);
 
   useEffect(() => {
     const fetchVans = async () => {
-      const req = await fetch("http://localhost:5000/vans");
+      const req = await fetch(`http://localhost:5000/vans`);
+      if (!req.ok) {
+        throw new Error(`Error: ${req.status}`);
+      }
       const res = await req.json();
       setVans(res);
     };
     fetchVans();
-  }, []);
+  }, [currentPage]);
 
   const handleClick = (option) => {
     const currentFilters = searchParams.getAll("type");
     if (currentFilters.includes(option.toLowerCase())) {
-      const newFilters = currentFilters.filter((f) => f !== option.toLowerCase());
+      const newFilters = currentFilters.filter(
+        (f) => f !== option.toLowerCase()
+      );
       setSearchParams(
         newFilters.length > 0 ? newFilters.map((f) => ["type", f]) : {}
       );
@@ -35,7 +53,6 @@ const Vans = () => {
     setSearchParams({});
   };
 
-  // helper for type badge colors
   const typeColor = (type) => {
     switch (type) {
       case "simple":
@@ -49,9 +66,13 @@ const Vans = () => {
     }
   };
 
+  const displayedProducts = vans.slice(
+    (currentPage - 1) * limit,
+    currentPage * limit
+  );
+
   return (
     <div className="bg-white min-h-screen py-10 px-4 lg:px-16">
-      {/* Header */}
       <div className="text-center mb-10">
         <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
           Explore Our Vans
@@ -61,7 +82,6 @@ const Vans = () => {
         </p>
       </div>
 
-      {/* Filters */}
       <div className="flex flex-wrap justify-center gap-3 mb-10">
         {options.map((o) => (
           <button
@@ -87,8 +107,10 @@ const Vans = () => {
         )}
       </div>
 
-      <Suspense fallback={<div className="text-center text-lg">Loading vans...</div>}>
-        <Await resolve={vans}>
+      <Suspense
+        fallback={<div className="text-center text-lg">Loading vans...</div>}
+      >
+        <Await resolve={displayedProducts}>
           {(loadedVans) => {
             const displayedData =
               typeFilters.length > 0
@@ -119,11 +141,11 @@ const Vans = () => {
                         <img
                           src={van?.imageUrl}
                           alt={van.name}
-                          className="h-64 w-full object-cover"
+                          className="h-64 w-full rounded-t-2xl object-cover"
                         />
                       </Link>
 
-                      <div className="p-5 flex flex-col justify-between ">
+                      <div className="p-5 flex  flex-col justify-between ">
                         <div className="flex justify-between items-center">
                           <h2 className="text-lg font-bold text-gray-900">
                             {van.name}
@@ -133,7 +155,8 @@ const Vans = () => {
                               van.type
                             )}`}
                           >
-                            {van.type?.charAt(0).toUpperCase() + van.type?.slice(1)}
+                            {van.type?.charAt(0).toUpperCase() +
+                              van.type?.slice(1)}
                           </span>
                         </div>
 
@@ -152,6 +175,50 @@ const Vans = () => {
           }}
         </Await>
       </Suspense>
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-3 mt-6">
+          <button
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+            className="flex items-center px-3 py-2 border rounded-md bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
+          >
+            <ChevronsLeft size={18} />
+          </button>
+
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="flex items-center px-3 py-2 border rounded-md bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
+          >
+            <ChevronLeft size={18} />
+            Prev
+          </button>
+
+          <span className="px-4 py-2 font-medium text-gray-700">
+            Page <span className="font-bold">{currentPage}</span> of{" "}
+            <span className="font-bold">{totalPages}</span>
+          </span>
+
+          <button
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+            className="flex items-center px-3 py-2 border rounded-md bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
+          >
+            Next
+            <ChevronRight size={18} />
+          </button>
+
+          <button
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+            className="flex items-center px-3 py-2 border rounded-md bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
+          >
+            <ChevronsRight size={18} />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

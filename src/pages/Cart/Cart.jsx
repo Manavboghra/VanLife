@@ -187,8 +187,8 @@ const Cart = () => {
                   </div>
 
                   {isToggleCancel && (
-                    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center p-4 z-50">
-                      <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+                    <div className="fixed inset-0  flex justify-center items-center p-4 z-50">
+                      <div className="bg-white p-6 rounded-lg  shadow-gray-400 shadow-2xl w-80">
                         <h2 className="font-semibold text-lg mb-3">
                           Confirm Deletion
                         </h2>
@@ -198,7 +198,7 @@ const Cart = () => {
 
                         <div className="flex justify-end gap-3 mt-5">
                           <button
-                            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition"
+                            className="bg-red-500 hover:bg-red-600 !text-white px-4 py-2 rounded-md transition"
                             onClick={confirmDelete}
                           >
                             Delete

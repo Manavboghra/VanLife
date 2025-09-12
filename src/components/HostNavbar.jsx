@@ -25,12 +25,10 @@ const HostNavbar = () => {
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
       <div
         className={`bg-white shadow-md w-64 p-5 flex flex-col transition-transform duration-300
         ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 fixed md:relative z-40`}
       >
-        {/* Logo + Toggle */}
         <div className="flex justify-between items-center mb-8">
           <span className="text-xl font-bold text-gray-800">Host Panel</span>
           <button
@@ -41,7 +39,6 @@ const HostNavbar = () => {
           </button>
         </div>
 
-        {/* Nav Links */}
         <nav className="flex flex-col gap-4">
           {navItems.map(({ to, label, icon, end }) => (
             <NavLink

@@ -52,12 +52,11 @@ const Income = () => {
       },
     },
     state: {
-      active: { fill: "#FF8C38" },
-      inactive: { fill: "#FFEAD0" },
+      active: { fill: "#406ADE" },
+      inactive: { fill: "#C2CFF5" },
     },
   };
 
-  // MonthPicker handler
   const handleChange = (_, dateString) => {
     if (dateString) {
       setSelectedMonth(dateString);
@@ -82,7 +81,7 @@ const Income = () => {
       <div>
         <Column
           title={false}
-          colorField={"#FF8C38"}
+          colorField={"#406ADE"}
           frame={"dotted"}
           className={""}
           {...config}

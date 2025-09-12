@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Star } from "react-feather";
+
 import {
   useParams,
   Link,
   useLocation,
   useLoaderData,
   Form,
+  useNavigate,
+  NavLink,
 } from "react-router-dom";
 import { addToCart, getReview, getVanById } from "../api";
 import requireAuth from "../utils/requireAuth";
@@ -48,8 +51,10 @@ const VansDetails = () => {
   const [addtoCart, setAddtoCart] = useState(false);
   const Allvans = useLoaderData();
   const clear = useRef();
+  const navigate = useNavigate();
+
   // const [currentUser, setCurrentUser] = useState(null);
-  const currentUser = getCurrentUser()
+  const currentUser = getCurrentUser();
 
   // useEffect(() => {
   //   const user = localStorage.getItem("currentUser");
@@ -69,7 +74,7 @@ const VansDetails = () => {
 
       setAddtoCart(true);
 
-      setTimeout(() => setAddtoCart(false), 1000);
+      setTimeout(() => setAddtoCart(false), 3000);
     } catch (err) {
       console.error("Failed to add to cart:", err);
     }
@@ -306,8 +311,16 @@ const VansDetails = () => {
       {addtoCart && (
         <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center p-4 z-50">
           <div className="bg-white p-8 rounded-xl flex-row shadow-lg text-center">
-            <div className="font-[600] text-xl text-black flex items-center gap-2">
-            Van added to cart!
+            <div className="font-[600] text-xl text-black flex flex-col items-center gap-2">
+              Van added to cart!
+              <div className="font-light">
+                <NavLink
+                  className="bg-gray-300 my-auto p-2 text-sm rounded-lg"
+                  to={"/cart"}
+                >
+                  view
+                </NavLink>
+              </div>
             </div>
           </div>
         </div>

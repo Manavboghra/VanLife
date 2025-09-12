@@ -486,7 +486,11 @@ export async function hostBooking(orderId, vans) {
   }
 }
 
-export async function getBookedVans() {
-  const res = await fetch("http://localhost:5000/bookings")
-  return await res.json()
+export async function getBookedVans(hostId) {
+  const res = await fetch(`http://localhost:5000/bookings?items.hostId=${hostId}`);
+  const data = await res.json();
+
+  return data.filter(booking =>
+    booking.items.some(item => String(item.hostId) === String(hostId))
+  );
 }

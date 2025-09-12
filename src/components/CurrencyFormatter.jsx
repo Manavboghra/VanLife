@@ -1,4 +1,3 @@
-// CurrencyFormatter.js
 import React from "react";
 
 const CurrencyFormatter = ({ value, currency = "USD", locale = "en-US" }) => {

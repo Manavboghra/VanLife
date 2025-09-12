@@ -106,14 +106,17 @@ const Signup = () => {
   }, [username]);
 
   return (
-    <div className="min-h-screen flex  items-center justify-center bg-white px-4 pb-5">
-      <div className="w-full max-w-md bg-white border rounded-2xl shadow-xl p-8 ">
-        <h1 className="text-3xl font-extrabold text-center text-gray-800">
+    <div className="min-h-screen flex  items-center justify-center bg-gray-200 px-4 pb-5">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl  ">
+        <div className="bg-blue-500 rounded-t-2xl p-8 max-w-full text-white">
+        <h1 className="text-3xl font-extrabold text-center ">
           Create an Account
         </h1>
-        <p className="text-center text-gray-500 mt-2">
+        <p className="text-center mt-2">
           Sign up to get started 
         </p>
+        </div>
+        <div className="px-8 pb-8">
 
         {message && (
           <div className="bg-red-100 text-red-600 p-2 mt-4 rounded-lg text-sm text-center">
@@ -140,7 +143,7 @@ const Signup = () => {
                 placeholder="Choose a username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full pl-10 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-[#FF8C38] outline-none"
+                className="w-full pl-10 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 required
               />
             </div>
@@ -158,7 +161,7 @@ const Signup = () => {
             <select
               name="role"
               id="role"
-              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-[#FF8C38] outline-none"
+              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
             >
               <option value="user">User</option>
               <option value="host">Host</option>
@@ -176,7 +179,7 @@ const Signup = () => {
                 id="email"
                 name="email"
                 placeholder="Enter your email"
-                className="w-full pl-10 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-[#FF8C38] outline-none"
+                className="w-full pl-10 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 required
               />
             </div>
@@ -193,7 +196,7 @@ const Signup = () => {
                 id="password"
                 name="password"
                 placeholder="Enter your password"
-                className="w-full pl-10 pr-10 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-[#FF8C38] outline-none"
+                className="w-full pl-10 pr-10 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 required
               />
               <div
@@ -202,6 +205,7 @@ const Signup = () => {
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </div>
+              
             </div>
           </div>
 
@@ -216,7 +220,7 @@ const Signup = () => {
                 id="confirmpassword"
                 name="confirmpassword"
                 placeholder="Confirm your password"
-                className="w-full pl-10 pr-10 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-[#FF8C38] outline-none"
+                className="w-full pl-10 pr-10 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 required
               />
               <div
@@ -229,7 +233,7 @@ const Signup = () => {
           </div>
 
           <button
-            className="bg-[#FF8C38] text-white font-bold py-2 px-4 rounded-lg mt-3 hover:bg-[#e6761a] transition-all disabled:bg-[#ffc9a0]"
+            className="bg-blue-500 !text-white font-bold py-2 px-4 rounded-lg mt-3 hover:bg-blue-600 transition-all disabled:bg-[#ffc9a0]"
             disabled={
               navigation.state === "submitting" ||
               usernameStatus.message === "Username is taken."
@@ -241,9 +245,10 @@ const Signup = () => {
 
         <div className="text-center text-sm mt-6 text-gray-600">
           Already have an account?{" "}
-          <Link to={"/login"} className="text-[#FF8C38] font-bold">
+          <Link to={"/login"} className="text-blue-500 font-bold">
             Login
           </Link>
+        </div>
         </div>
       </div>
     </div>

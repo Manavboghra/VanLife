@@ -24,21 +24,6 @@ export async function loader({ params }) {
 
 const HostVansDetails = () => {
   const vans = useLoaderData();
-  
-  // const { id } = useParams();
-
-  // const [vans,setVans] = useState("")
-
-  // useEffect(() => {
-  //   const fetchReviews = async () => {
-  //     const res = await fetch(`http://localhost:5000/vans/${id}`);
-  //     const vanData = await res.json();
-  //     setVans(vanData || []);
-  //   };
-    
-  //   fetchReviews();
-  // }, [id]);
-
 
   if (!vans) {
     return (
