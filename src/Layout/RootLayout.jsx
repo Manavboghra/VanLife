@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-// import Footer from "../components/Footer";
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
 const RootLayout = () => {
@@ -15,12 +15,13 @@ const RootLayout = () => {
 
       <div
         className={`flex-1 flex flex-col transition-all duration-300 ${
-          isOpen ? 'ml-64' : 'ml-20'
+          isOpen ? 'ml-56' : 'ml-20'
         }`}
       >
-        <main className="flex-1 p-6 pb-0 overflow-y-auto">
+        <main className="flex-1 py-6 pb-0 overflow-y-auto">
           <Outlet />
         </main>
+        <Footer/>
       </div>
     </div>
   );

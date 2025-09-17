@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "../assets/Logo.png";
-import logo2 from "../assets/Logo2.png";
 import {
   ShoppingCart,
   User,
@@ -22,10 +21,10 @@ import {
 
 const Navbar = ({ isOpen, toggleMenu }) => {
   const navLinks = [
-    { lable: "Host", to: "/host", icon:<UserPlus size={18}/>},
-    { lable: "About", to: "/about", icon:<Info size={18}/>},
-    { lable: "Vans", to: "/vans", icon:<Truck size={18}/>},
-    { lable: "Add Vans", to: "/addvans", icon:<FilePlus size={18}/> },
+    { lable: "Host", to: "/host", icon: <UserPlus size={18} /> },
+    { lable: "About", to: "/about", icon: <Info size={18} /> },
+    { lable: "Vans", to: "/vans", icon: <Truck size={18} /> },
+    { lable: "Add Vans", to: "/addvans", icon: <FilePlus size={18} /> },
   ];
 
   const location = useLocation();
@@ -46,7 +45,7 @@ const Navbar = ({ isOpen, toggleMenu }) => {
   return (
     <aside
       className={`fixed min-h-full ${
-        isOpen ? "w-64" : "w-20"
+        isOpen ? "w-52" : "w-20"
       } bg-white shadow-lg flex flex-col justify-between transition-all duration-300`}
     >
       <div>
@@ -67,24 +66,35 @@ const Navbar = ({ isOpen, toggleMenu }) => {
         <nav className="flex flex-col gap-2 px-4 text-gray-700 font-medium">
           {navLinks.map((link) =>
             link.to === "/host" ? (
-              <div key={link.to} className="mt-2">
-                <button
+              <div key={link.to} className="">
+                <NavLink
                   onClick={() => setIsHostOpen(!isHostOpen)}
-                  className={`w-full text-left px-3 py-2 rounded-md flex items-center justify-between transition-all ${
+                  className={`flex items-center gap-1 px-3 py-2 rounded-md transition-all hover:bg-gray-100 justify-center ${
                     isHostActive
                       ? "bg-blue-100 font-semibold !text-blue-500"
                       : "hover:bg-gray-100"
                   }`}
                 >
-                  {isOpen ? <div className="flex flex-row gap-4">{link.icon}{link.lable}</div>:<div>{link.icon}</div>}
-                  <span>
-                    {isHostOpen ? (
-                      <ChevronDown size={18} />
-                    ) : (
-                      <ChevronUp size={18} />
-                    )}
-                  </span>
-                </button>
+                  {isOpen ? (
+                    <div className="flex flex-row gap-16">
+                      <div className="flex items-center gap-4">
+                        {link.icon}
+                        {link.lable}
+                      </div>
+                      <span className="">
+                        {isHostOpen ? (
+                          <div>
+                          <ChevronDown size={18} />
+                          </div>
+                        ) : (
+                          <ChevronUp size={18} />
+                        )}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="">{link.icon}</div>
+                  )}
+                </NavLink>
 
                 {isHostOpen && (
                   <div className="ml-4 mt-2 space-y-2">
@@ -103,15 +113,17 @@ const Navbar = ({ isOpen, toggleMenu }) => {
                           }
                         >
                           {isOpen ? (
-                            <div className="px-3 py-2 flex flex-row items-center gap-3 rounded-md transition">
+                            <div className="px-3 py-2 flex flex-row items-center gap-2 rounded-md transition">
                               {icon}
                               {label}
                             </div>
                           ) : (
-                            <div className="flex flex-col items-center">{icon}</div>
+                            <div className="flex flex-col items-center">
+                              {icon}
+                            </div>
                           )}
                         </NavLink>
-                      )) }
+                      ))}
                     </nav>
                   </div>
                 )}
@@ -121,7 +133,7 @@ const Navbar = ({ isOpen, toggleMenu }) => {
                 key={link.to}
                 to={link.to}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-3 py-2 rounded-md transition-all ${
+                  `flex items-center gap-1 px-3 py-2 rounded-md transition-all ${
                     isActive
                       ? "bg-blue-100 text-blue-600 font-semibold"
                       : "hover:bg-gray-100"
@@ -129,7 +141,10 @@ const Navbar = ({ isOpen, toggleMenu }) => {
                 }
               >
                 {isOpen ? (
-                  <div className="flex flex-row gap-4">{link.icon}{link.lable}</div>
+                  <div className="flex flex-row gap-4">
+                    {link.icon}
+                    {link.lable}
+                  </div>
                 ) : (
                   <span>{link.icon}</span>
                 )}
@@ -143,7 +158,7 @@ const Navbar = ({ isOpen, toggleMenu }) => {
         <NavLink
           to="/login"
           className={({ isActive }) =>
-            `flex items-center gap-3 px-3 py-2 rounded-md transition-all ${
+            `flex items-center gap-1 px-3 py-2 rounded-md transition-all ${
               isActive
                 ? "bg-blue-100 text-blue-600 font-semibold"
                 : "hover:bg-gray-100"
@@ -157,7 +172,7 @@ const Navbar = ({ isOpen, toggleMenu }) => {
         <NavLink
           to="/cart"
           className={({ isActive }) =>
-            `flex items-center gap-3 px-3 py-2 rounded-md transition-all ${
+            `flex items-center gap-1 px-3 py-2 rounded-md transition-all ${
               isActive
                 ? "bg-blue-100 text-blue-600 font-semibold"
                 : "hover:bg-gray-100"

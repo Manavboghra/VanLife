@@ -587,6 +587,40 @@
           "type": "simple"
         }
       ]
+    },
+    {
+      "id": "6ef6",
+      "orderId": 1757778936872,
+      "items": [
+        {
+          "hostId": 123,
+          "income": "67.20",
+          "start": "Sep 14, 2025",
+          "end": "Sep 15, 2025",
+          "vanId": "1",
+          "name": "Modest Explorer",
+          "price": 60,
+          "imageUrl": "https://assets.scrimba.com/advanced-react/react-router/modest-explorer.png",
+          "type": "simple"
+        }
+      ]
+    },
+    {
+      "id": "ae83",
+      "orderId": 1758018668849,
+      "items": [
+        {
+          "hostId": 789,
+          "income": "1075.20",
+          "start": "Sep 18, 2025",
+          "end": "Sep 26, 2025",
+          "vanId": "5",
+          "name": "The Cruiser",
+          "price": 120,
+          "imageUrl": "https://assets.scrimba.com/advanced-react/react-router/the-cruiser.png",
+          "type": "luxury"
+        }
+      ]
     }
   ]
 }

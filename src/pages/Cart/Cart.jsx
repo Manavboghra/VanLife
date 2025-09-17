@@ -30,11 +30,28 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState(loaderData);
   const [isToggleCancel, setIsToggleCancel] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  // const [isToggleClear, setIsToggleClear] = useState(false)
 
   const handleXClick = (id) => {
     setDeleteId(id);
     setIsToggleCancel(true);
   };
+
+  // const confirmClear = async () =>{
+  //       try {
+  //     const currentUser = getCurrentUser();
+  //     await clearCart(currentUser.id);
+  //     setCartItems([]);
+  //   } catch (err) {
+  //     console.error("Failed to clear cart", err);
+  //   }finally {
+  //     setIsToggleClear(false);
+  //   }
+  // }
+
+  // const cancelClear = () =>{
+  //   setIsToggleClear(false);
+  // }
 
   const confirmDelete = async () => {
     try {
@@ -138,7 +155,7 @@ const Cart = () => {
         </button>
       </div>
       <div className="flex flex-col lg:flex-row gap-8">
-        <div className="lg:w-2/3">
+        <div className="lg:w-3/3">
           {cartItems.length > 0 ? (
             <div className="space-y-4">
               {cartItems.map((van) => (
@@ -217,11 +234,11 @@ const Cart = () => {
               ))}
             </div>
           ) : (
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+            <div className="bg-gray-100 w-full p-6 rounded-lg shadow-sm text-center">
               <p className="text-gray-600">Your cart is empty.</p>
               <a
                 href="/vans"
-                className="mt-4 inline-block bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600"
+                className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
               >
                 Explore Vans
               </a>
@@ -252,7 +269,7 @@ const Cart = () => {
 
             <button
               onClick={() => handleBooking(cartItems)}
-              className="w-full bg-orange-500 !text-white font-bold py-3 rounded-md hover:bg-orange-600 transition duration-200"
+              className="w-full bg-blue-500 !text-white font-bold py-3 rounded-md hover:bg-blue-600 transition duration-200"
             >
               Proceed to Checkout
             </button>

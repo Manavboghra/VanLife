@@ -32,7 +32,7 @@ const HostVans = ({ propVans }) => {
               </div>
 
               <div className="p-6">
-                <div className="font-semibold text-gray-800 group-hover:text-orange-600 transition">
+                <div className="font-semibold text-gray-800 group-hover:text-blue-600 transition">
                   {van.name}
                 </div>
                 <div className="text-sm text-gray-500">{van.type}</div>
@@ -42,7 +42,7 @@ const HostVans = ({ propVans }) => {
         </div>
       ) : (
         <div className="text-gray-500 text-center py-20 text-lg">
-          You haven’t listed any vans yet.
+          You haven't listed any vans yet.
         </div>
       )}
     </div>

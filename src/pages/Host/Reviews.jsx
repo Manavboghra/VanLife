@@ -49,8 +49,7 @@ const Reviews = () => {
       : [];
 
   return (
-    <div className="flex-1 bg-gray-50 p-8 overflow-auto">
-      {/* Header */}
+    <div className="flex-1 bg-white p-8 overflow-auto">
       <div className="flex items-center justify-between mb-6">
         <h1 className="font-bold text-3xl text-gray-800">Your Reviews</h1>
         {totalReviews > 0 && (
@@ -65,7 +64,6 @@ const Reviews = () => {
 
       {totalReviews > 0 ? (
         <>
-          {/* Stats Section */}
           <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
             {starStats?.map(({ star, percentage, average }) => (
               <div key={star}>

@@ -78,7 +78,7 @@ const AddVans = () => {
   }
 
   return (
-    <div className="bg-gray-200 min-h-screen flex items-center justify-center px-6 py-12">
+    <div className="bg-white min-h-screen flex items-center justify-center px-6 py-12">
       <div className="bg-white shadow-xl rounded-2xl w-full max-w-lg ">
         <div className="bg-blue-500 text-white rounded-t-2xl flex justify-center p-10">
           <h1 className="text-3xl font-extrabold text-center">Add New Van</h1>

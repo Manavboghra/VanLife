@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useLoaderData, Link, Outlet, useParams, redirect } from "react-router-dom";
+import {
+  useLoaderData,
+  Link,
+  Outlet,
+  useParams,
+  redirect,
+} from "react-router-dom";
 import HostVansDetailsNavbar from "./HostVansDetailsNavbar";
 import { ArrowLeft } from "react-feather";
 import { getVanById } from "../api";
@@ -20,23 +26,21 @@ export async function loader({ params }) {
   return van;
 }
 
-
-
 const HostVansDetails = () => {
   const vans = useLoaderData();
 
   if (!vans) {
     return (
-        <div className="p-6 bg-white">
-            <h2>Sorry, we couldn't find that van.</h2>
-            <Link to={"/host/vans"}>
-                <div className="flex items-center gap-2">
-                    <ArrowLeft size={16} />
-                    <span className="underline">Back to all vans</span>
-                </div>
-            </Link>
-        </div>
-    )
+      <div className="p-6 bg-white">
+        <h2>Sorry, we couldn't find that van.</h2>
+        <Link to={"/host/vans"}>
+          <div className="flex items-center gap-2">
+            <ArrowLeft size={16} />
+            <span className="underline">Back to all vans</span>
+          </div>
+        </Link>
+      </div>
+    );
   }
 
   return (
@@ -52,28 +56,32 @@ const HostVansDetails = () => {
           <div className=" flex gap-2 items-center p-4">
             <div className="">
               {vans.imageUrl ? (
-                <img className="lg:h-40 h-32 rounded-md" src={vans.imageUrl} alt={vans.name || "Van image"} />
+                <img
+                  className="lg:h-40 h-32 rounded-md"
+                  src={vans.imageUrl}
+                  alt={vans.name || "Van image"}
+                />
               ) : (
                 <div className="lg:h-40 h-32 w-48 bg-gray-200 rounded-md flex items-center justify-center">
-                    <span className="text-gray-500">No Image</span>
+                  <span className="text-gray-500">No Image</span>
                 </div>
               )}
             </div>
             <div className="gap-2 flex flex-col">
               {vans.type && (
                 <div
-                    className={`inline-block w-auto px-4 py-2 text-center rounded-md font-semibold text-white
-                        ${vans.type === "simple" && "bg-[#E17654]"}
-                        ${vans.type === "rugged" && "bg-[#5cc6bf]"}
-                        ${vans.type === "luxury" && "bg-[#983737]"}
+                  className={`inline-block w-auto px-4 py-2 text-center rounded-md font-semibold text-white
+                        ${vans.type === "simple" && "bg-blue-400"}
+                        ${vans.type === "rugged" && "bg-blue-600"}
+                        ${vans.type === "luxury" && "bg-blue-900"}
                     `}
                 >
-                    {vans.type.charAt(0).toUpperCase() + vans.type.slice(1)}
+                  {vans.type.charAt(0).toUpperCase() + vans.type.slice(1)}
                 </div>
               )}
               {vans.name && (
                 <div className="font-bold text-2xl text-[#161616]">
-                    {vans.name}
+                  {vans.name}
                 </div>
               )}
               {vans.price && (

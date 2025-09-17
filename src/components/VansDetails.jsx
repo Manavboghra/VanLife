@@ -132,9 +132,9 @@ const VansDetails = () => {
         <div className="lg:w-4/5 flex flex-col gap-4">
           <div
             className={`inline-block my-2 py-2 w-[40%] text-center rounded-md font-semibold text-white
-        ${String(Allvans.type) === "simple" && "bg-[#E17654]"}
-        ${String(Allvans.type) === "rugged" && "bg-[#115E59]"}
-        ${String(Allvans.type) === "luxury" && "bg-[#161616]"}`}
+        ${String(Allvans.type) === "simple" && "bg-blue-400"}
+        ${String(Allvans.type) === "rugged" && "bg-blue-600"}
+        ${String(Allvans.type) === "luxury" && "bg-blue-900"}`}
           >
             {String(Allvans.type).charAt(0).toUpperCase() +
               String(Allvans.type).slice(1)}
